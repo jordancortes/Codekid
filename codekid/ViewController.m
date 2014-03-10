@@ -9,8 +9,8 @@
 #import "ViewController.h"
 #import "Common.h"
 
-#define ACCEPT 0
-#define REJECT 1
+#define YYACCEPT 0
+#define YYREJECT 1
 
 @interface ViewController ()
 
@@ -57,11 +57,11 @@
     NSInteger result = [self tokenize:@"test.txt"];
     
     // Imprime el resultado
-    if (ACCEPT == result)
+    if (YYACCEPT == result)
     {
         _O_result.text = @"Aceptado";
     }
-    else if (REJECT == result)
+    else if (YYREJECT == result)
     {
         _O_result.text = @"Error";
     }
