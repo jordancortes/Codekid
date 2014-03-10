@@ -21,6 +21,9 @@
 		1737C45218CE415D00CFF4D0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1737C43418CE415D00CFF4D0 /* UIKit.framework */; };
 		1737C45A18CE415D00CFF4D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1737C45818CE415D00CFF4D0 /* InfoPlist.strings */; };
 		1737C45C18CE415E00CFF4D0 /* codekidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737C45B18CE415D00CFF4D0 /* codekidTests.m */; };
+		1737C46718CE41DE00CFF4D0 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46618CE41DE00CFF4D0 /* Common.m */; };
+		1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46818CE41ED00CFF4D0 /* tokenizer.lm */; };
+		1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46A18CE41F600CFF4D0 /* parser.ym */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,10 @@
 		1737C45718CE415D00CFF4D0 /* codekidTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "codekidTests-Info.plist"; sourceTree = "<group>"; };
 		1737C45918CE415D00CFF4D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1737C45B18CE415D00CFF4D0 /* codekidTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = codekidTests.m; sourceTree = "<group>"; };
+		1737C46518CE41DE00CFF4D0 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		1737C46618CE41DE00CFF4D0 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
+		1737C46818CE41ED00CFF4D0 /* tokenizer.lm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = tokenizer.lm; sourceTree = "<group>"; };
+		1737C46A18CE41F600CFF4D0 /* parser.ym */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = parser.ym; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +126,10 @@
 				1737C44618CE415D00CFF4D0 /* ViewController.m */,
 				1737C44818CE415D00CFF4D0 /* Images.xcassets */,
 				1737C43718CE415D00CFF4D0 /* Supporting Files */,
+				1737C46518CE41DE00CFF4D0 /* Common.h */,
+				1737C46618CE41DE00CFF4D0 /* Common.m */,
+				1737C46818CE41ED00CFF4D0 /* tokenizer.lm */,
+				1737C46A18CE41F600CFF4D0 /* parser.ym */,
 			);
 			path = codekid;
 			sourceTree = "<group>";
@@ -249,7 +260,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1737C46718CE41DE00CFF4D0 /* Common.m in Sources */,
 				1737C44718CE415D00CFF4D0 /* ViewController.m in Sources */,
+				1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */,
+				1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */,
 				1737C44118CE415D00CFF4D0 /* AppDelegate.m in Sources */,
 				1737C43D18CE415D00CFF4D0 /* main.m in Sources */,
 			);

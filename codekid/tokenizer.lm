@@ -1,0 +1,201 @@
+%{
+    #include "y.tab.h"
+    
+    int yyparse(void);
+    int yyerror(char*);
+%}
+
+%option nounput
+%option noyywrap
+
+%%
+[ \t\n]+
+
+"-" {
+    return RESTA;
+}
+
+"+" {
+    return SUMA;
+}
+
+"/"|"*" {
+    return MULT_DIV;
+}
+
+"="|"<"|">" {
+    return IGUAL_MENOR_MAYOR;
+}
+
+")" {
+    return P_CIERRA;
+}
+
+"(" {
+    return P_ABRE;
+}
+
+"{" {
+    return L_ABRE;
+}
+
+"}" {
+    return L_CIERRA;
+}
+
+"[" {
+    return B_ABRE;
+}
+
+"]" {
+    return B_CIERRA;
+}
+
+";" {
+    return PUNTO_Y_COMA;
+}
+
+"when" {
+    return CUANDO;
+}
+
+"start" {
+    return _START;
+}
+
+"create" {
+    return _CREATE;
+}
+
+"as" {
+    return _AS;
+}
+
+"var"|"list" {
+    return CREA_VAR_AS;
+}
+
+"to" {
+    return _TO;
+}
+
+"say" {
+    return _SAY;
+}
+
+"for" {
+    return _FOR;
+}
+
+"load" {
+    return _LOAD;
+}
+
+"set" {
+    return _SET;
+}
+
+"scale" {
+    return _SCALE;
+}
+
+"show"|"hide"|"clear" {
+    return VISIBILIDAD;
+}
+
+"if" {
+    return _IF;
+}
+
+"else" {
+    return _ELSE;
+}
+
+"repeat" {
+    return _REPEAT;
+}
+
+"until" {
+    return _UNTIL;
+}
+
+"add" {
+    return _ADD;
+}
+
+"delete" {
+    return _DELETE;
+}
+
+"at" {
+    return _AT;
+}
+
+"of" {
+    return _OF;
+}
+
+"go to" {
+    return GO_TO;
+}
+
+"turn" {
+    return _TURN;
+}
+
+"wait" {
+    return _WAIT;
+}
+
+"contains" {
+    return _CONTAINS;
+}
+
+"length" {
+    return _LENGTH;
+}
+
+"item" {
+    return _ITEM;
+}
+
+[0-9]+ {
+    return CTE_INT;
+}
+
+[0-9]+"."[0-9]+ {
+    return CTE_FLOAT;
+}
+
+'[a-zA-Z0-9]*[ ","|"."|":"|";"|"<"|">"|"{"|"}"|"‘"|"="|"/"|"*"|"+"|"-"|"_"|"("|")"|"&"|"^"|"%"|"$"|"#"|"@"|"?"|"!"|"[" ]*' {
+    return CTE_STRING;
+}
+
+[a-z][a-zA-Z0-9]* {
+    return NOMBRE_VAR;
+}
+
+. {
+    yyerror(yytext);
+}
+%%
+
+int yyerror(char *yytext)
+{
+    printf("Error con el token: %s\n", yytext);
+    
+    return 1;
+}
+
+int tokenizer(const char *archivo)
+{
+    yyin = fopen(archivo, "r");
+    int error = yyparse();
+    
+    if (error == 1)
+    {
+        return 1;
+    }
+    
+    return 0;
+}

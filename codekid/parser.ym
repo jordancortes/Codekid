@@ -1,0 +1,157 @@
+%{
+    #include <stdio.h>
+    #include <stdlib.h>
+    
+    int yylex(void);
+    int yyerror(char *);
+%}
+
+%token L_CIERRA L_ABRE B_CIERRA B_ABRE P_CIERRA P_ABRE PUNTO_Y_COMA IGUAL_MENOR_MAYOR SUMA RESTA MULT_DIV CUANDO _START _CREATE _AS CREA_VAR_AS _SET _SCALE _TO _SAY _FOR _LOAD VISIBILIDAD _IF _REPEAT _UNTIL _ADD _DELETE _AT _OF GO_TO _TURN _WAIT _CONTAINS _LENGTH _ITEM CTE_INT CTE_FLOAT CTE_STRING NOMBRE_VAR _ELSE
+
+%start inicio
+
+%%
+
+inicio:
+        CUANDO _START L_ABRE inicioAux inicioAux2 modulo inicioAux3 L_CIERRA { printf("Aceptado\n"); return 0; }
+        ;
+
+inicioAux:
+        /* epsilon */
+        | crea_var inicioAux
+        ;
+
+inicioAux2:
+        /* epsilon */
+        | evento inicioAux2
+        ;
+
+inicioAux3:
+        /* epsilon */
+        | modulo inicioAux3
+        ;
+
+crea_var:
+        _CREATE cte _AS CREA_VAR_AS PUNTO_Y_COMA
+        ;
+
+evento:
+        CUANDO B_ABRE expresion B_CIERRA L_ABRE modulo inicioAux3 L_CIERRA PUNTO_Y_COMA
+        ;
+
+modulo:
+        op_var
+        | op_texto
+        | op_imagen
+        | op_visibilidad
+        | op_lista
+        | op_movimiento
+        | op_espera
+        | ciclo
+        | condicion
+        ;
+
+op_var:
+        _SET var _TO exp PUNTO_Y_COMA
+        ;
+
+op_texto:
+        _SAY cte _FOR cte PUNTO_Y_COMA
+        ;
+
+op_imagen:
+        _LOAD cte PUNTO_Y_COMA
+        | _SET cte PUNTO_Y_COMA
+        | _SCALE cte PUNTO_Y_COMA
+        ;
+
+op_visibilidad:
+        VISIBILIDAD PUNTO_Y_COMA
+        ;
+
+op_lista:
+        _ADD cte opListaAux
+        | _DELETE cte _OF var PUNTO_Y_COMA
+        ;
+
+opListaAux:
+        _AT cte _TO var PUNTO_Y_COMA
+        | _TO var PUNTO_Y_COMA
+        ;
+
+op_movimiento:
+        GO_TO cte cte PUNTO_Y_COMA
+        | _TURN cte PUNTO_Y_COMA
+        ;
+
+op_espera:
+        _WAIT opEsperaAux PUNTO_Y_COMA
+        ;
+
+opEsperaAux:
+        cte
+        | _UNTIL expresion
+        ;
+
+ciclo:
+        _REPEAT cicloAux L_ABRE modulo L_CIERRA PUNTO_Y_COMA
+        ;
+
+cicloAux:
+        cte
+        | _UNTIL B_ABRE expresion B_CIERRA
+        ;
+
+condicion:
+        _IF B_ABRE expresion B_CIERRA L_ABRE modulo L_CIERRA condicionAux PUNTO_Y_COMA
+        ;
+
+condicionAux:
+        /* epsilon */
+        | _ELSE L_ABRE modulo L_CIERRA
+        ;
+
+expresion:
+        exp IGUAL_MENOR_MAYOR exp
+        | var _CONTAINS cte
+        ;
+
+exp:
+        termino expAux
+        ;
+
+expAux:
+        /* epsilon */
+        | SUMA exp
+        | RESTA exp
+        ;
+
+termino:
+        factor terminoAux
+        ;
+
+terminoAux:
+        /* epsilon */
+        | MULT_DIV termino
+        ;
+
+factor:
+        P_ABRE expresion P_CIERRA
+        | RESTA cte
+        | cte
+        ;
+
+cte:
+        var
+        | CTE_INT
+        | CTE_FLOAT
+        | CTE_STRING
+        | _LENGTH var
+        | _ITEM CTE_INT _OF var
+        ;
+
+var:
+        NOMBRE_VAR
+        ;
+
+%%

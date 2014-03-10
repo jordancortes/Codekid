@@ -7,6 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "Common.h"
+
+#define ACCEPT 0
+#define REJECT 1
 
 @interface ViewController ()
 
@@ -14,10 +18,24 @@
 
 @implementation ViewController
 
+/*
+ * Se encarga de llamar al tokenizer
+ * @param   NSString*   nombre  nombre del archivo
+ * @return  BOOL
+ */
+- (NSInteger) tokenize:(NSString *)nombre
+{
+    NSString *path = [[Common applicationDocumentsDirectory].path
+                      stringByAppendingPathComponent:nombre];
+    
+    const char *archivo = [path cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    return (NSInteger)tokenizer(archivo);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)didReceiveMemoryWarning
@@ -26,4 +44,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)A_check:(id)sender
+{
+    NSString *path = [[Common applicationDocumentsDirectory].path
+                      stringByAppendingPathComponent:@"test.txt"];
+    NSString *code = [_O_code text];
+    
+    // Copia el texto a un archivo
+    [code writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+    
+    // Manda checar el archivo
+    NSInteger result = [self tokenize:@"test.txt"];
+    
+    // Imprime el resultado
+    if (ACCEPT == result)
+    {
+        _O_result.text = @"Aceptado";
+    }
+    else if (REJECT == result)
+    {
+        _O_result.text = @"Error";
+    }
+}
 @end
