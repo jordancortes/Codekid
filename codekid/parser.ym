@@ -1,6 +1,7 @@
 %{
     #include <stdio.h>
     #include <stdlib.h>
+    #import "Common.h"
     
     int yylex(void);
     int yyerror(char *);
@@ -10,10 +11,12 @@
 
 %start inicio
 
+%error-verbose
+
 %%
 
 inicio:
-        CUANDO _START L_ABRE inicioAux inicioAux2 modulo inicioAux3 L_CIERRA { printf("Aceptado\n"); return 0; }
+        CUANDO _START L_ABRE inicioAux inicioAux2 modulo inicioAux3 L_CIERRA { return 0; }
         ;
 
 inicioAux:
@@ -32,7 +35,7 @@ inicioAux3:
         ;
 
 crea_var:
-        _CREATE cte _AS CREA_VAR_AS PUNTO_Y_COMA
+        _CREATE cte _AS CREA_VAR_AS PUNTO_Y_COMA { if (![Common addSymbolWithName:[Common getBeta] dType:[Common getAlfa] andInit:NO forKey:[Common getBeta]]) { return yyerror("La variable ya fue declarada."); } }
         ;
 
 evento:
@@ -52,7 +55,7 @@ modulo:
         ;
 
 op_var:
-        _SET var _TO exp PUNTO_Y_COMA
+        _SET var _TO exp PUNTO_Y_COMA { if (![Common initSymbol:[Common getBeta]]) { return yyerror("La variable no esta declarada."); } }
         ;
 
 op_texto:

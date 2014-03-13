@@ -18,30 +18,19 @@
 
 @implementation ViewController
 
-/*
- * Se encarga de llamar al tokenizer
- * @param   NSString*   nombre  nombre del archivo
- * @return  BOOL
- */
-- (NSInteger) tokenize:(NSString *)nombre
+- (NSInteger) scanner:(NSString *)nombre
 {
+    // se obtiene la ruta del archivo en Documents
     NSString *path = [[Common applicationDocumentsDirectory].path
                       stringByAppendingPathComponent:nombre];
     
+    // se obtiene la ruta para ser usada por fopen
     const char *archivo = [path cStringUsingEncoding:NSASCIIStringEncoding];
     
-    return (NSInteger)tokenizer(archivo);
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // se limpia la tabla de simbolos
+    [Common clearSymbolsTable];
+    
+    return (NSInteger)ext_scanner(archivo);
 }
 
 - (IBAction)A_check:(id)sender
@@ -54,7 +43,7 @@
     [code writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     
     // Manda checar el archivo
-    NSInteger result = [self tokenize:@"test.txt"];
+    NSInteger result = [self scanner:@"test.txt"];
     
     // Imprime el resultado
     if (YYACCEPT == result)
@@ -63,7 +52,7 @@
     }
     else if (YYREJECT == result)
     {
-        _O_result.text = @"Error";
+        _O_result.text = [Common getError];
     }
 }
 @end

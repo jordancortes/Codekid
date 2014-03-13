@@ -1,15 +1,21 @@
 %{
     #include "y.tab.h"
+    #import "Common.h"
     
     int yyparse(void);
     int yyerror(char*);
 %}
 
+%option yylineno
 %option nounput
 %option noyywrap
 
 %%
-[ \t\n]+
+[ \t]+
+
+\n {
+    
+}
 
 "-" {
     return RESTA;
@@ -72,6 +78,8 @@
 }
 
 "var"|"list" {
+    // Asigna alfa (semantica)
+    [Common setAlfa:[NSString stringWithUTF8String:yytext]];
     return CREA_VAR_AS;
 }
 
@@ -172,6 +180,9 @@
 }
 
 [a-z][a-zA-Z0-9]* {
+    // Asigna beta (semantica)
+    [Common setBeta:[NSString stringWithUTF8String:yytext]];
+    
     return NOMBRE_VAR;
 }
 
@@ -180,15 +191,33 @@
 }
 %%
 
+// Metodo que muestra los errores.
 int yyerror(char *yytext)
 {
-    printf("Error con el token: %s\n", yytext);
-    
+    [Common setError:[NSString stringWithFormat:@"ERROR (ln:%d) %s", yylineno, yytext]];
     return 1;
 }
 
-int tokenizer(const char *archivo)
+// Metodo principal de para el preprocesador.
+int ext_scanner(const char *archivo)
 {
+    //**** INICIA RESET VARIABLES
+    yylineno = 1;
+    yy_buffer_stack = NULL;
+    yy_buffer_stack_max = 0;
+    yy_c_buf_p = NULL;
+    yy_hold_char = '\0';
+    yy_init = 0;
+    yy_last_accepting_cpos = NULL;
+    yy_last_accepting_state = 0;
+    yy_n_chars = 0;
+    yy_start = 0;
+    yyin = NULL;
+    yyleng = 0;
+    yyout = NULL;
+    yytext = NULL;
+    //**** FIN RESET VARIABLES
+
     yyin = fopen(archivo, "r");
     int error = yyparse();
     

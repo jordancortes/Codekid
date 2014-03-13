@@ -10,13 +10,27 @@
 
 @interface ViewController : UIViewController
 
-// Prototipos de funciones externas
-int tokenizer( const char* );
+/**
+ Se encarga de verificar el léxico, la sintaxis y la semántica del código.
+ @param nombre
+    nombre del archivo a verificar.
+ @return Un entero: 0 si la verificación fue exitosa, o 0 si hubo un error.
+ */
+- (NSInteger) scanner:(NSString *)nombre;
 
-// Objetos del Storyboard
+/**
+ Prototipos de funciones externas
+ */
+int ext_scanner( const char* );
+
+/**
+ Objetos del Storyboard
+ */
 @property (weak, nonatomic) IBOutlet UITextView *O_code;
 @property (weak, nonatomic) IBOutlet UITextView *O_result;
 
-// Accionadores del Storyboard
+/**
+ Accionadores del Storyboard
+ */
 - (IBAction)A_check:(id)sender;
 @end
