@@ -107,8 +107,16 @@
     return _SCALE;
 }
 
-"show"|"hide"|"clear" {
-    return _VISIBILITY;
+"show" {
+    return _SHOW;
+}
+
+"hide" {
+    return _HIDE;
+}
+
+"clear" {
+    return _CLEAR;
 }
 
 "if" {

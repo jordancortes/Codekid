@@ -29,7 +29,9 @@
 %token _LOAD
 %token _SET
 %token _SCALE
-%token _VISIBILITY
+%token _SHOW
+%token _HIDE
+%token _CLEAR
 %token _IF
 %token _ELSE
 %token _REPEAT
@@ -109,7 +111,9 @@ op_imagen:
         ;
 
 op_visibilidad:
-        _VISIBILITY END_EXP
+        _SHOW END_EXP
+        | _HIDE END_EXP
+        | _CLEAR END_EXP
         ;
 
 op_lista:
