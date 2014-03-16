@@ -38,7 +38,7 @@
 %token _DELETE
 %token _AT
 %token _OF
-%token _GO_TO
+%token _GO
 %token _TURN
 %token _WAIT
 %token _CONTAINS
@@ -123,7 +123,7 @@ opListaAux:
         ;
 
 op_movimiento:
-        _GO_TO cte cte END_EXP
+        _GO _TO cte cte END_EXP
         | _TURN cte END_EXP
         ;
 

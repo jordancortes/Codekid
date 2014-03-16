@@ -143,8 +143,8 @@
     return _OF;
 }
 
-"go to" {
-    return _GO_TO;
+"go" {
+    return _GO;
 }
 
 "turn" {
