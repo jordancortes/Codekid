@@ -7,7 +7,47 @@
     int yyerror(char *);
 %}
 
-%token L_CIERRA L_ABRE B_CIERRA B_ABRE P_CIERRA P_ABRE PUNTO_Y_COMA IGUAL_MENOR_MAYOR SUMA RESTA MULT_DIV CUANDO _START _CREATE _AS CREA_VAR_AS _SET _SCALE _TO _SAY _FOR _LOAD VISIBILIDAD _IF _REPEAT _UNTIL _ADD _DELETE _AT _OF GO_TO _TURN _WAIT _CONTAINS _LENGTH _ITEM CTE_INT CTE_FLOAT CTE_STRING NOMBRE_VAR _ELSE
+%token MINUS
+%token PLUS
+%token MULT_DIV
+%token LOGIC_OP
+%token P_OPEN
+%token P_CLOSE
+%token L_OPEN
+%token L_CLOSE
+%token B_OPEN
+%token B_CLOSE
+%token END_EXP
+%token _WHEN
+%token _START
+%token _CREATE
+%token _AS
+%token _VAR_LIST
+%token _TO
+%token _SAY
+%token _FOR
+%token _LOAD
+%token _SET
+%token _SCALE
+%token _VISIBILITY
+%token _IF
+%token _ELSE
+%token _REPEAT
+%token _UNTIL
+%token _ADD
+%token _DELETE
+%token _AT
+%token _OF
+%token _GO_TO
+%token _TURN
+%token _WAIT
+%token _CONTAINS
+%token _LENGTH
+%token _ITEM
+%token CTE_INT
+%token CTE_FLOAT
+%token CTE_STRING
+%token VARIABLE
 
 %start inicio
 
@@ -16,7 +56,7 @@
 %%
 
 inicio:
-        CUANDO _START L_ABRE inicioAux inicioAux2 modulo inicioAux3 L_CIERRA { return 0; }
+        _WHEN _START L_OPEN inicioAux inicioAux2 modulo inicioAux3 L_CLOSE { return 0; }
         ;
 
 inicioAux:
@@ -35,11 +75,11 @@ inicioAux3:
         ;
 
 crea_var:
-        _CREATE cte _AS CREA_VAR_AS PUNTO_Y_COMA { if (![Common addSymbolWithName:[Common getBeta] dType:[Common getAlfa] andInit:NO forKey:[Common getBeta]]) { return yyerror("La variable ya fue declarada."); } }
+        _CREATE cte _AS _VAR_LIST END_EXP { if (![Common addSymbolWithName:[Common getBeta] dType:[Common getAlfa] andInit:NO forKey:[Common getBeta]]) { return yyerror("La variable ya fue declarada."); } }
         ;
 
 evento:
-        CUANDO B_ABRE expresion B_CIERRA L_ABRE modulo inicioAux3 L_CIERRA PUNTO_Y_COMA
+        _WHEN B_OPEN expresion B_CLOSE L_OPEN modulo inicioAux3 L_CLOSE END_EXP
         ;
 
 modulo:
@@ -55,40 +95,40 @@ modulo:
         ;
 
 op_var:
-        _SET var _TO exp PUNTO_Y_COMA { if (![Common initSymbol:[Common getBeta]]) { return yyerror("La variable no esta declarada."); } }
+        _SET var _TO exp END_EXP { if (![Common initSymbol:[Common getBeta]]) { return yyerror("La variable no esta declarada."); } }
         ;
 
 op_texto:
-        _SAY cte _FOR cte PUNTO_Y_COMA
+        _SAY cte _FOR cte END_EXP
         ;
 
 op_imagen:
-        _LOAD cte PUNTO_Y_COMA
-        | _SET cte PUNTO_Y_COMA
-        | _SCALE cte PUNTO_Y_COMA
+        _LOAD cte END_EXP
+        | _SET cte END_EXP
+        | _SCALE cte END_EXP
         ;
 
 op_visibilidad:
-        VISIBILIDAD PUNTO_Y_COMA
+        _VISIBILITY END_EXP
         ;
 
 op_lista:
         _ADD cte opListaAux
-        | _DELETE cte _OF var PUNTO_Y_COMA
+        | _DELETE cte _OF var END_EXP
         ;
 
 opListaAux:
-        _AT cte _TO var PUNTO_Y_COMA
-        | _TO var PUNTO_Y_COMA
+        _AT cte _TO var END_EXP
+        | _TO var END_EXP
         ;
 
 op_movimiento:
-        GO_TO cte cte PUNTO_Y_COMA
-        | _TURN cte PUNTO_Y_COMA
+        _GO_TO cte cte END_EXP
+        | _TURN cte END_EXP
         ;
 
 op_espera:
-        _WAIT opEsperaAux PUNTO_Y_COMA
+        _WAIT opEsperaAux END_EXP
         ;
 
 opEsperaAux:
@@ -97,25 +137,25 @@ opEsperaAux:
         ;
 
 ciclo:
-        _REPEAT cicloAux L_ABRE modulo L_CIERRA PUNTO_Y_COMA
+        _REPEAT cicloAux L_OPEN modulo L_CLOSE END_EXP
         ;
 
 cicloAux:
         cte
-        | _UNTIL B_ABRE expresion B_CIERRA
+        | _UNTIL B_OPEN expresion B_CLOSE
         ;
 
 condicion:
-        _IF B_ABRE expresion B_CIERRA L_ABRE modulo L_CIERRA condicionAux PUNTO_Y_COMA
+        _IF B_OPEN expresion B_CLOSE L_OPEN modulo L_CLOSE condicionAux END_EXP
         ;
 
 condicionAux:
         /* epsilon */
-        | _ELSE L_ABRE modulo L_CIERRA
+        | _ELSE L_OPEN modulo L_CLOSE
         ;
 
 expresion:
-        exp IGUAL_MENOR_MAYOR exp
+        exp LOGIC_OP exp
         | var _CONTAINS cte
         ;
 
@@ -125,8 +165,8 @@ exp:
 
 expAux:
         /* epsilon */
-        | SUMA exp
-        | RESTA exp
+        | PLUS exp
+        | MINUS exp
         ;
 
 termino:
@@ -139,8 +179,8 @@ terminoAux:
         ;
 
 factor:
-        P_ABRE expresion P_CIERRA
-        | RESTA cte
+        P_OPEN expresion P_CLOSE
+        | MINUS cte /* valor negativo */
         | cte
         ;
 
@@ -154,7 +194,7 @@ cte:
         ;
 
 var:
-        NOMBRE_VAR
+        VARIABLE
         ;
 
 %%

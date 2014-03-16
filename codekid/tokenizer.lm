@@ -18,11 +18,11 @@
 }
 
 "-" {
-    return RESTA;
+    return MINUS;
 }
 
 "+" {
-    return SUMA;
+    return PLUS;
 }
 
 "/"|"*" {
@@ -30,39 +30,39 @@
 }
 
 "="|"<"|">" {
-    return IGUAL_MENOR_MAYOR;
-}
-
-")" {
-    return P_CIERRA;
+    return LOGIC_OP;
 }
 
 "(" {
-    return P_ABRE;
+    return P_OPEN;
+}
+
+")" {
+    return P_CLOSE;
 }
 
 "{" {
-    return L_ABRE;
+    return L_OPEN;
 }
 
 "}" {
-    return L_CIERRA;
+    return L_CLOSE;
 }
 
 "[" {
-    return B_ABRE;
+    return B_OPEN;
 }
 
 "]" {
-    return B_CIERRA;
+    return B_CLOSE;
 }
 
 ";" {
-    return PUNTO_Y_COMA;
+    return END_EXP;
 }
 
 "when" {
-    return CUANDO;
+    return _WHEN;
 }
 
 "start" {
@@ -80,7 +80,7 @@
 "var"|"list" {
     // Asigna alfa (semantica)
     [Common setAlfa:[NSString stringWithUTF8String:yytext]];
-    return CREA_VAR_AS;
+    return _VAR_LIST;
 }
 
 "to" {
@@ -108,7 +108,7 @@
 }
 
 "show"|"hide"|"clear" {
-    return VISIBILIDAD;
+    return _VISIBILITY;
 }
 
 "if" {
@@ -144,7 +144,7 @@
 }
 
 "go to" {
-    return GO_TO;
+    return _GO_TO;
 }
 
 "turn" {
@@ -183,7 +183,7 @@
     // Asigna beta (semantica)
     [Common setBeta:[NSString stringWithUTF8String:yytext]];
     
-    return NOMBRE_VAR;
+    return VARIABLE;
 }
 
 . {
