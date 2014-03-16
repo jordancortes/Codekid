@@ -80,7 +80,7 @@ inicioAux3:
         ;
 
 crea_var:
-        _CREATE cte _AS _VAR_LIST END_EXP { if (![Common addSymbolWithName:[Common getBeta] dType:[Common getAlfa] andInit:NO forKey:[Common getBeta]]) { return yyerror("La variable ya fue declarada."); } }
+        _CREATE cte _AS _VAR_LIST END_EXP { if (![Common addSymbolWithName:[Common getBeta] Type:[Common getAlfa] dType:nil initialize:NO andMemory:0 forKey:[Common getBeta]]) { return yyerror("La variable ya fue declarada."); } }
         ;
 
 evento:

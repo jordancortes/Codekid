@@ -11,8 +11,10 @@
 @interface SemanticSymbol : NSObject
 
 @property NSString *name;
-@property NSString *dType;
+@property NSString *type;
+@property NSMutableArray *dType;
 @property BOOL initialize;
+@property NSInteger memory;
 
 /**
  Constructor de un simbolo.
@@ -23,6 +25,6 @@
  @param initialize
     Si el simbolo esta inicializado con un valor o no.
  */
-- (id)initWithName:(NSString *)name dType:(NSString *)dtype andInit:(BOOL)initialize;
+- (id)initWithName:(NSString *)name Type:(NSString *)type dType:(NSString *)dtype Initialize:(BOOL)initialize andMemory:(NSInteger)memory;
 
 @end

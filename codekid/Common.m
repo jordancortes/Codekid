@@ -26,7 +26,7 @@ static NSString *error;
     NSLog(@"%@\n", text);
 }
 
-+ (BOOL)addSymbolWithName:(NSString *)name dType:(NSString *)dtype andInit:(BOOL)initialize forKey:(NSString *)key
++ (BOOL)addSymbolWithName:(NSString *)name Type:(NSString *)type dType:(NSString *)dtype initialize:(BOOL)initialize andMemory:(NSInteger)mem forKey:(NSString *)key
 {
     if (!symbols)
     {
@@ -35,7 +35,7 @@ static NSString *error;
     
     if ([self getSemanticSymbol:key] == nil)
     {
-        [symbols setObject:[[SemanticSymbol alloc] initWithName:name dType:dtype andInit:initialize] forKey:key];
+        [symbols setObject:[[SemanticSymbol alloc] initWithName:name Type:type dType:dtype Initialize:initialize andMemory:mem] forKey:key];
         
         return YES;
     }

@@ -10,15 +10,17 @@
 
 @implementation SemanticSymbol
 
-- (id)initWithName:(NSString *)name dType:(NSString *)dtype andInit:(BOOL)initialize
+- (id)initWithName:(NSString *)name Type:(NSString *)type dType:(NSString *)dtype Initialize:(BOOL)initialize andMemory:(NSInteger)memory
 {
     self = [super init];
     
     if (self)
     {
         _name = name;
-        _dType = dtype;
+        _type = type;
+        _dType = [[NSMutableArray alloc] initWithObjects:dtype, nil];
         _initialize = initialize;
+        _memory = memory;
     }
     
     return self;

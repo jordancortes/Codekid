@@ -42,19 +42,23 @@
  Verifica si un simbolo existe en la tabla de variables, y si no existe entonces lo agrega.
  Ejemplo de uso:
  @code
- [Common addSymbolWithName:@"x" dType:@"int" andInit:NO forKey:@"x"];
+ [Common addSymbolWithName:@"x" Type:"var" dType:@"int" initialize:NO andMemory:0 forKey:@"x"];
  @endcode
  @param name
     Nombre del simbolo.
- @param dtype
+ @param type
     Tipo de simbolo (var, list).
+ @param dtype
+    Tipo de variable (int, float, string)
  @param initialize
     Si el simbolo esta inicializado o no.
+ @param mem
+    Ubicación en memoria virtual.
  @param key
     Nombre del simbolo, igual que name.
  @return YES si el simbolo se agregó a la tabla, o NO si el simbolo ya existe en la tabla.
  */
-+ (BOOL)addSymbolWithName:(NSString *)name dType:(NSString *)dtype andInit:(BOOL)initialize forKey:(NSString *)key;
++ (BOOL)addSymbolWithName:(NSString *)name Type:(NSString *)type dType:(NSString *)dtype initialize:(BOOL)initialize andMemory:(NSInteger)mem forKey:(NSString *)key;
 
 /**
  Regresa las propiedades de un simbolo de la tabla.
