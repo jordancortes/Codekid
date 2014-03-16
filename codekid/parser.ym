@@ -9,8 +9,11 @@
 
 %token MINUS
 %token PLUS
-%token MULT_DIV
-%token LOGIC_OP
+%token MULT
+%token DIV
+%token EQ
+%token LT
+%token GT
 %token P_OPEN
 %token P_CLOSE
 %token L_OPEN
@@ -159,8 +162,14 @@ condicionAux:
         ;
 
 expresion:
-        exp LOGIC_OP exp
+        exp expresionAux
         | var _CONTAINS cte
+        ;
+
+expresionAux:
+        EQ exp
+        | LT exp
+        | GT exp
         ;
 
 exp:
@@ -179,7 +188,8 @@ termino:
 
 terminoAux:
         /* epsilon */
-        | MULT_DIV termino
+        | MULT termino
+        | DIV termino
         ;
 
 factor:

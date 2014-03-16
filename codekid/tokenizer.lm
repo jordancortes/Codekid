@@ -25,12 +25,24 @@
     return PLUS;
 }
 
-"/"|"*" {
-    return MULT_DIV;
+"*" {
+    return MULT;
 }
 
-"="|"<"|">" {
-    return LOGIC_OP;
+"/" {
+    return DIV;
+}
+
+"=" {
+    return EQ;
+}
+
+"<" {
+    return LT;
+}
+
+">" {
+    return GT;
 }
 
 "(" {
