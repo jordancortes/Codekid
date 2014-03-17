@@ -80,7 +80,13 @@ inicioAux3:
         ;
 
 crea_var:
-        _CREATE cte _AS _VAR_LIST END_EXP { if (![Common addSymbolWithName:[Common getBeta] Type:[Common getAlfa] dType:nil initialize:NO andMemory:0 forKey:[Common getBeta]]) { return yyerror("La variable ya fue declarada."); } }
+        _CREATE cte _AS _VAR_LIST END_EXP
+            {
+                if (![Common addSymbolWithName:[Common getBeta] Type:[Common getAlfa] dType:nil initialize:NO andMemory:0 forKey:[Common getBeta]])
+                {
+                    return yyerror("");
+                }
+            }
         ;
 
 evento:
@@ -100,7 +106,13 @@ modulo:
         ;
 
 op_var:
-        _SET var _TO exp END_EXP { if (![Common initSymbol:[Common getBeta] for:@"var" withDType:[Common getDType] atPosition:-1]) { return yyerror("La variable no esta declarada."); } }
+        _SET var _TO exp END_EXP
+            {
+                if (![Common initSymbol:[Common getBeta] for:@"var" withDType:[Common getDType] atPosition:-1])
+                {
+                    return yyerror("");
+                }
+            }
         ;
 
 op_texto:
@@ -121,12 +133,30 @@ op_visibilidad:
 
 op_lista:
         _ADD cte opListaAux
-        | _DELETE cte _OF var END_EXP {if (![Common deleteFromList:[Common getBeta] atPosition:[Common getPosition]]) { return yyerror(""); } }
+        | _DELETE cte _OF var END_EXP
+            {
+                if (![Common deleteFromList:[Common getBeta] atPosition:[Common getPosition]])
+                {
+                    return yyerror("");
+                }
+            }
         ;
 
 opListaAux:
-        _AT cte _TO var END_EXP { if (![Common initSymbol:[Common getBeta] for:@"list" withDType:[Common getDType] atPosition:[Common getPosition]]) { return yyerror("La variable no esta declarada."); } }
-        | _TO var END_EXP { if (![Common initSymbol:[Common getBeta] for:@"list" withDType:[Common getDType] atPosition:-1]) { return yyerror("La variable no esta declarada."); } }
+        _AT cte _TO var END_EXP
+            {
+                if (![Common initSymbol:[Common getBeta] for:@"list" withDType:[Common getDType] atPosition:[Common getPosition]])
+                {
+                    return yyerror("");
+                }
+            }
+        | _TO var END_EXP
+            {
+                if (![Common initSymbol:[Common getBeta] for:@"list" withDType:[Common getDType] atPosition:-1])
+                {
+                    return yyerror("");
+                }
+            }
         ;
 
 op_movimiento:
@@ -203,7 +233,10 @@ cte:
         | CTE_INT
         | CTE_FLOAT
         | CTE_STRING
-        | _LENGTH var  { [Common setDType:@"int"]; }
+        | _LENGTH var
+            {
+                [Common setDType:@"int"];
+            }
         | _ITEM CTE_INT _OF var
         ;
 

@@ -229,7 +229,7 @@
 // Metodo que muestra los errores.
 int yyerror(char *yytext)
 {
-    [Common setError:[NSString stringWithFormat:@"ERROR (ln:%d) %s %@", yylineno, yytext, [Common getError]]];
+    [Common setYyErrorNo:yylineno];
     return 1;
 }
 

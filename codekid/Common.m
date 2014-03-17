@@ -8,6 +8,10 @@
 
 #import "Common.h"
 
+// Variables externas
+static NSInteger yyErrorNo;
+static NSString *yyError;
+
 static NSString *alfa; // tipo de variable
 static NSString *beta; // nombre de variable
 static NSString *dtype; // tipo de dato
@@ -16,6 +20,12 @@ static NSMapTable *symbols;
 static NSString *error;
 
 @implementation Common
+
++ (void)reset
+{
+    yyErrorNo = 1;
+    yyError = @"";
+}
 
 + (NSURL *)applicationDocumentsDirectory
 {
@@ -42,6 +52,7 @@ static NSString *error;
         return YES;
     }
     
+    [self setYyError:[NSString stringWithFormat:@"La variable '%@' ya habia sido declarada.", [self getBeta]]];
     return NO; // la variable ya esta declarada
 }
 
@@ -64,13 +75,13 @@ static NSString *error;
         }
         else
         {
+            [self setYyError:[NSString stringWithFormat:@"La asignación a '%@' no pertecene al tipo '%@'.", [symbol name], [symbol type]]];
             return NO; // si existe pero no se declara asi
         }
     }
-    else
-    {
-        return NO; // la variable no esta declarada
-    }
+
+    [self setYyError:[NSString stringWithFormat:@"La variable '%@' no esta declarada.", [self getBeta]]];
+    return NO; // la variable no esta declarada
 }
 
 + (BOOL) deleteFromList:(NSString *)key atPosition:(NSInteger)pos
@@ -154,6 +165,26 @@ static NSString *error;
 + (NSInteger)getPosition
 {
     return position;
+}
+
++ (void) setYyErrorNo:(NSInteger)yen
+{
+    yyErrorNo = yen;
+}
+
++ (NSInteger)yyErrorNo
+{
+    return yyErrorNo;
+}
+
++ (void) setYyError:(NSString *)ye
+{
+    yyError = ye;
+}
+
++ (NSString *)yyError
+{
+    return yyError;
 }
 
 @end

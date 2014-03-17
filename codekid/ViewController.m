@@ -42,6 +42,8 @@
     // Copia el texto a un archivo
     [code writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     
+    [Common reset];
+    
     // Manda checar el archivo
     NSInteger result = [self scanner:@"test.txt"];
     
@@ -52,7 +54,7 @@
     }
     else if (YYREJECT == result)
     {
-        _O_result.text = [Common getError];
+        _O_result.text = [NSString stringWithFormat:@"ERROR (ln:%d) %@", [Common yyErrorNo], [Common yyError]];
     }
 }
 @end

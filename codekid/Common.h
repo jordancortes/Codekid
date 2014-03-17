@@ -183,4 +183,10 @@
 + (NSInteger)getPosition;
 + (BOOL) deleteFromList:(NSString *)key atPosition:(NSInteger)pos;
 
++ (void) setYyErrorNo:(NSInteger)ye;
++ (NSInteger)yyErrorNo;
++ (void) setYyError:(NSString *)ye;
++ (NSString *)yyError;
++ (void)reset;
+
 @end
