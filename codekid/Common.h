@@ -76,9 +76,15 @@
  Inicializa una variable ya instanciada.
  @param key
     Varible a inicializar.
+ @param type
+    Tipo de simbolo (var, list)
+ @param dtype
+    Tipo de variable (int, float, string)
+ @param pos
+    Posición en donde se agregará el simbolo. Para VAR solo sustituye, para LIST: -1 al final.
  @return YES si la variable se inicializó, NO si la variable no existe.
  */
-+ (BOOL)initSymbol:(NSString *)key;
++ (BOOL)initSymbol:(NSString *)key for:(NSString *)type withDType:(NSString *)dtype atPosition:(NSInteger)pos;
 
 /**
  Limpia la tabla de simbolos.
@@ -93,7 +99,7 @@
  Asigna un valor para alfa.
  Ejemplo de uso:
  @code
- [Common setAlfa:@"x"];
+ [Common setAlfa:@"var"];
  @endcode
  @param a
     Nuevo valor para alfa.
@@ -151,5 +157,30 @@
  @return El último error. NULL si no existe.
  */
 + (NSString *)getError;
+
+/**
+ Asigna el tipo de dato.
+ Ejemplo de uso:
+ @code
+ [Common setDType:@"int"];
+ @endcode
+ @param d
+    Tipo de dato.
+ */
++ (void)setDType:(NSString *)d;
+
+/**
+ Regresa el tipo de dato de la variable.
+ Ejemplo de uso:
+ @code
+ [Common getDType];
+ @endcode
+ @return El tipo de dato del valor actual. NULL si no existe.
+ */
++ (NSString *)getDType;
+
++ (void)setPosition:(NSString *)p;
++ (NSInteger)getPosition;
++ (BOOL) deleteFromList:(NSString *)key atPosition:(NSInteger)pos;
 
 @end

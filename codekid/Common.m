@@ -8,8 +8,10 @@
 
 #import "Common.h"
 
-static NSString *alfa;
-static NSString *beta;
+static NSString *alfa; // tipo de variable
+static NSString *beta; // nombre de variable
+static NSString *dtype; // tipo de dato
+static NSInteger position;
 static NSMapTable *symbols;
 static NSString *error;
 
@@ -48,19 +50,55 @@ static NSString *error;
     return [symbols objectForKey:key];
 }
 
-+ (BOOL)initSymbol:(NSString *)key
++ (BOOL)initSymbol:(NSString *)key for:(NSString *)type withDType:(NSString *)dtype atPosition:(NSInteger)pos
 {
     SemanticSymbol *symbol = [symbols objectForKey:key];
     
     if (symbol != nil)
     {
-        [symbol setInitialize:YES];
-        return YES;
+        if ([[symbol type] isEqualToString:type])
+        {
+            [symbol addDtype:dtype atPosition:pos];
+            [symbol setInitialize:YES];
+            return YES;
+        }
+        else
+        {
+            return NO; // si existe pero no se declara asi
+        }
     }
     else
     {
         return NO; // la variable no esta declarada
     }
+}
+
++ (BOOL) deleteFromList:(NSString *)key atPosition:(NSInteger)pos
+{
+    SemanticSymbol *symbol = [symbols objectForKey:key];
+    
+    if (![[symbol type] isEqualToString:@"list"])
+    {
+        symbol = nil; // si la llave es var entonces no lo toma en cuenta
+    }
+    
+    if (symbol != nil)
+    {
+        if (pos > ([[symbol dType] count] - 1)) // indexOutOfBounds
+        {
+            [Common setError:[NSString stringWithFormat:@"%d esta fuera del rango de %@\n", pos, [symbol name]]];
+            return NO;
+        }
+        else
+        {
+            [symbol delSymbolAt:pos];
+            
+            return YES;
+        }
+    }
+    
+    [Common setError:[NSString stringWithFormat:@"La variable '%@' no esta declarada.\n", [symbol name]]];
+    return NO;
 }
 
 + (void)clearSymbolsTable
@@ -96,6 +134,26 @@ static NSString *error;
 + (NSString *)getError
 {
     return error;
+}
+
++ (void)setDType:(NSString *)d
+{
+    dtype = d;
+}
+
++ (NSString *)getDType
+{
+    return dtype;
+}
+
++ (void)setPosition:(NSString *)p
+{
+    position = [p integerValue];
+}
+
++ (NSInteger)getPosition
+{
+    return position;
 }
 
 @end

@@ -4,6 +4,7 @@
     
     int yyparse(void);
     int yyerror(char*);
+    int at = 0;
 %}
 
 %option yylineno
@@ -152,10 +153,12 @@
 }
 
 "delete" {
+    at = 1;
     return _DELETE;
 }
 
 "at" {
+    at = 1;
     return _AT;
 }
 
@@ -188,14 +191,26 @@
 }
 
 [0-9]+ {
+    if (1 == at)
+    {
+        [Common setPosition:[NSString stringWithUTF8String:yytext]];
+        at = 0;
+    }
+    else
+    {
+        [Common setDType:@"int"];
+    }
+    
     return CTE_INT;
 }
 
 [0-9]+"."[0-9]+ {
+    [Common setDType:@"float"];
     return CTE_FLOAT;
 }
 
 '[a-zA-Z0-9]*[ ","|"."|":"|";"|"<"|">"|"{"|"}"|"‘"|"="|"/"|"*"|"+"|"-"|"_"|"("|")"|"&"|"^"|"%"|"$"|"#"|"@"|"?"|"!"|"[" ]*' {
+    [Common setDType:@"string"];
     return CTE_STRING;
 }
 
@@ -214,7 +229,7 @@
 // Metodo que muestra los errores.
 int yyerror(char *yytext)
 {
-    [Common setError:[NSString stringWithFormat:@"ERROR (ln:%d) %s", yylineno, yytext]];
+    [Common setError:[NSString stringWithFormat:@"ERROR (ln:%d) %s %@", yylineno, yytext, [Common getError]]];
     return 1;
 }
 

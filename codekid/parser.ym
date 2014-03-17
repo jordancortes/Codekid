@@ -100,7 +100,7 @@ modulo:
         ;
 
 op_var:
-        _SET var _TO exp END_EXP { if (![Common initSymbol:[Common getBeta]]) { return yyerror("La variable no esta declarada."); } }
+        _SET var _TO exp END_EXP { if (![Common initSymbol:[Common getBeta] for:@"var" withDType:[Common getDType] atPosition:-1]) { return yyerror("La variable no esta declarada."); } }
         ;
 
 op_texto:
@@ -121,12 +121,12 @@ op_visibilidad:
 
 op_lista:
         _ADD cte opListaAux
-        | _DELETE cte _OF var END_EXP
+        | _DELETE cte _OF var END_EXP {if (![Common deleteFromList:[Common getBeta] atPosition:[Common getPosition]]) { return yyerror(""); } }
         ;
 
 opListaAux:
-        _AT cte _TO var END_EXP
-        | _TO var END_EXP
+        _AT cte _TO var END_EXP { if (![Common initSymbol:[Common getBeta] for:@"list" withDType:[Common getDType] atPosition:[Common getPosition]]) { return yyerror("La variable no esta declarada."); } }
+        | _TO var END_EXP { if (![Common initSymbol:[Common getBeta] for:@"list" withDType:[Common getDType] atPosition:-1]) { return yyerror("La variable no esta declarada."); } }
         ;
 
 op_movimiento:
@@ -203,7 +203,7 @@ cte:
         | CTE_INT
         | CTE_FLOAT
         | CTE_STRING
-        | _LENGTH var
+        | _LENGTH var  { [Common setDType:@"int"]; }
         | _ITEM CTE_INT _OF var
         ;
 
