@@ -14,6 +14,15 @@
 @interface Common : NSObject
 
 /**
+ Reinicia algunas variables para cada compilación.
+ Ejemplo de uso:
+ @code
+ [Common reset];
+ @endcode
+ */
++ (void)reset;
+
+/**
  Obtienes el URL del directorio @c Documents de la aplicación actual.
  Ejemplo de uso con retorno @c NSURL:
  @code
@@ -37,6 +46,20 @@
     Texto a ser impreso en consola.
 */
 + (void)printToConsole:(NSString *)text;
+
+/**
+ Inicializa una variable ya instanciada.
+ @param key
+ Varible a inicializar.
+ @param type
+ Tipo de simbolo (var, list)
+ @param dtype
+ Tipo de variable (int, float, string)
+ @param pos
+ Posición en donde se agregará el simbolo. Para VAR solo sustituye, para LIST: -1 al final.
+ @return YES si la variable se inicializó, NO si la variable no existe.
+ */
++ (BOOL)initSymbol:(NSString *)key for:(NSString *)type withDType:(NSString *)dtype atPosition:(NSInteger)pos;
 
 /**
  Verifica si un simbolo existe en la tabla de variables, y si no existe entonces lo agrega.
@@ -64,36 +87,69 @@
  Regresa las propiedades de un simbolo de la tabla.
  Ejemplo de uso:
  @code
- [Common getSemanticSymbol:@"x"];
+ [Common symbolAttr:@"x"];
  @endcode
  @param key
     Nombre del simbolo a buscar en la tabla
  @return El simbolo como objeto, y contiene toda la información de él. Si el simbolo no existe regresa nil.
  */
-+ (SemanticSymbol *)getSemanticSymbol:(NSString *)key;
++ (SemanticSymbol *)symbolAttr:(NSString *)key;
 
 /**
- Inicializa una variable ya instanciada.
- @param key
-    Varible a inicializar.
- @param type
-    Tipo de simbolo (var, list)
- @param dtype
-    Tipo de variable (int, float, string)
- @param pos
-    Posición en donde se agregará el simbolo. Para VAR solo sustituye, para LIST: -1 al final.
- @return YES si la variable se inicializó, NO si la variable no existe.
- */
-+ (BOOL)initSymbol:(NSString *)key for:(NSString *)type withDType:(NSString *)dtype atPosition:(NSInteger)pos;
-
-/**
- Limpia la tabla de simbolos.
+ Elimina un elemento de la lista en cierta posición.
  Ejemplo de uso:
  @code
- [Common clearSymbolsTable];
+ [Common deleteFromList:@"x" atPosition:4];
  @endcode
+ @param key
+    Lista de la cual se eliminará el elemento.
+ @param pos
+    Posición de la lista que será eliminada.
+ @return YES si lo eliminó, FALSE si ocurrio algún error.
  */
-+ (void)clearSymbolsTable;
++ (BOOL) deleteFromList:(NSString *)key atPosition:(NSInteger)pos;
+
+/**
+ Asigna el número de linea en donde se encontró el error.
+ Ejemplo de uso:
+ @code
+ [Common setYyErrorNo:4];
+ @endcode
+ @param yenum
+    Número de linea en donde hay un error.
+ */
++ (void) setYyErrorNo:(NSInteger)yenum;
+
+/**
+ Regresa el número de linea donde hubo un error.
+ Ejemplo de uso:
+ @code
+ [Common yyErrorNo];
+ @endcode
+ @return El número de linea.
+ */
++ (NSInteger)yyErrorNo;
+
+/**
+ Asigna la descripción del error.
+ Ejemplo de uso:
+ @code
+ [Common setYyError:@"la variable no existe"];
+ @endcode
+ @param ye
+ Descripción del error encontrado.
+ */
++ (void) setYyError:(NSString *)ye;
+
+/**
+ Regresa último error encontrado.
+ Ejemplo de uso:
+ @code
+ [Common yyError];
+ @endcode
+ @return El último error. NULL si no existe.
+ */
++ (NSString *)yyError;
 
 /**
  Asigna un valor para alfa.
@@ -110,11 +166,11 @@
  Regresa el valor de alfa.
  Ejemplo de uso:
  @code
- [Common getAlfa];
+ [Common alfa];
  @endcode
  @return El valor actual de alfa. NULL si no existe.
  */
-+ (NSString *)getAlfa;
++ (NSString *)alfa;
 
 /**
  Asigna un valor para beta.
@@ -131,32 +187,11 @@
  Regresa el valor de beta.
  Ejemplo de uso:
  @code
- [Common getBeta];
+ [Common beta];
  @endcode
  @return El valor actual de beta. NULL si no existe.
  */
-+ (NSString *)getBeta;
-
-/**
- Asigna la descripción del error.
- Ejemplo de uso:
- @code
- [Common setError:@"la variable no existe"];
- @endcode
- @param e
-    Descripción del error encontrado.
- */
-+ (void)setError:(NSString *)e;
-
-/**
- Regresa último error encontrado.
- Ejemplo de uso:
- @code
- [Common getError];
- @endcode
- @return El último error. NULL si no existe.
- */
-+ (NSString *)getError;
++ (NSString *)beta;
 
 /**
  Asigna el tipo de dato.
@@ -173,20 +208,32 @@
  Regresa el tipo de dato de la variable.
  Ejemplo de uso:
  @code
- [Common getDType];
+ [Common dType];
  @endcode
  @return El tipo de dato del valor actual. NULL si no existe.
  */
-+ (NSString *)getDType;
++ (NSString *)dType;
 
+/**
+ Asigna la posición en la lista a la que se quiere hacer referencia.
+ Ejemplo de uso:
+ @code
+ [Common setPosition:@"4"];
+ @endcode
+ @param p
+    Posición a guardar. Se recibe como NSString porque viene de yytext como
+    char*, aunque se convierte a NSInteger.
+ */
 + (void)setPosition:(NSString *)p;
-+ (NSInteger)getPosition;
-+ (BOOL) deleteFromList:(NSString *)key atPosition:(NSInteger)pos;
 
-+ (void) setYyErrorNo:(NSInteger)ye;
-+ (NSInteger)yyErrorNo;
-+ (void) setYyError:(NSString *)ye;
-+ (NSString *)yyError;
-+ (void)reset;
+/**
+ Regresa la posición de una lista que se hizo referencia.
+ Ejemplo de uso:
+ @code
+ [Common position];
+ @endcode
+ @return La posición mencionada en el código.
+ */
++ (NSInteger)position;
 
 @end

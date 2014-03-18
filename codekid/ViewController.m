@@ -27,9 +27,6 @@
     // se obtiene la ruta para ser usada por fopen
     const char *archivo = [path cStringUsingEncoding:NSASCIIStringEncoding];
     
-    // se limpia la tabla de simbolos
-    [Common clearSymbolsTable];
-    
     return (NSInteger)ext_scanner(archivo);
 }
 

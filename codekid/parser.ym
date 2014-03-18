@@ -82,7 +82,7 @@ inicioAux3:
 crea_var:
         _CREATE cte _AS _VAR_LIST END_EXP
             {
-                if (![Common addSymbolWithName:[Common getBeta] Type:[Common getAlfa] dType:nil initialize:NO andMemory:0 forKey:[Common getBeta]])
+                if (![Common addSymbolWithName:[Common beta] Type:[Common alfa] dType:nil initialize:NO andMemory:0 forKey:[Common beta]])
                 {
                     return yyerror("");
                 }
@@ -108,7 +108,7 @@ modulo:
 op_var:
         _SET var _TO exp END_EXP
             {
-                if (![Common initSymbol:[Common getBeta] for:@"var" withDType:[Common getDType] atPosition:-1])
+                if (![Common initSymbol:[Common beta] for:@"var" withDType:[Common dType] atPosition:-1])
                 {
                     return yyerror("");
                 }
@@ -135,7 +135,7 @@ op_lista:
         _ADD cte opListaAux
         | _DELETE cte _OF var END_EXP
             {
-                if (![Common deleteFromList:[Common getBeta] atPosition:[Common getPosition]])
+                if (![Common deleteFromList:[Common beta] atPosition:[Common position]])
                 {
                     return yyerror("");
                 }
@@ -145,14 +145,14 @@ op_lista:
 opListaAux:
         _AT cte _TO var END_EXP
             {
-                if (![Common initSymbol:[Common getBeta] for:@"list" withDType:[Common getDType] atPosition:[Common getPosition]])
+                if (![Common initSymbol:[Common beta] for:@"list" withDType:[Common dType] atPosition:[Common position]])
                 {
                     return yyerror("");
                 }
             }
         | _TO var END_EXP
             {
-                if (![Common initSymbol:[Common getBeta] for:@"list" withDType:[Common getDType] atPosition:-1])
+                if (![Common initSymbol:[Common beta] for:@"list" withDType:[Common dType] atPosition:-1])
                 {
                     return yyerror("");
                 }
