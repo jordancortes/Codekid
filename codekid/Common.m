@@ -17,6 +17,7 @@ static NSString *beta; // nombre de variable
 static NSString *dtype; // tipo de dato
 static NSInteger position; // posicion referente a listas
 static NSMapTable *symbols; // tabla de simbolos
+static int cube[3][3][7];
 
 @implementation Common
 
@@ -34,6 +35,96 @@ static NSMapTable *symbols; // tabla de simbolos
     yyError = @"";
     symbols = nil;
     symbols = [[NSMapTable alloc] init];
+    
+    /*
+     Cube[T1][T2][OP] = Type
+     
+     ERROR -> -1
+     
+     TYPES:
+     int    -> 0
+     float  -> 1
+     string -> 2
+     bool   -> 3
+     
+     OPERATORS
+     < -> 0
+     = -> 1
+     > -> 2
+     + -> 3
+     - -> 4
+     * -> 5
+     / -> 6
+     */
+    
+    /* INT */
+    cube[0][0][0]= 3; // int < int = bool
+    cube[0][0][1]= 3; // int = int = bool
+    cube[0][0][2]= 3; // int > int = bool
+    cube[0][0][3]= 0; // int + int = int
+    cube[0][0][4]= 0; // int - int = int
+    cube[0][0][5]= 0; // int * int = int
+    cube[0][0][6]= 0; // int / int = int
+    cube[0][1][0]= 3; // int < float = bool
+    cube[0][1][1]= 3; // int = float = bool
+    cube[0][1][2]= 3; // int > float = bool
+    cube[0][1][3]= 1; // int + float = float
+    cube[0][1][4]= 1; // int - float = float
+    cube[0][1][5]= 1; // int * float = float
+    cube[0][1][6]= 1; // int / float = float
+    cube[0][2][0]= -1; // int < string = ERROR
+    cube[0][2][1]= -1; // int = string = ERROR
+    cube[0][2][2]= -1; // int > string = ERROR
+    cube[0][2][3]= -1; // int + string = ERROR
+    cube[0][2][4]= -1; // int - string = ERROR
+    cube[0][2][5]= -1; // int * string = ERROR
+    cube[0][2][6]= -1; // int / string = ERROR
+    
+    /* FLOAT */
+    cube[1][0][0]= 3; // float < int = bool
+    cube[1][0][1]= 3; // float = int = bool
+    cube[1][0][2]= 3; // float > int = bool
+    cube[1][0][3]= 1; // float + int = float
+    cube[1][0][4]= 1; // float - int = float
+    cube[1][0][5]= 1; // float * int = float
+    cube[1][0][6]= 1; // float / int = float
+    cube[1][1][0]= 3; // float < float = bool
+    cube[1][1][1]= 3; // float = float = bool
+    cube[1][1][2]= 3; // float > float = bool
+    cube[1][1][3]= 1; // float + float = float
+    cube[1][1][4]= 1; // float - float = float
+    cube[1][1][5]= 1; // float * float = float
+    cube[1][1][6]= 1; // float / float = float
+    cube[1][2][0]= -1; // float < string = ERROR
+    cube[1][2][1]= -1; // float = string = ERROR
+    cube[1][2][2]= -1; // float > string = ERROR
+    cube[1][2][3]= -1; // float + string = ERROR
+    cube[1][2][4]= -1; // float - string = ERROR
+    cube[1][2][5]= -1; // float * string = ERROR
+    cube[1][2][6]= -1; // float / string = ERROR
+    
+    /* STRING */
+    cube[2][0][0]= -1; // string < int = ERROR
+    cube[2][0][1]= -1; // string = int = ERROR
+    cube[2][0][2]= -1; // string > int = ERROR
+    cube[2][0][3]= -1; // string + int = ERROR
+    cube[2][0][4]= -1; // string - int = ERROR
+    cube[2][0][5]= -1; // string * int = ERROR
+    cube[2][0][6]= -1; // string / int = ERROR
+    cube[2][1][0]= -1; // string < float = ERROR
+    cube[2][1][1]= -1; // string = float = ERROR
+    cube[2][1][2]= -1; // string > float = ERROR
+    cube[2][1][3]= -1; // string + float = ERROR
+    cube[2][1][4]= -1; // string - float = ERROR
+    cube[2][1][5]= -1; // string * float = ERROR
+    cube[2][1][6]= -1; // string / float = ERROR
+    cube[2][2][0]= -1; // string < string = ERROR
+    cube[2][2][1]= 3; // string = string = bool
+    cube[2][2][2]= -1; // string > string = ERROR
+    cube[2][2][3]= -1; // string + string = ERROR
+    cube[2][2][4]= -1; // string - string = ERROR
+    cube[2][2][5]= -1; // string * string = ERROR
+    cube[2][2][6]= -1; // string / string = ERROR
 }
 
 + (NSURL *)applicationDocumentsDirectory
