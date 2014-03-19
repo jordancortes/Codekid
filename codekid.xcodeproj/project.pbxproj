@@ -25,6 +25,8 @@
 		1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46818CE41ED00CFF4D0 /* tokenizer.lm */; };
 		1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46A18CE41F600CFF4D0 /* parser.ym */; };
 		175FE03B18CE8578006C25B2 /* SemanticSymbol.m in Sources */ = {isa = PBXBuildFile; fileRef = 175FE03A18CE8578006C25B2 /* SemanticSymbol.m */; };
+		17722D7118D8042900E4A3CB /* Quadruple.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7018D8042900E4A3CB /* Quadruple.m */; };
+		17722D7518D807BC00E4A3CB /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7418D807BC00E4A3CB /* Stack.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,10 @@
 		1737C46A18CE41F600CFF4D0 /* parser.ym */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = parser.ym; sourceTree = "<group>"; };
 		175FE03918CE8578006C25B2 /* SemanticSymbol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SemanticSymbol.h; sourceTree = "<group>"; };
 		175FE03A18CE8578006C25B2 /* SemanticSymbol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SemanticSymbol.m; sourceTree = "<group>"; };
+		17722D6F18D8042900E4A3CB /* Quadruple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quadruple.h; sourceTree = "<group>"; };
+		17722D7018D8042900E4A3CB /* Quadruple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quadruple.m; sourceTree = "<group>"; };
+		17722D7318D807BC00E4A3CB /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
+		17722D7418D807BC00E4A3CB /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,8 +138,7 @@
 				1737C46518CE41DE00CFF4D0 /* Common.h */,
 				1737C46618CE41DE00CFF4D0 /* Common.m */,
 				17D0E8FE18D1504300B0C02C /* flex & bison */,
-				175FE03918CE8578006C25B2 /* SemanticSymbol.h */,
-				175FE03A18CE8578006C25B2 /* SemanticSymbol.m */,
+				17722D7218D8043100E4A3CB /* Objects */,
 			);
 			path = codekid;
 			sourceTree = "<group>";
@@ -165,6 +170,19 @@
 				1737C45818CE415D00CFF4D0 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		17722D7218D8043100E4A3CB /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				175FE03918CE8578006C25B2 /* SemanticSymbol.h */,
+				175FE03A18CE8578006C25B2 /* SemanticSymbol.m */,
+				17722D6F18D8042900E4A3CB /* Quadruple.h */,
+				17722D7018D8042900E4A3CB /* Quadruple.m */,
+				17722D7318D807BC00E4A3CB /* Stack.h */,
+				17722D7418D807BC00E4A3CB /* Stack.m */,
+			);
+			name = Objects;
 			sourceTree = "<group>";
 		};
 		17D0E8FE18D1504300B0C02C /* flex & bison */ = {
@@ -273,7 +291,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17722D7518D807BC00E4A3CB /* Stack.m in Sources */,
 				1737C46718CE41DE00CFF4D0 /* Common.m in Sources */,
+				17722D7118D8042900E4A3CB /* Quadruple.m in Sources */,
 				1737C44718CE415D00CFF4D0 /* ViewController.m in Sources */,
 				1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */,
 				1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */,

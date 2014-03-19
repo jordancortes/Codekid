@@ -65,12 +65,12 @@ inicio:
         ;
 
 inicioAux:
-        /* epsilon */
+        /* epsilon */ { [Common setFlag:FLAG_EVENT]; }
         | crea_var inicioAux
         ;
 
 inicioAux2:
-        /* epsilon */
+        /* epsilon */ { [Common setFlag:FLAG_MODULE]; }
         | evento inicioAux2
         ;
 

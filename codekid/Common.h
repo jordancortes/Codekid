@@ -10,6 +10,12 @@
 
 #import <Foundation/Foundation.h>
 #import "SemanticSymbol.h"
+#import "Quadruple.h"
+#import "Stack.h"
+
+#define FLAG_CREATE 0
+#define FLAG_EVENT 1
+#define FLAG_MODULE 2
 
 @interface Common : NSObject
 
@@ -235,5 +241,11 @@
  @return La posición mencionada en el código.
  */
 + (NSInteger)position;
+
++ (void)setFlag:(NSInteger)f;
++ (NSInteger)flag;
+
++ (void)pushToStack:(NSString *)stack Object:(id)object;
++ (id)popFromStack:(NSString *)stack;
 
 @end

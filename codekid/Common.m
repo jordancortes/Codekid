@@ -16,8 +16,14 @@ static NSString *alfa; // tipo de variable
 static NSString *beta; // nombre de variable
 static NSString *dtype; // tipo de dato
 static NSInteger position; // posicion referente a listas
+static NSInteger flag; // indica en que fragmento de codigo esta
 static NSMapTable *symbols; // tabla de simbolos
 static int cube[3][3][7];
+
+// Variables para cuadruplos
+static NSMutableArray *quadruples;
+static Stack *operands;
+static Stack *terms;
 
 @implementation Common
 
@@ -31,10 +37,14 @@ static int cube[3][3][7];
     beta = @"";
     dtype = @"";
     position = 0;
+    flag = FLAG_CREATE;
     yyErrorNo = 1;
     yyError = @"";
     symbols = nil;
     symbols = [[NSMapTable alloc] init];
+    quadruples = [[NSMutableArray alloc] init];
+    operands = [[Stack alloc] init];
+    terms = [[Stack alloc] init];
     
     /*
      Cube[T1][T2][OP] = Type
@@ -216,6 +226,36 @@ static int cube[3][3][7];
 }
 
 //==============================================================================
+//======================================================================= STACKS
+//==============================================================================
+
++ (void)pushToStack:(NSString *)stack Object:(id)object
+{
+    if ([stack isEqualToString:@"operands"])
+    {
+        [operands push:object];
+    }
+    else if ([stack isEqualToString:@"terms"])
+    {
+        [terms push:object];
+    }
+}
+
++ (id)popFromStack:(NSString *)stack
+{
+    if ([stack isEqualToString:@"operands"])
+    {
+        return [operands pop];
+    }
+    else if ([stack isEqualToString:@"terms"])
+    {
+        return [terms pop];
+    }
+    
+    return nil;
+}
+
+//==============================================================================
 //============================================================ SETTERS & GETTERS
 //==============================================================================
 
@@ -277,6 +317,16 @@ static int cube[3][3][7];
 + (NSInteger)position
 {
     return position;
+}
+
++ (void)setFlag:(NSInteger)f
+{
+    flag = f;
+}
+
++ (NSInteger)flag
+{
+    return flag;
 }
 
 @end
