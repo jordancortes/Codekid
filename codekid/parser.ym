@@ -106,13 +106,18 @@ modulo:
         ;
 
 op_var:
-        _SET var _TO exp END_EXP
+        _SET var _TO exp opVarAux END_EXP
             {
                 if (![Common initSymbol:[Common beta] for:@"var" withDType:[Common dType] atPosition:-1])
                 {
                     return yyerror("");
                 }
             }
+        ;
+
+opVarAux:
+        /* epsilon */
+        | _AT cte
         ;
 
 op_texto:
@@ -132,7 +137,7 @@ op_visibilidad:
         ;
 
 op_lista:
-        _ADD cte opListaAux
+        _ADD cte _TO var opListaAux END_EXP
         | _DELETE cte _OF var END_EXP
             {
                 if (![Common deleteFromList:[Common beta] atPosition:[Common position]])
@@ -143,16 +148,16 @@ op_lista:
         ;
 
 opListaAux:
-        _AT cte _TO var END_EXP
+        /* epsilon */
             {
-                if (![Common initSymbol:[Common beta] for:@"list" withDType:[Common dType] atPosition:[Common position]])
+                if (![Common initSymbol:[Common beta] for:@"list" withDType:[Common dType] atPosition:-1])
                 {
                     return yyerror("");
                 }
             }
-        | _TO var END_EXP
+        | _AT cte
             {
-                if (![Common initSymbol:[Common beta] for:@"list" withDType:[Common dType] atPosition:-1])
+                if (![Common initSymbol:[Common beta] for:@"list" withDType:[Common dType] atPosition:[Common position]])
                 {
                     return yyerror("");
                 }
