@@ -274,7 +274,7 @@
  @endcode
  @return La bandera que define la posición acutal del código.
  */
-+ (NSInteger)flag; 
++ (NSInteger)flag;
 
 + (void)pushToStack:(NSString *)stack Object:(id)object;
 + (id)popFromStack:(NSString *)stack;
