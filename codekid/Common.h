@@ -115,6 +115,19 @@
  */
 + (BOOL) deleteFromList:(NSString *)key atPosition:(NSInteger)pos;
 
+// hace lookup
+/**
+ Busca por un simbolo en la tabla de simbolos.
+ Ejemplo de uso:
+ @code
+ [Common lookupSymbol:@"x"];
+ @endcode
+ @param key
+    Simbolo a buscar
+ @return YES si lo encontró, NO si el simbolo no existe.
+ */
++ (BOOL) lookupSymbol:(NSString *)key;
+
 /**
  Asigna el número de linea en donde se encontró el error.
  Ejemplo de uso:
@@ -242,14 +255,28 @@
  */
 + (NSInteger)position;
 
+/**
+ Asigna la bandera que define la posición en el archivo.
+ Ejemplo de uso:
+ @code
+ [Common setFlag:FLAG_EVENT];
+ @endcode
+ @param f
+    Bandera que define la posición actual en el código.
+ */
 + (void)setFlag:(NSInteger)f;
+
+/**
+ Regresa la bandera que define la sección de código con la que se esta trabajando.
+ Ejemplo de uso:
+ @code
+ [Common flag];
+ @endcode
+ @return La bandera que define la posición acutal del código.
+ */
 + (NSInteger)flag; 
 
 + (void)pushToStack:(NSString *)stack Object:(id)object;
 + (id)popFromStack:(NSString *)stack;
-
-// hace lookup
-+ (BOOL) lookupVar:(NSString *)key;
-
 
 @end

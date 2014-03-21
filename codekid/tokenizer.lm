@@ -220,7 +220,7 @@
 
     // hace el lookup de la var
     if([Common flag] != FLAG_CREATE){
-        if (![Common lookupVar:[NSString stringWithUTF8String: yytext]])
+        if (![Common lookupSymbol:[NSString stringWithUTF8String: yytext]])
         {
             return yyerror("");
         }

@@ -225,20 +225,15 @@ static Stack *terms;
     return NO;
 }
 
-+ (BOOL) lookupVar:(NSString *)key
++ (BOOL) lookupSymbol:(NSString *)key
 {
-    
-    //SemanticSymbol *symbol = [symbols objectForKey:key]; // busca por un simbolo
-    
-   // if (![[symbol name] isEqualToString:key])
     if ([self symbolAttr:key] == nil) // si el simbolo no existe
     {
         [Common setYyError:[NSString stringWithFormat:@"La variable '%@' no esta declarada.\n", key]];
         return NO;
-    }else{
-        return YES;
     }
     
+    return YES;
 }
 
 
