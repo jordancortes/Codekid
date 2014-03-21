@@ -217,7 +217,14 @@
 [a-z][a-zA-Z0-9]* {
     // Asigna beta (semantica)
     [Common setBeta:[NSString stringWithUTF8String:yytext]];
-    
+
+    // hace el lookup de la var
+    if([Common flag] != FLAG_CREATE){
+        if (![Common lookupVar:[NSString stringWithUTF8String: yytext]])
+        {
+            return yyerror("");
+        }
+    }
     return VARIABLE;
 }
 

@@ -243,9 +243,13 @@
 + (NSInteger)position;
 
 + (void)setFlag:(NSInteger)f;
-+ (NSInteger)flag;
++ (NSInteger)flag; 
 
 + (void)pushToStack:(NSString *)stack Object:(id)object;
 + (id)popFromStack:(NSString *)stack;
+
+// hace lookup
++ (BOOL) lookupVar:(NSString *)key;
+
 
 @end

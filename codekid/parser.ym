@@ -80,7 +80,7 @@ inicioAux3:
         ;
 
 crea_var:
-        _CREATE cte _AS _VAR_LIST END_EXP
+        _CREATE var _AS _VAR_LIST END_EXP
             {
                 if (![Common addSymbolWithName:[Common beta] Type:[Common alfa] dType:nil initialize:NO andMemory:0 forKey:[Common beta]])
                 {
