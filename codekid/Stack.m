@@ -10,18 +10,25 @@
 
 @implementation Stack
 
-- (void)push:(id)object
+- (id)init
 {
-    [self addObject:object];
+    self = [super init];
+    
+    if (self)
+    {
+        _stack = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
 }
 
 - (id)pop
 {
-    if ([self count] > 0)
+    if ([_stack count] > 0)
     {
-        id object = [self lastObject];
+        id object = [_stack lastObject];
         
-        [self removeLastObject];
+        [_stack removeLastObject];
         
         return object;
     }
@@ -31,9 +38,19 @@
 
 - (id)top
 {
-    if ([self count] > 0)
+    return [self top:0];
+}
+
+- (void)push:(id)object
+{
+    [_stack addObject:object];
+}
+
+- (id)top:(NSInteger)pos
+{
+    if ([_stack count] > pos)
     {
-        id object = [self lastObject];
+        id object = [_stack objectAtIndex:([_stack count] - 1 + pos)];
         
         return object;
     }

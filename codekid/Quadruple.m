@@ -10,7 +10,7 @@
 
 @implementation Quadruple
 
-- (id) initQuadrupleWithPointer:(NSInteger)pointer Operator:(NSString *)operator Term1:(NSString *)term1 Term2:(NSString *)term2 andResult:(NSString *)result
+- (id) initQuadrupleWithPointer:(NSInteger)pointer Operator:(NSInteger)operator Term1:(NSString *)term1 Term2:(NSString *)term2 andResult:(NSString *)result
 {
     self = [super init];
     

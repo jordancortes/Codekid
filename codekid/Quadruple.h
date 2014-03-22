@@ -14,11 +14,11 @@
 
 // Posibles operadores:
 // + - / * < > =
-@property NSString *operator;
+@property NSInteger operator;
 @property NSString *term1;
 @property NSString *term2;
 @property NSString *result;
 
-- (id)initQuadrupleWithPointer:(NSInteger)pointer Operator:(NSString *)operator Term1:(NSString *)term1 Term2:(NSString *)term2 andResult:(NSString *)result;
+- (id)initQuadrupleWithPointer:(NSInteger)pointer Operator:(NSInteger)operator Term1:(NSString *)term1 Term2:(NSString *)term2 andResult:(NSString *)result;
 
 @end

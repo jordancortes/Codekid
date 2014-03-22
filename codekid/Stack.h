@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Stack : NSMutableArray
+@interface Stack : NSObject
 
-- (void)push:(id)object;
+@property NSMutableArray *stack;
+
+- (id)init;
 - (id)pop;
 - (id)top;
+- (void)push:(id)object;
+- (id)top:(NSInteger)pos;
 
 @end

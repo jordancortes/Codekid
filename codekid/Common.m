@@ -21,9 +21,14 @@ static NSMapTable *symbols; // tabla de simbolos
 static int cube[3][3][7];
 
 // Variables para cuadruplos
+static NSDictionary *operatorCode;
+static NSDictionary *operandCode;
 static NSMutableArray *quadruples;
+static NSInteger qPointer;
+static NSInteger avail;
 static Stack *operands;
-static Stack *terms;
+static Stack *operators;
+static Stack *operandsTypes;
 
 @implementation Common
 
@@ -44,27 +49,63 @@ static Stack *terms;
     symbols = [[NSMapTable alloc] init];
     quadruples = [[NSMutableArray alloc] init];
     operands = [[Stack alloc] init];
-    terms = [[Stack alloc] init];
+    operators = [[Stack alloc] init];
+    operandsTypes = [[Stack alloc] init];
+    qPointer = 1;
+    avail = 1;
     
     /*
-     Cube[T1][T2][OP] = Type
-     
-     ERROR -> -1
-     
-     TYPES:
-     int    -> 0
-     float  -> 1
-     string -> 2
-     bool   -> 3
-     
-     OPERATORS
-     < -> 0
-     = -> 1
-     > -> 2
-     + -> 3
-     - -> 4
-     * -> 5
-     / -> 6
+     Referencia numerica de operadores
+     =================================
+     0   ->  <
+     1   ->  =
+     2   ->  >
+     3   ->  +
+     4   ->  -
+     5   ->  *
+     6   ->  /
+     10  ->  GOTO
+     11  ->  GOTOF
+     12  ->  GOTOV
+     20  ->  SET
+     21  ->  LENGTH
+     22  ->  ITEM
+     23  ->  WAIT
+     24  ->  WAIT_UNTIL
+     25  ->  CONTAINS
+     26  ->  TURN
+     27  ->  GO_TO
+     28  ->  ADD
+     29  ->  DELETE
+     30  ->  SAY
+     31  ->  SHOW
+     32  ->  HIDE
+     33  ->  CLEAR
+     34  ->  LOAD
+     35  ->  SET
+     36  ->  SCALE
+     */
+    operatorCode = [[NSDictionary alloc]
+                     initWithObjects:[NSArray arrayWithObjects:@"0", @"1", @"2", @"3", @"4", @"5", @"6", @"10",
+                                      @"11", @"12", @"20", @"21", @"22", @"23", @"24",
+                                      @"25", @"26", @"27", @"28", @"29", @"30", @"31",
+                                      @"32", @"33", @"34", @"35", @"36", nil]
+                     forKeys:[NSArray arrayWithObjects:@"<", @"=", @">", @"+", @"-", @"*", @"/", @"GOTO",
+                              @"GOTOF", @"GOTOV", @"SET", @"LENGTH", @"ITEM", @"WAIT", @"WAIT_UNTIL", @"CONTAINS",
+                              @"TURN", @"GO_TO", @"ADD", @"DELETE", @"SAY", @"SHOW", @"HIDE", @"CLEAR",
+                              @"LOAD", @"SET", @"SCALE", nil]];
+    
+    operandCode = [[NSDictionary alloc]
+                   initWithObjects:[NSArray arrayWithObjects:@"-1", @"0", @"1", @"2", @"3", nil]
+                   forKeys:[NSArray arrayWithObjects:@"ERROR", @"int", @"float", @"string", @"bool", nil]];
+    
+    /*
+     Cubo[T1][T2][OP] = Tipo
+    -1  ->  ERROR
+     0  ->  INT
+     1  ->  FLOAT
+     2  ->  STRING
+     3  ->  BOOL
      */
     
     /* INT */
@@ -238,33 +279,67 @@ static Stack *terms;
 
 
 //==============================================================================
-//======================================================================= STACKS
+//============================================ STACKS, DICTIONARIES, QUADRUPPLES
 //==============================================================================
 
-+ (void)pushToStack:(NSString *)stack Object:(id)object
++ (BOOL)isOperationCorrectWithOperator:(NSString *)operator Term1:(NSString *)term1 andTerm2:(NSString *)term2
 {
-    if ([stack isEqualToString:@"operands"])
-    {
-        [operands push:object];
-    }
-    else if ([stack isEqualToString:@"terms"])
-    {
-        [terms push:object];
-    }
-}
+    NSInteger result = cube[ [self lookupOperandCodeForKey:term1] ][ [self lookupOperandCodeForKey:term2] ][ [self lookupOperatorCodeForKey:operator] ];
 
-+ (id)popFromStack:(NSString *)stack
-{
-    if ([stack isEqualToString:@"operands"])
+    if (-1 != result)
     {
-        return [operands pop];
-    }
-    else if ([stack isEqualToString:@"terms"])
-    {
-        return [terms pop];
+        return YES;
     }
     
-    return nil;
+    return NO;
+}
+
++ (NSInteger)lookupOperatorCodeForKey:(NSString *)key
+{
+    return [[operatorCode objectForKey:key] integerValue];
+}
+
++ (NSInteger)lookupOperandCodeForKey:(NSString *)key
+{
+    return [[operandCode objectForKey:key] integerValue];
+}
+
++ (void)pushToStack:(Stack *)stack Object:(id)object
+{
+    [stack push:object];
+}
+
++ (id)popFromStack:(Stack *)stack
+{
+    return [stack pop];
+}
+
++ (id)topFromStack:(Stack *)stack
+{
+    return [stack top];
+}
+
++ (id)topFromStack:(Stack *)stack atPosition:(NSInteger)pos
+{
+    return [stack top:pos];
+}
+
++ (void) addQuadrupleWithOperator:(NSString *)operator Term1:(NSString *)term1 Term2:(NSString *)term2 andResult:(NSString *)result
+{
+    [quadruples addObject:[[Quadruple alloc] initQuadrupleWithPointer:qPointer Operator:[self lookupOperatorCodeForKey:operator] Term1:term1 Term2:term2 andResult:result]];
+    qPointer++;
+}
+
++ (void)saveQuadruples
+{
+    NSURL *url = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"data.json"];
+    NSError *e = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:quadruples options:NSJSONWritingPrettyPrinted error:&e];
+    
+    if (jsonData)
+    {
+        [jsonData writeToFile:url.path atomically:YES];
+    }
 }
 
 //==============================================================================
@@ -339,6 +414,21 @@ static Stack *terms;
 + (NSInteger)flag
 {
     return flag;
+}
+
++ (Stack *)operands
+{
+    return operands;
+}
+
++ (Stack *)operators
+{
+    return operands;
+}
+
++ (Stack *)op_types
+{
+    return operands;
 }
 
 @end
