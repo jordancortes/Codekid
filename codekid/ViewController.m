@@ -18,40 +18,16 @@
 
 @implementation ViewController
 
-- (NSInteger) scanner:(NSString *)nombre
+- (void)viewDidLoad
 {
-    // se obtiene la ruta del archivo en Documents
-    NSString *path = [[Common applicationDocumentsDirectory].path
-                      stringByAppendingPathComponent:nombre];
-    
-    // se obtiene la ruta para ser usada por fopen
-    const char *archivo = [path cStringUsingEncoding:NSASCIIStringEncoding];
-    
-    return (NSInteger)ext_scanner(archivo);
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
 }
 
-- (IBAction)A_check:(id)sender
+- (void)didReceiveMemoryWarning
 {
-    NSString *path = [[Common applicationDocumentsDirectory].path
-                      stringByAppendingPathComponent:@"test.txt"];
-    NSString *code = [_O_code text];
-    
-    // Copia el texto a un archivo
-    [code writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
-    
-    [Common reset];
-    
-    // Manda checar el archivo
-    NSInteger result = [self scanner:@"test.txt"];
-    
-    // Imprime el resultado
-    if (YYACCEPT == result)
-    {
-        _O_result.text = @"Aceptado";
-    }
-    else if (YYREJECT == result)
-    {
-        _O_result.text = [NSString stringWithFormat:@"ERROR (ln:%d) %@", [Common yyErrorNo], [Common yyError]];
-    }
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
+
 @end
