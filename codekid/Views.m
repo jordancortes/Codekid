@@ -17,12 +17,16 @@
     if (self) {
         // inicializa componentes del UIView
         [self setBackgroundColor:[UIColor grayColor]];
+        /*
         UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(98, 160, 97, 35)];
         name.text = @"Name";
         [self addSubview:name]; // agrega el label "name" a la vista
-         
+        */
         
-
+        UITextField *name = [[UITextField alloc] initWithFrame:CGRectMake(0, 160, 255, 35)];
+        name.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:name];
+        [name becomeFirstResponder];
     }
     
     return self;

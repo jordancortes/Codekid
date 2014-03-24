@@ -26,13 +26,14 @@
     plus = 0;
 	// Do any additional setup after loading the view, typically from a nib.
     
-/*  if(plus == 1){
-        //crea vista, crea instancia de "vistas"
-        vistas *v = [[vistas alloc]initWithFrame:CGRectMake(75, 212, 253, 153)];
-        [self.view addSubview:v]; // la agrega al main view
-        plus = 0;
-    }
-*/
+    // quitar teclado
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(quitaTeclado)];
+    [self.view addGestureRecognizer:tap];
+}
+
+// quitar teclado
+- (void) quitaTeclado{
+	[self.view endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning
