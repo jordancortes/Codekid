@@ -27,6 +27,10 @@
 		175FE03B18CE8578006C25B2 /* SemanticSymbol.m in Sources */ = {isa = PBXBuildFile; fileRef = 175FE03A18CE8578006C25B2 /* SemanticSymbol.m */; };
 		17722D7118D8042900E4A3CB /* Quadruple.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7018D8042900E4A3CB /* Quadruple.m */; };
 		17722D7518D807BC00E4A3CB /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7418D807BC00E4A3CB /* Stack.m */; };
+		DF3D350018DFC07500F8D6BD /* Views.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D34FF18DFC07500F8D6BD /* Views.m */; };
+		DF3D350418DFCC7000F8D6BD /* codekid.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3D350118DFCC7000F8D6BD /* codekid.png */; };
+		DF3D350518DFCC7000F8D6BD /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3D350218DFCC7000F8D6BD /* edit.png */; };
+		DF3D350618DFCC7000F8D6BD /* plus-76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3D350318DFCC7000F8D6BD /* plus-76x76@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +73,11 @@
 		17722D7018D8042900E4A3CB /* Quadruple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quadruple.m; sourceTree = "<group>"; };
 		17722D7318D807BC00E4A3CB /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		17722D7418D807BC00E4A3CB /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
+		DF3D34FE18DFC07500F8D6BD /* Views.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Views.h; sourceTree = "<group>"; };
+		DF3D34FF18DFC07500F8D6BD /* Views.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Views.m; sourceTree = "<group>"; };
+		DF3D350118DFCC7000F8D6BD /* codekid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = codekid.png; path = "codekid-img/codekid.png"; sourceTree = "<group>"; };
+		DF3D350218DFCC7000F8D6BD /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edit.png; path = "codekid-img/edit.png"; sourceTree = "<group>"; };
+		DF3D350318DFCC7000F8D6BD /* plus-76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plus-76x76@2x.png"; path = "codekid-img/plus-76x76@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +107,9 @@
 		1737C42418CE415D00CFF4D0 = {
 			isa = PBXGroup;
 			children = (
+				DF3D350118DFCC7000F8D6BD /* codekid.png */,
+				DF3D350218DFCC7000F8D6BD /* edit.png */,
+				DF3D350318DFCC7000F8D6BD /* plus-76x76@2x.png */,
 				1737C43618CE415D00CFF4D0 /* codekid */,
 				1737C45518CE415D00CFF4D0 /* codekidTests */,
 				1737C42F18CE415D00CFF4D0 /* Frameworks */,
@@ -133,6 +145,8 @@
 				1737C44218CE415D00CFF4D0 /* Main.storyboard */,
 				1737C44518CE415D00CFF4D0 /* ViewController.h */,
 				1737C44618CE415D00CFF4D0 /* ViewController.m */,
+				DF3D34FE18DFC07500F8D6BD /* Views.h */,
+				DF3D34FF18DFC07500F8D6BD /* Views.m */,
 				1737C44818CE415D00CFF4D0 /* Images.xcassets */,
 				1737C43718CE415D00CFF4D0 /* Supporting Files */,
 				1737C46518CE41DE00CFF4D0 /* Common.h */,
@@ -271,6 +285,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1737C44918CE415D00CFF4D0 /* Images.xcassets in Resources */,
+				DF3D350618DFCC7000F8D6BD /* plus-76x76@2x.png in Resources */,
+				DF3D350518DFCC7000F8D6BD /* edit.png in Resources */,
+				DF3D350418DFCC7000F8D6BD /* codekid.png in Resources */,
 				1737C43B18CE415D00CFF4D0 /* InfoPlist.strings in Resources */,
 				1737C44418CE415D00CFF4D0 /* Main.storyboard in Resources */,
 			);
@@ -298,6 +315,7 @@
 				1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */,
 				1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */,
 				175FE03B18CE8578006C25B2 /* SemanticSymbol.m in Sources */,
+				DF3D350018DFC07500F8D6BD /* Views.m in Sources */,
 				1737C44118CE415D00CFF4D0 /* AppDelegate.m in Sources */,
 				1737C43D18CE415D00CFF4D0 /* main.m in Sources */,
 			);
