@@ -23,6 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    plus = 0;
 	// Do any additional setup after loading the view, typically from a nib.
     
 /*  if(plus == 1){
@@ -44,9 +45,26 @@
 }
 
 - (IBAction)A_plus:(UIButton *)sender {
-    // plus = 1;
     // [self viewDidLoad];
-    views *v = [[views alloc]initWithFrame:CGRectMake(75, 212, 253, 153)];
+    plus++;
+    int fila, col;
+
+    if ((int)round((plus % 3)) != 0) {
+        fila = ((int)roundf(plus / 3)) +1;
+        col = (plus % 3);
+        
+        if (col == 1) {
+            col = 75;
+        } else if (col == 2){
+            col = 395;
+        }
+    } else{
+        fila = ((int)roundf(plus / 3));
+        col = 715;
+    }
+    
+    views *v = [[views alloc]initWithFrame:CGRectMake(col, 212*fila, 253, 153) forCont:plus];
     [self.view addSubview:v]; // la agrega al main view
+    
 }
 @end

@@ -10,6 +10,6 @@
 
 @interface views : UIView
 
-- (id)initWithFrame:(CGRect)frame;
+- (id)initWithFrame:(CGRect)frame forCont:(NSInteger)cont;
 
 @end

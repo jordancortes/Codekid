@@ -10,17 +10,21 @@
 
 @implementation views
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame forCont:(NSInteger)cont
 {
     self = [super initWithFrame:frame];
+    
     if (self) {
         // inicializa componentes del UIView
         [self setBackgroundColor:[UIColor grayColor]];
-        UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(100, 160, 97, 35)];
-        label1.text = @"Name 1";
-        [self addSubview:label1]; // agrega el label1 a la vista
+        UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(98, 160, 97, 35)];
+        name.text = @"Name";
+        [self addSubview:name]; // agrega el label "name" a la vista
+         
         
+
     }
+    
     return self;
 }
 
