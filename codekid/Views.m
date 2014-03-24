@@ -23,10 +23,10 @@
         [self addSubview:name]; // agrega el label "name" a la vista
         */
         
-        UITextField *name = [[UITextField alloc] initWithFrame:CGRectMake(0, 160, 255, 35)];
-        name.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:name];
-        [name becomeFirstResponder];
+        _project = [[UITextField alloc] initWithFrame:CGRectMake(0, 160, 255, 35)];
+        _project.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_project];
+        [_project becomeFirstResponder];
     }
     
     return self;

@@ -12,4 +12,6 @@
 
 - (id)initWithFrame:(CGRect)frame forCont:(NSInteger)cont;
 
+@property UITextField *project;
+
 @end
