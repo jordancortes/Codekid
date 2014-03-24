@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface views : UIView
+@interface Project : NSObject
 
 - (id)initWithFrame:(CGRect)frame forCont:(NSInteger)cont;
 
-@property UITextField *project;
+@property UIView *preview;
+@property UITextField *project_title;
 
 @end

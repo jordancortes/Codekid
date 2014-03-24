@@ -8,14 +8,14 @@
 
 #import "ViewController.h"
 #import "Common.h"
-#import "Views.h"
+#import "Project.h"
 
 #define YYACCEPT 0
 #define YYREJECT 1
 
 @interface ViewController (){
     int plus;
-    NSMutableArray *vistas;
+    NSMutableArray *projects;
 }
 @end
 
@@ -28,7 +28,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     // inicializa arreglo vistas
-    vistas = [[NSMutableArray alloc] init];
+    projects = [[NSMutableArray alloc] init];
     
     // quitar teclado
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
@@ -38,7 +38,7 @@
 // quitar teclado
 - (void) hideKeyboard
 {
-    if (![[[[vistas lastObject] project] text] isEqualToString:@""])
+    if (![[[[projects lastObject] project_title] text] isEqualToString:@""])
     {
         [self.view endEditing:YES];
     }
@@ -79,9 +79,9 @@
         col = 715;
     }
     
-    views *v = [[views alloc]initWithFrame:CGRectMake(col, 212*row, 253, 153) forCont:plus];
-    [vistas addObject:v];
-    [self.view addSubview:v]; // la agrega al main view
+    Project *p = [[Project alloc]initWithFrame:CGRectMake(col, 212*row, 253, 153) forCont:plus];
+    [projects addObject:p];
+    [self.view addSubview:[p preview]]; // la agrega al main view
     
 }
 @end

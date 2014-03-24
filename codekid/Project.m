@@ -6,27 +6,31 @@
 //  Copyright (c) 2014 Cecilia Rodríguez Ramírez & Jordan Y. Cortés Guzmán. All rights reserved.
 //
 
-#import "views.h"
+#import "Project.h"
 
-@implementation views
+@implementation Project
 
 - (id)initWithFrame:(CGRect)frame forCont:(NSInteger)cont
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
+    
+    //self = [super initWithFrame:frame];
     
     if (self) {
+        _preview = [[UIView alloc] initWithFrame:frame];
+        
         // inicializa componentes del UIView
-        [self setBackgroundColor:[UIColor grayColor]];
+        [_preview setBackgroundColor:[UIColor grayColor]];
         /*
         UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(98, 160, 97, 35)];
         name.text = @"Name";
         [self addSubview:name]; // agrega el label "name" a la vista
         */
         
-        _project = [[UITextField alloc] initWithFrame:CGRectMake(0, 160, 255, 35)];
-        _project.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:_project];
-        [_project becomeFirstResponder];
+        _project_title = [[UITextField alloc] initWithFrame:CGRectMake(0, 160, 255, 35)];
+        _project_title.textAlignment = NSTextAlignmentCenter;
+        [_preview addSubview:_project_title];
+        [_project_title becomeFirstResponder];
     }
     
     return self;
