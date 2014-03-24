@@ -8,12 +8,14 @@
 
 #import "ViewController.h"
 #import "Common.h"
+#import "Views.h"
 
 #define YYACCEPT 0
 #define YYREJECT 1
 
-@interface ViewController ()
-
+@interface ViewController (){
+    int plus;
+}
 @end
 
 @implementation ViewController
@@ -22,6 +24,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+/*  if(plus == 1){
+        //crea vista, crea instancia de "vistas"
+        vistas *v = [[vistas alloc]initWithFrame:CGRectMake(75, 212, 253, 153)];
+        [self.view addSubview:v]; // la agrega al main view
+        plus = 0;
+    }
+*/
 }
 
 - (void)didReceiveMemoryWarning
@@ -30,4 +40,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)A_Edit:(UIButton *)sender {
+}
+
+- (IBAction)A_plus:(UIButton *)sender {
+    // plus = 1;
+    // [self viewDidLoad];
+    views *v = [[views alloc]initWithFrame:CGRectMake(75, 212, 253, 153)];
+    [self.view addSubview:v]; // la agrega al main view
+}
 @end
