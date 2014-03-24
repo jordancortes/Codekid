@@ -21,11 +21,9 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
     plus = 0;
-	// Do any additional setup after loading the view, typically from a nib.
     
     // inicializa arreglo vistas
     projects = [[NSMutableArray alloc] init];
@@ -33,45 +31,37 @@
     // quitar teclado
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:tap];
+    
 }
 
 // quitar teclado
-- (void) hideKeyboard
-{
-    if (![[[[projects lastObject] project_title] text] isEqualToString:@""])
-    {
+- (void) hideKeyboard{
+    if (![[[[projects lastObject] project_title] text] isEqualToString:@""]){
         [self.view endEditing:YES];
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)A_Edit:(UIButton *)sender
-{
+- (IBAction)A_Edit:(UIButton *)sender{
     
 }
 
-- (IBAction)A_plus:(UIButton *)sender
-{
+- (IBAction)A_plus:(UIButton *)sender{
     // [self viewDidLoad];
     plus++;
     int row, col;
 
-    if ((int)round((plus % 3)) != 0)
-    {
+    if ((int)round((plus % 3)) != 0){
         row = ((int)roundf(plus / 3)) +1;
         col = (plus % 3);
         
-        if (col == 1)
-        {
+        if (col == 1){
             col = 75;
-        }
-        else if (col == 2)
-        {
+        } else if (col == 2){
             col = 395;
         }
     } else{

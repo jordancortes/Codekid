@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Project : NSObject
+@interface Project : NSObject <UITextFieldDelegate>
 
 - (id)initWithFrame:(CGRect)frame forCont:(NSInteger)cont;
 

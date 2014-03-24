@@ -8,6 +8,7 @@
 
 #import "Project.h"
 
+
 @implementation Project
 
 - (id)initWithFrame:(CGRect)frame forCont:(NSInteger)cont
@@ -31,9 +32,20 @@
         _project_title.textAlignment = NSTextAlignmentCenter;
         [_preview addSubview:_project_title];
         [_project_title becomeFirstResponder];
+        
+        // return key keyboard
+        [_project_title setDelegate:self];
     }
     
     return self;
+}
+
+// return key keyboard -- esconde teclado si el nombre no esta en blanco
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (![textField.text isEqualToString:@""]){
+        [textField resignFirstResponder];
+    }
+    return YES;
 }
 
 @end

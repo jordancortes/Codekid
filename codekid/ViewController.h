@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UITextFieldDelegate>
 
 - (IBAction)A_Edit:(UIButton *)sender;
 - (IBAction)A_plus:(UIButton *)sender;
