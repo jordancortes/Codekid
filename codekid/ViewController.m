@@ -8,50 +8,70 @@
 
 #import "ViewController.h"
 #import "Common.h"
+#import "Project.h"
 
 #define YYACCEPT 0
 #define YYREJECT 1
 
-@interface ViewController ()
-
+@interface ViewController (){
+    int plus;
+    NSMutableArray *projects;
+}
 @end
 
 @implementation ViewController
 
-- (NSInteger) scanner:(NSString *)nombre
-{
-    // se obtiene la ruta del archivo en Documents
-    NSString *path = [[Common applicationDocumentsDirectory].path
-                      stringByAppendingPathComponent:nombre];
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    plus = 0;
     
-    // se obtiene la ruta para ser usada por fopen
-    const char *archivo = [path cStringUsingEncoding:NSASCIIStringEncoding];
+    // inicializa arreglo vistas
+    projects = [[NSMutableArray alloc] init];
     
-    return (NSInteger)ext_scanner(archivo);
+    // quitar teclado
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
 }
 
-- (IBAction)A_check:(id)sender
-{
-    NSString *path = [[Common applicationDocumentsDirectory].path
-                      stringByAppendingPathComponent:@"test.txt"];
-    NSString *code = [_O_code text];
-    
-    // Copia el texto a un archivo
-    [code writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
-    
-    [Common reset];
-    
-    // Manda checar el archivo
-    NSInteger result = [self scanner:@"test.txt"];
-    
-    // Imprime el resultado
-    if (YYACCEPT == result)
-    {
-        _O_result.text = @"Aceptado";
+// quitar teclado
+- (void) hideKeyboard{
+    if (![[[[projects lastObject] project_title] text] isEqualToString:@""]){
+        [self.view endEditing:YES];
     }
-    else if (YYREJECT == result)
-    {
-        _O_result.text = [NSString stringWithFormat:@"ERROR (ln:%d) %@", [Common yyErrorNo], [Common yyError]];
+}
+
+- (void)didReceiveMemoryWarning{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)A_Edit:(UIButton *)sender{
+    
+}
+
+- (IBAction)A_plus:(UIButton *)sender{
+    // [self viewDidLoad];
+    plus++;
+    int row, col;
+
+    if ((int)round((plus % 3)) != 0){
+        row = ((int)roundf(plus / 3)) +1;
+        col = (plus % 3);
+        
+        if (col == 1){
+            col = 75;
+        } else if (col == 2){
+            col = 395;
+        }
+    } else{
+        row = ((int)roundf(plus / 3));
+        col = 715;
     }
+    
+    Project *p = [[Project alloc]initWithFrame:CGRectMake(col, 212*row, 253, 153) forCont:plus];
+    [projects addObject:p];
+    [self.view addSubview:[p preview]]; // la agrega al main view
+    
 }
 @end
