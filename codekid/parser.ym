@@ -30,6 +30,7 @@
 %token _SAY
 %token _FOR
 %token _LOAD
+%token _APPLY
 %token _SET
 %token _SCALE
 %token _SHOW
@@ -43,7 +44,7 @@
 %token _DELETE
 %token _AT
 %token _OF
-%token _GO
+%token _MOVE
 %token _TURN
 %token _WAIT
 %token _CONTAINS
@@ -117,29 +118,83 @@ op_var:
 
 opVarAux:
         /* epsilon */
+            {
+                // 21
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]];
+                NSString *r1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]];
+                NSString *op = [Common popFromStack:[Common operators]];
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:@"" andResult:r1];
+            }
         | _AT cte
         ;
 
 op_texto:
         _SAY cte _FOR cte END_EXP
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t2 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]];
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvail]];
+            }
         ;
 
 op_imagen:
         _LOAD cte END_EXP
-        | _SET cte END_EXP
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]];
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:@"" andResult:[Common nextAvail]];
+            }
+        | _APPLY cte END_EXP
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]];
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:@"" andResult:[Common nextAvail]];
+            }
         | _SCALE cte END_EXP
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]];
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:@"" andResult:[Common nextAvail]];
+            }
         ;
 
 op_visibilidad:
         _SHOW END_EXP
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                [Common addQuadrupleWithOperator:op Term1:@"" Term2:@"" andResult:[Common nextAvail]];
+            }
         | _HIDE END_EXP
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                [Common addQuadrupleWithOperator:op Term1:@"" Term2:@"" andResult:[Common nextAvail]];
+            }
         | _CLEAR END_EXP
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                [Common addQuadrupleWithOperator:op Term1:@"" Term2:@"" andResult:[Common nextAvail]];
+            }
         ;
 
 op_lista:
         _ADD cte _TO var opListaAux END_EXP
         | _DELETE cte _OF var END_EXP
             {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t2 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]]; /* TODO: que no sea lista */
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]]; /* TODO: que sea lista */
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvail]];
+            
                 if (![Common deleteFromList:[Common beta] atPosition:[Common position]])
                 {
                     return yyerror("");
@@ -165,8 +220,22 @@ opListaAux:
         ;
 
 op_movimiento:
-        _GO _TO cte cte END_EXP
+        _MOVE cte cte END_EXP
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t2 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]]; /* TODO: que no sea lista */
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]]; /* TODO: que no sea lista */
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvail]];
+            }
         | _TURN cte END_EXP
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]]; /* TODO: que no sea lista */
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:@"" andResult:[Common nextAvail]];
+            }
         ;
 
 op_espera:
@@ -175,7 +244,19 @@ op_espera:
 
 opEsperaAux:
         cte
-        | _UNTIL expresion
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]]; /* TODO: que no sea lista */
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:@"" andResult:[Common nextAvail]];
+            }
+        | _UNTIL B_OPEN expresion B_CLOSE
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]]; /* TODO: que no sea lista */
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:@"" andResult:[Common nextAvail]];
+            }
         ;
 
 ciclo:
@@ -199,12 +280,100 @@ condicionAux:
 expresion:
         exp expresionAux
         | var _CONTAINS cte
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t2 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]];
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvail]];
+            }
         ;
 
 expresionAux:
-        EQ exp
+        /* epsilon */
+        | EQ exp
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t2 = [Common popFromStack:[Common operands]];
+                NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+                
+                NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+                
+                if ( -1 != result )
+                {
+                    [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
+                    [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
+                }
+                else
+                {
+                    return yyerror("");
+                }
+                
+                while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+                {
+                    [Common popFromStack:[Common operators]];
+                    [Common setDelParen:([Common delParen] - 1)];
+                }
+            }
         | LT exp
+            {
+                {
+                    NSString *op = [Common popFromStack:[Common operators]];
+                    NSString *t2 = [Common popFromStack:[Common operands]];
+                    NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
+                    NSString *t1 = [Common popFromStack:[Common operands]];
+                    NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+                    
+                    NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+                    
+                    if ( -1 != result )
+                    {
+                        [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
+                        [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
+                    }
+                    else
+                    {
+                        return yyerror("");
+                    }
+                    
+                    while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+                    {
+                        [Common popFromStack:[Common operators]];
+                        [Common setDelParen:([Common delParen] - 1)];
+                    }
+                }
+            }
         | GT exp
+            {
+                {
+                    NSString *op = [Common popFromStack:[Common operators]];
+                    NSString *t2 = [Common popFromStack:[Common operands]];
+                    NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
+                    NSString *t1 = [Common popFromStack:[Common operands]];
+                    NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+                    
+                    NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+                    
+                    if ( -1 != result )
+                    {
+                        [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
+                        [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
+                    }
+                    else
+                    {
+                        return yyerror("");
+                    }
+                    
+                    while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+                    {
+                        [Common popFromStack:[Common operators]];
+                        [Common setDelParen:([Common delParen] - 1)];
+                    }
+                }
+            }
         ;
 
 exp:
@@ -214,7 +383,63 @@ exp:
 expAux:
         /* epsilon */
         | PLUS exp
+            {
+                if ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"+"] || [Common isStringEqual:[Common topFromStack:[Common operators]] To:@"-"])
+                {
+                    NSString *op = [Common popFromStack:[Common operators]];
+                    NSString *t2 = [Common popFromStack:[Common operands]];
+                    NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
+                    NSString *t1 = [Common popFromStack:[Common operands]];
+                    NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+                    
+                    NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+                    
+                    if ( -1 != result )
+                    {
+                        [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
+                        [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
+                    }
+                    else
+                    {
+                        return yyerror("");
+                    }
+                    
+                    while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+                    {
+                        [Common popFromStack:[Common operators]];
+                        [Common setDelParen:([Common delParen] - 1)];
+                    }
+                }
+            }
         | MINUS exp
+            {
+                if ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"+"] || [Common isStringEqual:[Common topFromStack:[Common operators]] To:@"-"])
+                {
+                    NSString *op = [Common popFromStack:[Common operators]];
+                    NSString *t2 = [Common popFromStack:[Common operands]];
+                    NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
+                    NSString *t1 = [Common popFromStack:[Common operands]];
+                    NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+                    
+                    NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+                    
+                    if ( -1 != result )
+                    {
+                        [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
+                        [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
+                    }
+                    else
+                    {
+                        return yyerror("");
+                    }
+                    
+                    while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+                    {
+                        [Common popFromStack:[Common operators]];
+                        [Common setDelParen:([Common delParen] - 1)];
+                    }
+                }
+            }
         ;
 
 termino:
@@ -229,8 +454,63 @@ terminoAux:
 
 factor:
         P_OPEN expresion P_CLOSE
-        | MINUS cte /* valor negativo */
+        {
+            if ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"*"] || [Common isStringEqual:[Common topFromStack:[Common operators]] To:@"/"])
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t2 = [Common popFromStack:[Common operands]];
+                NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+                
+                NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+                
+                if ( -1 != result )
+                {
+                    [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
+                    [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
+                }
+                else
+                {
+                    return yyerror("");
+                }
+                
+                while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+                {
+                    [Common popFromStack:[Common operators]];
+                    [Common setDelParen:([Common delParen] - 1)];
+                }
+            }
+        }
         | cte
+        {
+            if ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"*"] || [Common isStringEqual:[Common topFromStack:[Common operators]] To:@"/"])
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t2 = [Common popFromStack:[Common operands]];
+                NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+                
+                NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+                
+                if ( -1 != result )
+                {
+                    [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
+                    [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
+                }
+                else
+                {
+                    return yyerror("");
+                }
+                
+                while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+                {
+                    [Common popFromStack:[Common operators]];
+                    [Common setDelParen:([Common delParen] - 1)];
+                }
+            }
+        }
         ;
 
 cte:
@@ -240,9 +520,22 @@ cte:
         | CTE_STRING
         | _LENGTH var
             {
-                [Common setDType:@"int"];
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]]; /*TODO: que sea lista */
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:@"" andResult:[Common nextAvail]];
+            
+                //[Common setDType:@"int"]; TODO: para que esta esto?
             }
         | _ITEM CTE_INT _OF var
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *t2 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]]; /* TODO: que sea int y que este dentro del rango*/
+                NSString *t1 = [Common popFromStack:[Common operands]];
+                [Common popFromStack:[Common operandsTypes]]; /* TODO: que sea lista */
+                [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvail]];
+            }
         ;
 
 var:

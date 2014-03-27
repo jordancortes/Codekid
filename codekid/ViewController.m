@@ -24,6 +24,8 @@
     NSString *path = [[Common applicationDocumentsDirectory].path
                       stringByAppendingPathComponent:nombre];
     
+    NSLog(@"%@", path);
+    
     // se obtiene la ruta para ser usada por fopen
     const char *archivo = [path cStringUsingEncoding:NSASCIIStringEncoding];
     
@@ -47,6 +49,7 @@
     // Imprime el resultado
     if (YYACCEPT == result)
     {
+        [Common saveQuadruples];
         _O_result.text = @"Aceptado";
     }
     else if (YYREJECT == result)

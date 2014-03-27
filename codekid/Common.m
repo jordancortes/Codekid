@@ -29,6 +29,7 @@ static NSInteger avail;
 static Stack *operands;
 static Stack *operators;
 static Stack *operandsTypes;
+static int delParen;
 
 @implementation Common
 
@@ -52,7 +53,8 @@ static Stack *operandsTypes;
     operators = [[Stack alloc] init];
     operandsTypes = [[Stack alloc] init];
     qPointer = 1;
-    avail = 1;
+    avail = 1001;
+    delParen = 0;
     
     /*
      Referencia numerica de operadores
@@ -91,13 +93,13 @@ static Stack *operandsTypes;
                                       @"25", @"26", @"27", @"28", @"29", @"30", @"31",
                                       @"32", @"33", @"34", @"35", @"36", nil]
                      forKeys:[NSArray arrayWithObjects:@"<", @"=", @">", @"+", @"-", @"*", @"/", @"GOTO",
-                              @"GOTOF", @"GOTOV", @"SET", @"LENGTH", @"ITEM", @"WAIT", @"WAIT_UNTIL", @"CONTAINS",
-                              @"TURN", @"GO_TO", @"ADD", @"DELETE", @"SAY", @"SHOW", @"HIDE", @"CLEAR",
-                              @"LOAD", @"SET", @"SCALE", nil]];
+                              @"GOTOF", @"GOTOT", @"SET", @"LENGTH", @"ITEM", @"WAIT", @"WAIT_UNTIL", @"CONTAINS",
+                              @"TURN", @"MOVE", @"ADD", @"DELETE", @"SAY", @"SHOW", @"HIDE", @"CLEAR",
+                              @"LOAD", @"APPLY", @"SCALE", nil]];
     
     operandCode = [[NSDictionary alloc]
-                   initWithObjects:[NSArray arrayWithObjects:@"-1", @"0", @"1", @"2", @"3", nil]
-                   forKeys:[NSArray arrayWithObjects:@"ERROR", @"int", @"float", @"string", @"bool", nil]];
+                   initWithObjects:[NSArray arrayWithObjects:@"-1", @"0", @"1", @"2", @"3", @"4", nil]
+                   forKeys:[NSArray arrayWithObjects:@"ERROR", @"INT", @"FLOAT", @"STRING", @"BOOL", @"UNDEFINED", nil]];
     
     /*
      Cubo[T1][T2][OP] = Tipo
@@ -106,76 +108,193 @@ static Stack *operandsTypes;
      1  ->  FLOAT
      2  ->  STRING
      3  ->  BOOL
+     4  ->  UNDECLEARED
      */
     
     /* INT */
-    cube[0][0][0]= 3; // int < int = bool
-    cube[0][0][1]= 3; // int = int = bool
-    cube[0][0][2]= 3; // int > int = bool
-    cube[0][0][3]= 0; // int + int = int
-    cube[0][0][4]= 0; // int - int = int
-    cube[0][0][5]= 0; // int * int = int
-    cube[0][0][6]= 0; // int / int = int
-    cube[0][1][0]= 3; // int < float = bool
-    cube[0][1][1]= 3; // int = float = bool
-    cube[0][1][2]= 3; // int > float = bool
-    cube[0][1][3]= 1; // int + float = float
-    cube[0][1][4]= 1; // int - float = float
-    cube[0][1][5]= 1; // int * float = float
-    cube[0][1][6]= 1; // int / float = float
-    cube[0][2][0]= -1; // int < string = ERROR
-    cube[0][2][1]= -1; // int = string = ERROR
-    cube[0][2][2]= -1; // int > string = ERROR
-    cube[0][2][3]= -1; // int + string = ERROR
-    cube[0][2][4]= -1; // int - string = ERROR
-    cube[0][2][5]= -1; // int * string = ERROR
-    cube[0][2][6]= -1; // int / string = ERROR
+    cube[0][0][0] = 3;  // int < int = bool
+    cube[0][0][1] = 3;  // int = int = bool
+    cube[0][0][2] = 3;  // int > int = bool
+    cube[0][0][3] = 0;  // int + int = int
+    cube[0][0][4] = 0;  // int - int = int
+    cube[0][0][5] = 0;  // int * int = int
+    cube[0][0][6] = 0;  // int / int = int
+    cube[0][1][0] = 3;  // int < float = bool
+    cube[0][1][1] = 3;  // int = float = bool
+    cube[0][1][2] = 3;  // int > float = bool
+    cube[0][1][3] = 1;  // int + float = float
+    cube[0][1][4] = 1;  // int - float = float
+    cube[0][1][5] = 1;  // int * float = float
+    cube[0][1][6] = 1;  // int / float = float
+    cube[0][2][0] = -1; // int < string = ERROR
+    cube[0][2][1] = -1; // int = string = ERROR
+    cube[0][2][2] = -1; // int > string = ERROR
+    cube[0][2][3] = -1; // int + string = ERROR
+    cube[0][2][4] = -1; // int - string = ERROR
+    cube[0][2][5] = -1; // int * string = ERROR
+    cube[0][2][6] = -1; // int / string = ERROR
+    cube[0][3][0] = -1; // int < bool = ERROR
+    cube[0][3][1] = -1; // int = bool = ERROR
+    cube[0][3][2] = -1; // int > bool = ERROR
+    cube[0][3][3] = -1; // int + bool = ERROR
+    cube[0][3][4] = -1; // int - bool = ERROR
+    cube[0][3][5] = -1; // int * bool = ERROR
+    cube[0][3][6] = -1; // int / bool = ERROR
+    cube[0][4][0] = -1; // int < undecleared = ERROR
+    cube[0][4][1] = -1; // int = undecleared = ERROR
+    cube[0][4][2] = -1; // int > undecleared = ERROR
+    cube[0][4][3] = -1; // int + undecleared = ERROR
+    cube[0][4][4] = -1; // int - undecleared = ERROR
+    cube[0][4][5] = -1; // int * undecleared = ERROR
+    cube[0][4][6] = -1; // int / undecleared = ERROR
     
     /* FLOAT */
-    cube[1][0][0]= 3; // float < int = bool
-    cube[1][0][1]= 3; // float = int = bool
-    cube[1][0][2]= 3; // float > int = bool
-    cube[1][0][3]= 1; // float + int = float
-    cube[1][0][4]= 1; // float - int = float
-    cube[1][0][5]= 1; // float * int = float
-    cube[1][0][6]= 1; // float / int = float
-    cube[1][1][0]= 3; // float < float = bool
-    cube[1][1][1]= 3; // float = float = bool
-    cube[1][1][2]= 3; // float > float = bool
-    cube[1][1][3]= 1; // float + float = float
-    cube[1][1][4]= 1; // float - float = float
-    cube[1][1][5]= 1; // float * float = float
-    cube[1][1][6]= 1; // float / float = float
-    cube[1][2][0]= -1; // float < string = ERROR
-    cube[1][2][1]= -1; // float = string = ERROR
-    cube[1][2][2]= -1; // float > string = ERROR
-    cube[1][2][3]= -1; // float + string = ERROR
-    cube[1][2][4]= -1; // float - string = ERROR
-    cube[1][2][5]= -1; // float * string = ERROR
-    cube[1][2][6]= -1; // float / string = ERROR
+    cube[1][0][0]= 3;   // float < int = bool
+    cube[1][0][1]= 3;   // float = int = bool
+    cube[1][0][2]= 3;   // float > int = bool
+    cube[1][0][3]= 1;   // float + int = float
+    cube[1][0][4]= 1;   // float - int = float
+    cube[1][0][5]= 1;   // float * int = float
+    cube[1][0][6]= 1;   // float / int = float
+    cube[1][1][0]= 3;   // float < float = bool
+    cube[1][1][1]= 3;   // float = float = bool
+    cube[1][1][2]= 3;   // float > float = bool
+    cube[1][1][3]= 1;   // float + float = float
+    cube[1][1][4]= 1;   // float - float = float
+    cube[1][1][5]= 1;   // float * float = float
+    cube[1][1][6]= 1;   // float / float = float
+    cube[1][2][0]= -1;  // float < string = ERROR
+    cube[1][2][1]= -1;  // float = string = ERROR
+    cube[1][2][2]= -1;  // float > string = ERROR
+    cube[1][2][3]= -1;  // float + string = ERROR
+    cube[1][2][4]= -1;  // float - string = ERROR
+    cube[1][2][5]= -1;  // float * string = ERROR
+    cube[1][2][6]= -1;  // float / string = ERROR
+    cube[1][3][0] = -1; // float < bool = ERROR
+    cube[1][3][1] = -1; // float = bool = ERROR
+    cube[1][3][2] = -1; // float > bool = ERROR
+    cube[1][3][3] = -1; // float + bool = ERROR
+    cube[1][3][4] = -1; // float - bool = ERROR
+    cube[1][3][5] = -1; // float * bool = ERROR
+    cube[1][3][6] = -1; // float / bool = ERROR
+    cube[1][4][0] = -1; // float < undecleared = ERROR
+    cube[1][4][1] = -1; // float = undecleared = ERROR
+    cube[1][4][2] = -1; // float > undecleared = ERROR
+    cube[1][4][3] = -1; // float + undecleared = ERROR
+    cube[1][4][4] = -1; // float - undecleared = ERROR
+    cube[1][4][5] = -1; // float * undecleared = ERROR
+    cube[1][4][6] = -1; // float / undecleared = ERROR
     
     /* STRING */
-    cube[2][0][0]= -1; // string < int = ERROR
-    cube[2][0][1]= -1; // string = int = ERROR
-    cube[2][0][2]= -1; // string > int = ERROR
-    cube[2][0][3]= -1; // string + int = ERROR
-    cube[2][0][4]= -1; // string - int = ERROR
-    cube[2][0][5]= -1; // string * int = ERROR
-    cube[2][0][6]= -1; // string / int = ERROR
-    cube[2][1][0]= -1; // string < float = ERROR
-    cube[2][1][1]= -1; // string = float = ERROR
-    cube[2][1][2]= -1; // string > float = ERROR
-    cube[2][1][3]= -1; // string + float = ERROR
-    cube[2][1][4]= -1; // string - float = ERROR
-    cube[2][1][5]= -1; // string * float = ERROR
-    cube[2][1][6]= -1; // string / float = ERROR
-    cube[2][2][0]= -1; // string < string = ERROR
-    cube[2][2][1]= 3; // string = string = bool
-    cube[2][2][2]= -1; // string > string = ERROR
-    cube[2][2][3]= -1; // string + string = ERROR
-    cube[2][2][4]= -1; // string - string = ERROR
-    cube[2][2][5]= -1; // string * string = ERROR
-    cube[2][2][6]= -1; // string / string = ERROR
+    cube[2][0][0] = -1; // string < int = ERROR
+    cube[2][0][1] = -1; // string = int = ERROR
+    cube[2][0][2] = -1; // string > int = ERROR
+    cube[2][0][3] = -1; // string + int = ERROR
+    cube[2][0][4] = -1; // string - int = ERROR
+    cube[2][0][5] = -1; // string * int = ERROR
+    cube[2][0][6] = -1; // string / int = ERROR
+    cube[2][1][0] = -1; // string < float = ERROR
+    cube[2][1][1] = -1; // string = float = ERROR
+    cube[2][1][2] = -1; // string > float = ERROR
+    cube[2][1][3] = -1; // string + float = ERROR
+    cube[2][1][4] = -1; // string - float = ERROR
+    cube[2][1][5] = -1; // string * float = ERROR
+    cube[2][1][6] = -1; // string / float = ERROR
+    cube[2][2][0] = -1; // string < string = ERROR
+    cube[2][2][1] = 3;  // string = string = bool
+    cube[2][2][2] = -1; // string > string = ERROR
+    cube[2][2][3] = -1; // string + string = ERROR
+    cube[2][2][4] = -1; // string - string = ERROR
+    cube[2][2][5] = -1; // string * string = ERROR
+    cube[2][2][6] = -1; // string / string = ERROR
+    cube[2][3][0] = -1; // string < bool = ERROR
+    cube[2][3][1] = -1; // string = bool = ERROR
+    cube[2][3][2] = -1; // string > bool = ERROR
+    cube[2][3][3] = -1; // string + bool = ERROR
+    cube[2][3][4] = -1; // string - bool = ERROR
+    cube[2][3][5] = -1; // string * bool = ERROR
+    cube[2][3][6] = -1; // string / bool = ERROR
+    cube[2][4][0] = -1; // string < undecleared = ERROR
+    cube[2][4][1] = -1; // string = undecleared = ERROR
+    cube[2][4][2] = -1; // string > undecleared = ERROR
+    cube[2][4][3] = -1; // string + undecleared = ERROR
+    cube[2][4][4] = -1; // string - undecleared = ERROR
+    cube[2][4][5] = -1; // string * undecleared = ERROR
+    cube[2][4][6] = -1; // string / undecleared = ERROR
+    
+    /* BOOL */
+    cube[3][0][0] = -1; // bool < int = ERROR
+    cube[3][0][1] = -1; // bool = int = ERROR
+    cube[3][0][2] = -1; // bool > int = ERROR
+    cube[3][0][3] = -1; // bool + int = ERROR
+    cube[3][0][4] = -1; // bool - int = ERROR
+    cube[3][0][5] = -1; // bool * int = ERROR
+    cube[3][0][6] = -1; // bool / int = ERROR
+    cube[3][1][0] = -1; // bool < float = ERROR
+    cube[3][1][1] = -1; // bool = float = ERROR
+    cube[3][1][2] = -1; // bool > float = ERROR
+    cube[3][1][3] = -1; // bool + float = ERROR
+    cube[3][1][4] = -1; // bool - float = ERROR
+    cube[3][1][5] = -1; // bool * float = ERROR
+    cube[3][1][6] = -1; // bool / float = ERROR
+    cube[3][2][0] = -1; // bool < string = ERROR
+    cube[3][2][1] = 3;  // bool = string = ERROR
+    cube[3][2][2] = -1; // bool > string = ERROR
+    cube[3][2][3] = -1; // bool + string = ERROR
+    cube[3][2][4] = -1; // bool - string = ERROR
+    cube[3][2][5] = -1; // bool * string = ERROR
+    cube[3][2][6] = -1; // bool / string = ERROR
+    cube[3][3][0] = -1; // bool < bool = ERROR
+    cube[3][3][1] = -1; // bool = bool = bool
+    cube[3][3][2] = -1; // bool > bool = ERROR
+    cube[3][3][3] = -1; // bool + bool = ERROR
+    cube[3][3][4] = -1; // bool - bool = ERROR
+    cube[3][3][5] = -1; // bool * bool = ERROR
+    cube[3][3][6] = -1; // bool / bool = ERROR
+    cube[3][4][0] = -1; // bool < undecleared = ERROR
+    cube[3][4][1] = -1; // bool = undecleared = ERROR
+    cube[3][4][2] = -1; // bool > undecleared = ERROR
+    cube[3][4][3] = -1; // bool + undecleared = ERROR
+    cube[3][4][4] = -1; // bool - undecleared = ERROR
+    cube[3][4][5] = -1; // bool * undecleared = ERROR
+    cube[3][4][6] = -1; // bool / undecleared = ERROR
+    
+    /* UNDECLEARED */
+    cube[4][0][0] = -1; // undecleared < int = ERROR
+    cube[4][0][1] = -1; // undecleared = int = ERROR
+    cube[4][0][2] = -1; // undecleared > int = ERROR
+    cube[4][0][3] = -1; // undecleared + int = ERROR
+    cube[4][0][4] = -1; // undecleared - int = ERROR
+    cube[4][0][5] = -1; // undecleared * int = ERROR
+    cube[4][0][6] = -1; // undecleared / int = ERROR
+    cube[4][1][0] = -1; // undecleared < float = ERROR
+    cube[4][1][1] = -1; // undecleared = float = ERROR
+    cube[4][1][2] = -1; // undecleared > float = ERROR
+    cube[4][1][3] = -1; // undecleared + float = ERROR
+    cube[4][1][4] = -1; // undecleared - float = ERROR
+    cube[4][1][5] = -1; // undecleared * float = ERROR
+    cube[4][1][6] = -1; // undecleared / float = ERROR
+    cube[4][2][0] = -1; // undecleared < string = ERROR
+    cube[4][2][1] = -1;  // undecleared = string = ERROR
+    cube[4][2][2] = -1; // undecleared > string = ERROR
+    cube[4][2][3] = -1; // undecleared + string = ERROR
+    cube[4][2][4] = -1; // undecleared - string = ERROR
+    cube[4][2][5] = -1; // undecleared * string = ERROR
+    cube[4][2][6] = -1; // undecleared / string = ERROR
+    cube[4][3][0] = -1; // undecleared < bool = ERROR
+    cube[4][3][1] = -1; // undecleared = bool = bool
+    cube[4][3][2] = -1; // undecleared > bool = ERROR
+    cube[4][3][3] = -1; // undecleared + bool = ERROR
+    cube[4][3][4] = -1; // undecleared - bool = ERROR
+    cube[4][3][5] = -1; // undecleared * bool = ERROR
+    cube[4][3][6] = -1; // undecleared / bool = ERROR
+    cube[4][4][0] = -1; // undecleared < undecleared = ERROR
+    cube[4][4][1] = -1; // undecleared = undecleared = ERROR
+    cube[4][4][2] = -1; // undecleared > undecleared = ERROR
+    cube[4][4][3] = -1; // undecleared + undecleared = ERROR
+    cube[4][4][4] = -1; // undecleared - undecleared = ERROR
+    cube[4][4][5] = -1; // undecleared * undecleared = ERROR
+    cube[4][4][6] = -1; // undecleared / undecleared = ERROR
 }
 
 + (NSURL *)applicationDocumentsDirectory
@@ -277,31 +396,42 @@ static Stack *operandsTypes;
     return YES;
 }
 
++ (NSString *)dTypeForSymbol:(NSString *)key
+{
+    NSMutableArray *t = [[self symbolAttr:key] dType];
+    if (0 == [t count])
+    {
+        return nil;
+    }
+    
+    return [t objectAtIndex:0]; /*TODO: para listas */
+}
+
 
 //==============================================================================
 //============================================ STACKS, DICTIONARIES, QUADRUPPLES
 //==============================================================================
 
-+ (BOOL)isOperationCorrectWithOperator:(NSString *)operator Term1:(NSString *)term1 andTerm2:(NSString *)term2
++ (NSInteger)operationResultWithOperator:(NSString *)operator Term1:(NSString *)term1 andTerm2:(NSString *)term2
 {
-    NSInteger result = cube[ [self lookupOperandCodeForKey:term1] ][ [self lookupOperandCodeForKey:term2] ][ [self lookupOperatorCodeForKey:operator] ];
+    NSInteger result = cube[ [self lookupOperandCodeForKey:term1] ][ [self lookupOperandCodeForKey:term2] ][ [self lookupOperandCodeForKey:operator] ];
 
-    if (-1 != result)
+    if (-1 == result)
     {
-        return YES;
+        [Common setYyError:[NSString stringWithFormat:@"La operación '%@ %@ %@' es inválida.\n", term1, operator, term2]];
     }
-    
-    return NO;
+
+    return result;
 }
 
 + (NSInteger)lookupOperatorCodeForKey:(NSString *)key
 {
-    return [[operatorCode objectForKey:key] integerValue];
+    return [[operatorCode objectForKey:[key uppercaseString]] integerValue];
 }
 
 + (NSInteger)lookupOperandCodeForKey:(NSString *)key
 {
-    return [[operandCode objectForKey:key] integerValue];
+    return [[operandCode objectForKey:[key uppercaseString]] integerValue];
 }
 
 + (void)pushToStack:(Stack *)stack Object:(id)object
@@ -324,6 +454,21 @@ static Stack *operandsTypes;
     return [stack top:pos];
 }
 
++ (BOOL)topOfStackIsOperator
+{
+    if ([[operators top] isEqualToString:@")"])
+    {
+        return NO;
+    }
+    
+    return YES;
+}
+
++ (BOOL)isStringEqual:(NSString *)st1 To:(NSString *)st2
+{
+    return [st1 isEqualToString:st2];
+}
+
 + (void) addQuadrupleWithOperator:(NSString *)operator Term1:(NSString *)term1 Term2:(NSString *)term2 andResult:(NSString *)result
 {
     [quadruples addObject:[[Quadruple alloc] initQuadrupleWithPointer:qPointer Operator:[self lookupOperatorCodeForKey:operator] Term1:term1 Term2:term2 andResult:result]];
@@ -332,14 +477,44 @@ static Stack *operandsTypes;
 
 + (void)saveQuadruples
 {
-    NSURL *url = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"data.json"];
-    NSError *e = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:quadruples options:NSJSONWritingPrettyPrinted error:&e];
+    NSError *error;
+    NSString *path = [[Common applicationDocumentsDirectory].path
+                      stringByAppendingPathComponent:@"file.txt"];
+    NSString *text = [[NSString alloc] init];
     
-    if (jsonData)
-    {
-        [jsonData writeToFile:url.path atomically:YES];
+    for (int x = 0; x < [quadruples count]; x++) {
+        Quadruple *q = [quadruples objectAtIndex:x];
+        text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%d\t%@\t%@\t%@\n", [q pointer], [q operator], [q term1], [q term2], [q result]]];
     }
+    
+    /*BOOL success = */[text writeToFile:path atomically:YES encoding:NSUnicodeStringEncoding error:&error];
+    
+    //NSLog(@"%d -> %d\n", YES, success);
+    //NSLog(@"%@", path);
+}
+
++ (NSString *)nextAvail
+{
+    NSString *st = [NSString stringWithFormat:@"%d", avail];
+
+    avail++;
+    return st;
+}
+
++ (NSString *)nextAvailWithPush:(BOOL)reuse
+{
+    NSString *st = [NSString stringWithFormat:@"%d", avail];
+    if (reuse)
+    {
+        [self pushToStack:operands Object:st];
+    }
+    avail++;
+    return st;
+}
+
++ (NSString *)avail
+{
+    return [NSString stringWithFormat:@"%d", avail];
 }
 
 //==============================================================================
@@ -416,6 +591,16 @@ static Stack *operandsTypes;
     return flag;
 }
 
++ (void)setDelParen:(NSInteger)dp
+{
+    delParen = dp;
+}
+
++ (NSInteger)delParen
+{
+    return delParen;
+}
+
 + (Stack *)operands
 {
     return operands;
@@ -423,12 +608,12 @@ static Stack *operandsTypes;
 
 + (Stack *)operators
 {
-    return operands;
+    return operators;
 }
 
-+ (Stack *)op_types
++ (Stack *)operandsTypes
 {
-    return operands;
+    return operandsTypes;
 }
 
 @end
