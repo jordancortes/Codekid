@@ -72,6 +72,5 @@
     Project *p = [[Project alloc]initWithFrame:CGRectMake(col, 212*row, 253, 153) forCont:plus];
     [projects addObject:p];
     [self.view addSubview:[p preview]]; // la agrega al main view
-    
 }
 @end

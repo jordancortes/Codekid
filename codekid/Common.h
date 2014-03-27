@@ -276,7 +276,26 @@
  */
 + (NSInteger)flag;
 
-+ (void)pushToStack:(NSString *)stack Object:(id)object;
-+ (id)popFromStack:(NSString *)stack;
++ (void)setDelParen:(NSInteger)dp;
++ (NSInteger)delParen;
+
++ (Stack *)operands;
++ (Stack *)operators;
++ (Stack *)operandsTypes;
+
++ (BOOL)isStringEqual:(NSString *)st1 To:(NSString *)st2;
++ (BOOL)topOfStackIsOperator;
++ (NSString *)dTypeForSymbol:(NSString *)key;
++ (NSString *)nextAvail;
++ (NSString *)nextAvailWithPush:(BOOL)reuse;
++ (NSInteger)operationResultWithOperator:(NSString *)operator Term1:(NSString *)term1 andTerm2:(NSString *)term2;
+
++ (NSString *)avail;
++ (void)pushToStack:(Stack *)stack Object:(id)object;
++ (id)popFromStack:(Stack *)stack;
++ (id)topFromStack:(Stack *)stack;
++ (id)topFromStack:(Stack *)stack atPosition:(NSInteger)pos;
++ (void)addQuadrupleWithOperator:(NSString *)operator Term1:(NSString *)term1 Term2:(NSString *)term2 andResult:(NSString *)result;
++ (void)saveQuadruples;
 
 @end

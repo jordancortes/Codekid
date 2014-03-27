@@ -19,38 +19,122 @@
 }
 
 "-" {
+    if ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"+"] || [Common isStringEqual:[Common topFromStack:[Common operators]] To:@"-"])
+    {
+        NSString *op = [Common popFromStack:[Common operators]];
+        NSString *t2 = [Common popFromStack:[Common operands]];
+        NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
+        NSString *t1 = [Common popFromStack:[Common operands]];
+        NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+        
+        NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+        
+        if ( -1 != result )
+        {
+            [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
+            [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
+        }
+        else
+        {
+            return yyerror("");
+        }
+        
+        while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+        {
+            [Common popFromStack:[Common operators]];
+            [Common setDelParen:([Common delParen] - 1)];
+        }
+    }
+
+    // 2
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return MINUS;
 }
 
 "+" {
+    if ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"+"] || [Common isStringEqual:[Common topFromStack:[Common operators]] To:@"-"])
+    {
+        NSString *op = [Common popFromStack:[Common operators]];
+        NSString *t2 = [Common popFromStack:[Common operands]];
+        NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
+        NSString *t1 = [Common popFromStack:[Common operands]];
+        NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+        
+        NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+        
+        if ( -1 != result )
+        {
+            [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
+            [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
+        }
+        else
+        {
+            return yyerror("");
+        }
+        
+        while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+        {
+            [Common popFromStack:[Common operators]];
+            [Common setDelParen:([Common delParen] - 1)];
+        }
+    }
+    
+    // 2
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return PLUS;
 }
 
 "*" {
+    // 3
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
     return MULT;
 }
 
 "/" {
+    // 3
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
     return DIV;
 }
 
 "=" {
+    
+    // 8
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
     return EQ;
 }
 
 "<" {
+
+    // 8
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return LT;
 }
 
 ">" {
+    
+    // 8
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
     return GT;
 }
 
 "(" {
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
     return P_OPEN;
 }
 
 ")" {
+    
+    //[Common popFromStack:[Common operators]];
+    
+    [Common setDelParen:([Common delParen] + 1)];
+    
     return P_CLOSE;
 }
 
@@ -101,6 +185,9 @@
 }
 
 "say" {
+    // 37
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _SAY;
 }
 
@@ -109,26 +196,51 @@
 }
 
 "load" {
+    // 43
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _LOAD;
 }
 
 "set" {
+    // 38
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _SET;
 }
 
+"apply" {
+    // 44
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
+    return _APPLY;
+}
+
 "scale" {
+    // 45
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _SCALE;
 }
 
 "show" {
+    // 40
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _SHOW;
 }
 
 "hide" {
+    // 41
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _HIDE;
 }
 
 "clear" {
+    // 42
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _CLEAR;
 }
 
@@ -145,20 +257,38 @@
 }
 
 "until" {
+    if ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"wait"])
+    {
+        [Common popFromStack:[Common operators]];
+        // 31
+        [Common pushToStack:[Common operators] Object:@"WAIT_UNTIL"];
+    }
+
     return _UNTIL;
 }
 
 "add" {
+    // 35
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _ADD;
 }
 
 "delete" {
     at = 1;
+    
+    // 34
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
     return _DELETE;
 }
 
 "at" {
     at = 1;
+    
+    // 36
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
     return _AT;
 }
 
@@ -166,27 +296,45 @@
     return _OF;
 }
 
-"go" {
-    return _GO;
+"move" {
+    // 31
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
+    return _MOVE;
 }
 
 "turn" {
+    // 33
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _TURN;
 }
 
 "wait" {
+    // 30
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _WAIT;
 }
 
 "contains" {
+    // 26
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _CONTAINS;
 }
 
 "length" {
+    // 28
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _LENGTH;
 }
 
 "item" {
+    // 29
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
     return _ITEM;
 }
 
@@ -201,16 +349,30 @@
         [Common setDType:@"int"];
     }
     
+    // 1
+    [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
+    [Common pushToStack:[Common operandsTypes] Object:@"int"];
+    
     return CTE_INT;
 }
 
 [0-9]+"."[0-9]+ {
     [Common setDType:@"float"];
+    
+    // 1
+    [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
+    [Common pushToStack:[Common operandsTypes] Object:@"float"];
+    
     return CTE_FLOAT;
 }
 
 '[a-zA-Z0-9]*[ ","|"."|":"|";"|"<"|">"|"{"|"}"|"‘"|"="|"/"|"*"|"+"|"-"|"_"|"("|")"|"&"|"^"|"%"|"$"|"#"|"@"|"?"|"!"|"[" ]*' {
     [Common setDType:@"string"];
+    
+    // 1
+    [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
+    [Common pushToStack:[Common operandsTypes] Object:@"string"];
+    
     return CTE_STRING;
 }
 
@@ -219,12 +381,25 @@
     [Common setBeta:[NSString stringWithUTF8String:yytext]];
 
     // hace el lookup de la var
-    if([Common flag] != FLAG_CREATE){
+    if([Common flag] != FLAG_CREATE)
+    {
         if (![Common lookupSymbol:[NSString stringWithUTF8String: yytext]])
         {
             return yyerror("");
         }
+        
+        // 1
+        [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
+        if ( [Common dTypeForSymbol:[NSString stringWithUTF8String:yytext]] != nil )
+        {
+            [Common pushToStack:[Common operandsTypes] Object:[Common dTypeForSymbol:[NSString stringWithUTF8String:yytext]]];
+        }
+        else
+        {
+            [Common pushToStack:[Common operandsTypes] Object:@"undefined"];
+        }
     }
+    
     return VARIABLE;
 }
 
