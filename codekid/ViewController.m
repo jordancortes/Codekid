@@ -32,6 +32,8 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:tap];
     
+    //self.o_S.contentSize =CGSizeMake(1250, 1000);
+    
 }
 
 // quitar teclado

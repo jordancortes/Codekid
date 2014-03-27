@@ -40,6 +40,14 @@
     return self;
 }
 
+// hide key keyboard -- no permite esconder el teclado si el nombre esta en blanco
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    if (![textField.text isEqualToString:@""]){
+        return YES;
+    }
+    return NO;
+}
+
 // return key keyboard -- esconde teclado si el nombre no esta en blanco
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (![textField.text isEqualToString:@""]){
