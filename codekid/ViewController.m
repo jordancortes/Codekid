@@ -14,7 +14,7 @@
 #define YYREJECT 1
 
 @interface ViewController (){
-    int plus;
+    int plus, row, col;
     NSMutableArray *projects;
     BOOL edit;
 }
@@ -25,6 +25,8 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     plus = 0;
+    col = 0;
+    row = 1;
     edit = NO;
     _project_to_delete = -1;
     _project_to_rename = -1;
@@ -88,6 +90,7 @@
             }
             
             [projects replaceObjectAtIndex:_project_to_delete withObject:[[NSNull alloc] init]];
+            [self reArrangeProjectsView];
             _project_to_delete = -1;
         }
     } else if (alertView.tag == 2){
@@ -161,26 +164,54 @@
      }
 }
 
+- (void)reArrangeProjectsView
+{
+    row = 1;
+    col = 1;
+
+    for (int x = 0; x<[projects count]; x++)
+    {
+        if ([[projects objectAtIndex:x] isKindOfClass:[Project class]])
+        {
+            // primero quita todos los proyectos
+            [[[projects objectAtIndex:x] preview] removeFromSuperview];
+            
+            // los vuelve a poner sin brincas espacios
+            [[[projects objectAtIndex:x] preview] setFrame:CGRectMake(75 + (col - 1) * 320, 211 + (row - 1) * 213, 253, 153)];
+            [self.view addSubview:[[projects objectAtIndex:x] preview]];
+            
+            col++;
+            if (4 == col)
+            {
+                col = 1;
+                row++;
+            }
+        }
+    }
+    
+    //ajusta
+    if (1 == col)
+    {
+        col = 3;
+        row--;
+    }
+    else
+    {
+        col--;
+    }
+}
+
 - (IBAction)A_plus:(UIButton *)sender{
     plus++;
-    int row, col;
     
-
-    if ((int)round((plus % 3)) != 0){
-        row = ((int)roundf(plus / 3)) +1;
-        col = (plus % 3);
-        
-        if (col == 1){
-            col = 75;
-        } else if (col == 2){
-            col = 395;
-        }
-    } else{
-        row = ((int)roundf(plus / 3));
-        col = 715;
+    col++;
+    if (4 == col)
+    {
+        col = 1;
+        row++;
     }
 
-    Project *p = [[Project alloc]initWithFrame:CGRectMake(col, 212*row, 253, 153) forCont:plus];
+    Project *p = [[Project alloc]initWithFrame:CGRectMake(75 + (col - 1) * 320, 211 + (row - 1) * 213, 253, 153) forCont:plus];
     [projects addObject:p];
     
     // asigna accion de eliminar proyecto
