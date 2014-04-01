@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController <UITextFieldDelegate>
+@interface ViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
+
+@property  NSInteger project_to_delete;
 
 - (IBAction)A_Edit:(UIButton *)sender;
 - (IBAction)A_plus:(UIButton *)sender;
+
 
 @end

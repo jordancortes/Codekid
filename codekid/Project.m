@@ -8,7 +8,6 @@
 
 #import "Project.h"
 
-
 @implementation Project
 
 - (id)initWithFrame:(CGRect)frame forCont:(NSInteger)cont
@@ -22,12 +21,16 @@
         
         // inicializa componentes del UIView
         [_preview setBackgroundColor:[UIColor grayColor]];
-        /*
-        UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(98, 160, 97, 35)];
-        name.text = @"Name";
-        [self addSubview:name]; // agrega el label "name" a la vista
-        */
         
+        // crea boton, lo deshabilita y oculta
+        _project_delete = [[UIButton alloc] initWithFrame:CGRectMake(-20, -20, 50, 50)];
+        UIImage *btnImage = [UIImage imageNamed:@"x.png"];
+        [_project_delete setImage:btnImage forState:UIControlStateNormal];
+        [_project_delete setEnabled:NO];
+        _project_delete.hidden = YES;
+        [_preview addSubview:_project_delete];
+        
+        // crea label
         _project_title = [[UITextField alloc] initWithFrame:CGRectMake(0, 160, 255, 35)];
         _project_title.textAlignment = NSTextAlignmentCenter;
         [_preview addSubview:_project_title];
@@ -46,6 +49,7 @@
         return YES;
     }
     return NO;
+    
 }
 
 // return key keyboard -- esconde teclado si el nombre no esta en blanco
