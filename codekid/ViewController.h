@@ -11,9 +11,12 @@
 @interface ViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
 @property  NSInteger project_to_delete;
+@property  NSInteger project_to_rename;
 
 - (IBAction)A_Edit:(UIButton *)sender;
 - (IBAction)A_plus:(UIButton *)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *O_Edit;
+@property (weak, nonatomic) IBOutlet UIButton *O_Plus;
 
 @end

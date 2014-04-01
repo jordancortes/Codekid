@@ -14,6 +14,7 @@
 
 @property UIView *preview;
 @property UITextField *project_title;
+@property UIButton *btn_title;
 @property UIButton *project_delete;
 
 @end
