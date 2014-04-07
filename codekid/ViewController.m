@@ -176,7 +176,7 @@
             // primero quita todos los proyectos
             [[[projects objectAtIndex:x] preview] removeFromSuperview];
             
-            // los vuelve a poner sin brincas espacios
+            // los vuelve a poner sin brincar espacios
             [[[projects objectAtIndex:x] preview] setFrame:CGRectMake(75 + (col - 1) * 320, 211 + (row - 1) * 213, 253, 153)];
             [self.view addSubview:[[projects objectAtIndex:x] preview]];
             
