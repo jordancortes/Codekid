@@ -37,6 +37,7 @@
     self.O_pickerEvents.hidden = YES;
     self.O_changePicker.hidden = YES;
     self.O_changePicker.enabled = NO;
+    self.O_errors.text = @" Not Compiled ";
     
     UIImage *btnEdit = [UIImage imageNamed:@"Events.png"];
     [self.O_opcMenu1 setImage:btnEdit forState:UIControlStateNormal];
@@ -64,7 +65,9 @@
 */
 
 
-- (IBAction)A_projects:(UIButton *)sender {
+- (IBAction)A_projects:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)A_run:(UIButton *)sender {
@@ -124,8 +127,11 @@
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button addTarget:self action:@selector(handleDrag:forEvent:) forControlEvents:UIControlEventTouchDragInside];
     [button setImage:[UIImage imageNamed:@"drag.png"] forState:UIControlStateNormal];
-    [button setFrame:CGRectMake(80, 20, 100, 100)];
+    [button setFrame:CGRectMake(80, 20, 316, 67)];
     [self.O_viewGeneral addSubview:button];
+    
+//    316 86
+//    316 67
 
 }
 

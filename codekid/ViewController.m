@@ -40,6 +40,32 @@
     
 }
 
+- (void) pushMyNewViewController:(UITapGestureRecognizer *)recognizer {
+    UIView *project_view = [recognizer view];
+    NSInteger index;
+    
+    for (int x = 0; x < [projects count]; x++)
+    {
+        if ([[projects objectAtIndex:x] isKindOfClass:[Project class]])
+        {
+            if ([[projects objectAtIndex:x] preview] == project_view)
+            {
+                index = x;
+            }
+        }
+    }
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    EventsViewController *events = [storyboard instantiateViewControllerWithIdentifier:@"EventsViewController"];
+    [events setModalPresentationStyle:UIModalPresentationFullScreen];
+    
+    // do any setup you need for myNewVC
+    [self presentViewController:events animated:YES completion:nil];
+    
+    [[events O_NameProject] setText:[[[projects objectAtIndex:index] project_title] text]];
+
+}
+
 // quitar teclado
 - (void) hideKeyboard{
     if (![[[[projects lastObject] project_title] text] isEqualToString:@""]){
@@ -218,6 +244,10 @@
     [[[projects lastObject] project_delete] addTarget:self action:@selector(deleteProject:) forControlEvents:UIControlEventTouchUpInside];
     [[projects lastObject] project_delete].tag = [projects count] - 1; // indice en el arreglo
     
+    // Asigna acción de cambiar de pantalla
+    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushMyNewViewController:)];
+    [[[projects lastObject] preview] addGestureRecognizer:singleFingerTap];
+    
     // asigna accion de cambiar nombre
     [[[projects lastObject] btn_title] addTarget:self action:@selector(changeName:) forControlEvents:UIControlEventTouchUpInside];
     [[projects lastObject] btn_title].tag = [projects count] - 1; // indice en el arreglo
@@ -226,4 +256,12 @@
 
 }
 
+
 @end
+
+
+
+
+
+
+

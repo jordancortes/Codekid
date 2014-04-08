@@ -37,7 +37,6 @@
 		DF7F272F18EE1BAA00971329 /* statusBar.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F272E18EE1BAA00971329 /* statusBar.png */; };
 		DF7F273118EE1C6F00971329 /* projects.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F273018EE1C6F00971329 /* projects.png */; };
 		DF7F273318EE33D000971329 /* codekid-48.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F273218EE33D000971329 /* codekid-48.png */; };
-		DF7F273718F26DEF00971329 /* drag.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F273618F26DEF00971329 /* drag.png */; };
 		DF7F278518F36C3D00971329 /* character.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F277D18F36C3D00971329 /* character.png */; };
 		DF7F279318F3712D00971329 /* Appearance.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F278C18F3712D00971329 /* Appearance.png */; };
 		DF7F279418F3712D00971329 /* Control.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F278D18F3712D00971329 /* Control.png */; };
@@ -46,6 +45,7 @@
 		DF7F279818F3712D00971329 /* Operators.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F279118F3712D00971329 /* Operators.png */; };
 		DF7F279918F3712D00971329 /* Variables.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F279218F3712D00971329 /* Variables.png */; };
 		DF7F279B18F3722400971329 /* Movement.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F279A18F3722400971329 /* Movement.png */; };
+		DF7F279D18F383A600971329 /* drag.png in Resources */ = {isa = PBXBuildFile; fileRef = DF7F279C18F383A600971329 /* drag.png */; };
 		DFE0BDD718EA271500F87F18 /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE0BDD618EA271500F87F18 /* x.png */; };
 		DFE0BDD918EA64E000F87F18 /* editEnable.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE0BDD818EA64E000F87F18 /* editEnable.png */; };
 		DFE0BDDB18EA6ED400F87F18 /* rename.png in Resources */ = {isa = PBXBuildFile; fileRef = DFE0BDDA18EA6ED400F87F18 /* rename.png */; };
@@ -103,7 +103,6 @@
 		DF7F272E18EE1BAA00971329 /* statusBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = statusBar.png; path = "codekid-img/statusBar.png"; sourceTree = SOURCE_ROOT; };
 		DF7F273018EE1C6F00971329 /* projects.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = projects.png; path = "codekid-img/projects.png"; sourceTree = SOURCE_ROOT; };
 		DF7F273218EE33D000971329 /* codekid-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "codekid-48.png"; path = "codekid-img/codekid-48.png"; sourceTree = SOURCE_ROOT; };
-		DF7F273618F26DEF00971329 /* drag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = drag.png; path = "codekid-img/drag.png"; sourceTree = SOURCE_ROOT; };
 		DF7F277D18F36C3D00971329 /* character.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = character.png; path = "codekid-img/optionsMenu/character.png"; sourceTree = SOURCE_ROOT; };
 		DF7F278C18F3712D00971329 /* Appearance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Appearance.png; path = "codekid-img/optionsMenu/Appearance.png"; sourceTree = "<group>"; };
 		DF7F278D18F3712D00971329 /* Control.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Control.png; path = "codekid-img/optionsMenu/Control.png"; sourceTree = "<group>"; };
@@ -112,6 +111,7 @@
 		DF7F279118F3712D00971329 /* Operators.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Operators.png; path = "codekid-img/optionsMenu/Operators.png"; sourceTree = "<group>"; };
 		DF7F279218F3712D00971329 /* Variables.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Variables.png; path = "codekid-img/optionsMenu/Variables.png"; sourceTree = "<group>"; };
 		DF7F279A18F3722400971329 /* Movement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Movement.png; path = "codekid-img/optionsMenu/Movement.png"; sourceTree = "<group>"; };
+		DF7F279C18F383A600971329 /* drag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = drag.png; path = "codekid-img/drag.png"; sourceTree = "<group>"; };
 		DFE0BDD618EA271500F87F18 /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = x.png; path = "codekid-img/x.png"; sourceTree = SOURCE_ROOT; };
 		DFE0BDD818EA64E000F87F18 /* editEnable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = editEnable.png; path = "codekid-img/editEnable.png"; sourceTree = SOURCE_ROOT; };
 		DFE0BDDA18EA6ED400F87F18 /* rename.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rename.png; path = "codekid-img/rename.png"; sourceTree = SOURCE_ROOT; };
@@ -249,13 +249,13 @@
 			isa = PBXGroup;
 			children = (
 				DF7F277D18F36C3D00971329 /* character.png */,
-				DF7F273618F26DEF00971329 /* drag.png */,
 				DF7F279A18F3722400971329 /* Movement.png */,
 				DF7F273218EE33D000971329 /* codekid-48.png */,
 				DF7F273018EE1C6F00971329 /* projects.png */,
 				DF7F272E18EE1BAA00971329 /* statusBar.png */,
 				DF3D350D18E0F5F300F8D6BD /* Default.png */,
 				DF7F278C18F3712D00971329 /* Appearance.png */,
+				DF7F279C18F383A600971329 /* drag.png */,
 				DF7F278D18F3712D00971329 /* Control.png */,
 				DF7F278E18F3712D00971329 /* Events.png */,
 				DF7F278F18F3712D00971329 /* Lists.png */,
@@ -357,10 +357,10 @@
 				DF3D350618DFCC7000F8D6BD /* plus-76x76@2x.png in Resources */,
 				DF7F278518F36C3D00971329 /* character.png in Resources */,
 				DF3D350518DFCC7000F8D6BD /* edit.png in Resources */,
+				DF7F279D18F383A600971329 /* drag.png in Resources */,
 				DF7F273118EE1C6F00971329 /* projects.png in Resources */,
 				DF7F279918F3712D00971329 /* Variables.png in Resources */,
 				DF7F272F18EE1BAA00971329 /* statusBar.png in Resources */,
-				DF7F273718F26DEF00971329 /* drag.png in Resources */,
 				1737C43B18CE415D00CFF4D0 /* InfoPlist.strings in Resources */,
 				DF7F279B18F3722400971329 /* Movement.png in Resources */,
 				DF3D350E18E0F5F300F8D6BD /* Default.png in Resources */,
