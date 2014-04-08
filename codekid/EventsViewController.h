@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EventsViewController : UIViewController
+@interface EventsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIView *O_viewGeneral;
+@property (weak, nonatomic) IBOutlet UIPickerView *O_pickerEvents;
+- (IBAction)A_changePicker:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *O_changePicker;
+@property (nonatomic, strong) NSArray *actionsEvent;
+
 
 // Actions y Outlets de la barra superior
 - (IBAction)A_projects:(UIButton *)sender;

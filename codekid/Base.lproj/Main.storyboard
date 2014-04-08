@@ -76,6 +76,28 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="en0-mi-cvs">
                                 <rect key="frame" x="316" y="140" width="708" height="628"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P91-tV-3Wc">
+                                        <rect key="frame" x="0.0" y="412" width="708" height="216"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="dFT-pX-Fh0" id="uMj-oL-yt6"/>
+                                            <outlet property="delegate" destination="dFT-pX-Fh0" id="Zz0-H4-qpx"/>
+                                        </connections>
+                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5w-S0-Yd1">
+                                        <rect key="frame" x="586" y="357" width="131" height="72"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                        <state key="normal" title="Change">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="A_changePicker:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="C0Y-mm-2wz"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2pO-rg-d6z">
@@ -118,7 +140,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kef-Ae-H8M">
                                         <rect key="frame" x="3" y="15" width="310" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="events.png">
+                                        <state key="normal" image="Events.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -190,10 +212,12 @@
                         <outlet property="O_NameProject" destination="IIB-r9-ZFD" id="K1G-Mv-TwW"/>
                         <outlet property="O_bgMenu1" destination="7ZB-CZ-VfP" id="Vem-7a-Wxy"/>
                         <outlet property="O_bgMenu2" destination="EoF-jW-fnW" id="s9B-CL-4n9"/>
+                        <outlet property="O_changePicker" destination="l5w-S0-Yd1" id="oHL-QE-2PS"/>
                         <outlet property="O_drag" destination="sQv-qP-tnR" id="mTH-eR-1rY"/>
                         <outlet property="O_errors" destination="LNb-lS-Kbd" id="ZCB-GX-CUV"/>
                         <outlet property="O_opcMenu1" destination="Kef-Ae-H8M" id="RTr-vZ-Uj7"/>
                         <outlet property="O_opcMenu2" destination="Lig-CU-Z7M" id="PRV-uN-Ngg"/>
+                        <outlet property="O_pickerEvents" destination="P91-tV-3Wc" id="Zci-LK-rZr"/>
                         <outlet property="O_statusBar" destination="lfs-R5-Vpc" id="fKs-OI-hFs"/>
                         <outlet property="O_viewGeneral" destination="en0-mi-cvs" id="lqO-aM-4EB"/>
                     </connections>
@@ -204,12 +228,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Events.png" width="1123" height="153"/>
         <image name="character.png" width="1122" height="152"/>
         <image name="codekid-48.png" width="641" height="144"/>
         <image name="codekid.png" width="1035" height="180"/>
         <image name="drag.png" width="152" height="152"/>
         <image name="edit.png" width="353" height="152"/>
-        <image name="events.png" width="1123" height="153"/>
         <image name="plus-76x76.png" width="76" height="76"/>
         <image name="projects.png" width="442" height="165"/>
         <image name="run.png" width="152" height="152"/>
