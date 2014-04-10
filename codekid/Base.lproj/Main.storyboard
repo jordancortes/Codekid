@@ -148,13 +148,73 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sQv-qP-tnR">
-                                        <rect key="frame" x="0.0" y="86" width="316" height="67"/>
+                                        <rect key="frame" x="15" y="80" width="285" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="drag.png">
+                                        <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="A_drag:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="O41-qh-asG"/>
+                                            <action selector="A_drag1:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="M7o-ec-K5t"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBe-D2-QKi">
+                                        <rect key="frame" x="15" y="148" width="285" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="A_drag2:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="fqf-wV-wcI"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PY1-l0-s7x">
+                                        <rect key="frame" x="15" y="216" width="285" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="A_drag3:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="JsC-Zl-dL4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MRM-vL-APf">
+                                        <rect key="frame" x="15" y="284" width="285" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="A_drag4:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="91h-5X-SCI"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V60-y1-h71">
+                                        <rect key="frame" x="15" y="351" width="285" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="A_drag5:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="Pbt-Jh-kh6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R73-xj-Lu4">
+                                        <rect key="frame" x="15" y="419" width="285" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="A_drag6:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="dEj-Au-rgd"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k4n-io-Oip">
+                                        <rect key="frame" x="15" y="487" width="285" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="A_drag7:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="kMc-0D-fok"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -213,7 +273,13 @@
                         <outlet property="O_bgMenu1" destination="7ZB-CZ-VfP" id="Vem-7a-Wxy"/>
                         <outlet property="O_bgMenu2" destination="EoF-jW-fnW" id="s9B-CL-4n9"/>
                         <outlet property="O_changePicker" destination="l5w-S0-Yd1" id="oHL-QE-2PS"/>
-                        <outlet property="O_drag" destination="sQv-qP-tnR" id="mTH-eR-1rY"/>
+                        <outlet property="O_drag1" destination="sQv-qP-tnR" id="c9W-SL-758"/>
+                        <outlet property="O_drag2" destination="FBe-D2-QKi" id="3gH-tk-1wP"/>
+                        <outlet property="O_drag3" destination="PY1-l0-s7x" id="Wkb-2o-nSo"/>
+                        <outlet property="O_drag4" destination="MRM-vL-APf" id="jSk-L5-IqU"/>
+                        <outlet property="O_drag5" destination="V60-y1-h71" id="VpB-76-f0z"/>
+                        <outlet property="O_drag6" destination="R73-xj-Lu4" id="Pqh-Dp-k9O"/>
+                        <outlet property="O_drag7" destination="k4n-io-Oip" id="tOl-00-IFd"/>
                         <outlet property="O_errors" destination="LNb-lS-Kbd" id="ZCB-GX-CUV"/>
                         <outlet property="O_opcMenu1" destination="Kef-Ae-H8M" id="RTr-vZ-Uj7"/>
                         <outlet property="O_opcMenu2" destination="Lig-CU-Z7M" id="PRV-uN-Ngg"/>
@@ -232,7 +298,6 @@
         <image name="character.png" width="1122" height="152"/>
         <image name="codekid-48.png" width="641" height="144"/>
         <image name="codekid.png" width="1035" height="180"/>
-        <image name="drag.png" width="551" height="121"/>
         <image name="edit.png" width="353" height="152"/>
         <image name="plus-76x76.png" width="76" height="76"/>
         <image name="projects.png" width="442" height="165"/>
