@@ -12,11 +12,11 @@
 
 - (id)init
 {
-    self = [super init];
+    self = [super init]; // inicializa objeto
     
     if (self)
     {
-        _stack = [[NSMutableArray alloc] init];
+        _stack = [[NSMutableArray alloc] init]; // inicializa arreglo
     }
     
     return self;
@@ -24,38 +24,33 @@
 
 - (id)pop
 {
-    if ([_stack count] > 0)
+    if ([_stack count] > 0) // si hay objetos
     {
-        id object = [_stack lastObject];
+        id object = [_stack lastObject]; // obtiene el objeto
         
-        [_stack removeLastObject];
+        [_stack removeLastObject]; // elimina el objeto
         
         return object;
     }
     
-    return nil;
+    return nil; // la pila esta vacia
 }
 
 - (id)top
 {
-    return [self top:0];
-}
-
-- (void)push:(id)object
-{
-    [_stack addObject:object];
-}
-
-- (id)top:(NSInteger)pos
-{
-    if ([_stack count] > pos)
+    if ([_stack count] > 0) // si hay objetos
     {
-        id object = [_stack objectAtIndex:([_stack count] - 1 + pos)];
+        id object = [_stack lastObject]; // obtiene el objeto
         
         return object;
     }
     
-    return nil;
+    return nil; // la pila esta vacia
+}
+
+- (void)push:(id)object
+{
+    [_stack addObject:object]; // inserta el objeto
 }
 
 @end

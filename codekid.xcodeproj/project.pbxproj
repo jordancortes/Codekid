@@ -24,9 +24,12 @@
 		1737C46718CE41DE00CFF4D0 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46618CE41DE00CFF4D0 /* Common.m */; };
 		1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46818CE41ED00CFF4D0 /* tokenizer.lm */; };
 		1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46A18CE41F600CFF4D0 /* parser.ym */; };
-		175FE03B18CE8578006C25B2 /* SemanticSymbol.m in Sources */ = {isa = PBXBuildFile; fileRef = 175FE03A18CE8578006C25B2 /* SemanticSymbol.m */; };
+		176A498E18F1EA1A00ACB7CE /* Temporal.m in Sources */ = {isa = PBXBuildFile; fileRef = 176A498D18F1EA1A00ACB7CE /* Temporal.m */; };
 		17722D7118D8042900E4A3CB /* Quadruple.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7018D8042900E4A3CB /* Quadruple.m */; };
 		17722D7518D807BC00E4A3CB /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7418D807BC00E4A3CB /* Stack.m */; };
+		1781C5C618EDAFC9009826D2 /* Variable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781C5C518EDAFC9009826D2 /* Variable.m */; };
+		1781C5C918EDB024009826D2 /* Procedure.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781C5C818EDB024009826D2 /* Procedure.m */; };
+		1781C5CC18EDB085009826D2 /* Memory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1781C5CB18EDB085009826D2 /* Memory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,12 +66,18 @@
 		1737C46618CE41DE00CFF4D0 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
 		1737C46818CE41ED00CFF4D0 /* tokenizer.lm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = tokenizer.lm; sourceTree = "<group>"; };
 		1737C46A18CE41F600CFF4D0 /* parser.ym */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = parser.ym; sourceTree = "<group>"; };
-		175FE03918CE8578006C25B2 /* SemanticSymbol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SemanticSymbol.h; sourceTree = "<group>"; };
-		175FE03A18CE8578006C25B2 /* SemanticSymbol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SemanticSymbol.m; sourceTree = "<group>"; };
+		176A498C18F1EA1A00ACB7CE /* Temporal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Temporal.h; sourceTree = "<group>"; };
+		176A498D18F1EA1A00ACB7CE /* Temporal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Temporal.m; sourceTree = "<group>"; };
 		17722D6F18D8042900E4A3CB /* Quadruple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quadruple.h; sourceTree = "<group>"; };
 		17722D7018D8042900E4A3CB /* Quadruple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quadruple.m; sourceTree = "<group>"; };
 		17722D7318D807BC00E4A3CB /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		17722D7418D807BC00E4A3CB /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
+		1781C5C418EDAFC9009826D2 /* Variable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Variable.h; sourceTree = "<group>"; };
+		1781C5C518EDAFC9009826D2 /* Variable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Variable.m; sourceTree = "<group>"; };
+		1781C5C718EDB024009826D2 /* Procedure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Procedure.h; sourceTree = "<group>"; };
+		1781C5C818EDB024009826D2 /* Procedure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Procedure.m; sourceTree = "<group>"; };
+		1781C5CA18EDB085009826D2 /* Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memory.h; sourceTree = "<group>"; };
+		1781C5CB18EDB085009826D2 /* Memory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,11 +143,11 @@
 				1737C44518CE415D00CFF4D0 /* ViewController.h */,
 				1737C44618CE415D00CFF4D0 /* ViewController.m */,
 				1737C44818CE415D00CFF4D0 /* Images.xcassets */,
-				1737C43718CE415D00CFF4D0 /* Supporting Files */,
 				1737C46518CE41DE00CFF4D0 /* Common.h */,
 				1737C46618CE41DE00CFF4D0 /* Common.m */,
-				17D0E8FE18D1504300B0C02C /* flex & bison */,
+				17D0E8FE18D1504300B0C02C /* Flex&Bison */,
 				17722D7218D8043100E4A3CB /* Objects */,
+				1737C43718CE415D00CFF4D0 /* Supporting Files */,
 			);
 			path = codekid;
 			sourceTree = "<group>";
@@ -175,23 +184,29 @@
 		17722D7218D8043100E4A3CB /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				175FE03918CE8578006C25B2 /* SemanticSymbol.h */,
-				175FE03A18CE8578006C25B2 /* SemanticSymbol.m */,
 				17722D6F18D8042900E4A3CB /* Quadruple.h */,
 				17722D7018D8042900E4A3CB /* Quadruple.m */,
 				17722D7318D807BC00E4A3CB /* Stack.h */,
 				17722D7418D807BC00E4A3CB /* Stack.m */,
+				1781C5C418EDAFC9009826D2 /* Variable.h */,
+				1781C5C518EDAFC9009826D2 /* Variable.m */,
+				1781C5C718EDB024009826D2 /* Procedure.h */,
+				1781C5C818EDB024009826D2 /* Procedure.m */,
+				1781C5CA18EDB085009826D2 /* Memory.h */,
+				1781C5CB18EDB085009826D2 /* Memory.m */,
+				176A498C18F1EA1A00ACB7CE /* Temporal.h */,
+				176A498D18F1EA1A00ACB7CE /* Temporal.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
 		};
-		17D0E8FE18D1504300B0C02C /* flex & bison */ = {
+		17D0E8FE18D1504300B0C02C /* Flex&Bison */ = {
 			isa = PBXGroup;
 			children = (
 				1737C46818CE41ED00CFF4D0 /* tokenizer.lm */,
 				1737C46A18CE41F600CFF4D0 /* parser.ym */,
 			);
-			name = "flex & bison";
+			name = "Flex&Bison";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,7 +312,10 @@
 				1737C44718CE415D00CFF4D0 /* ViewController.m in Sources */,
 				1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */,
 				1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */,
-				175FE03B18CE8578006C25B2 /* SemanticSymbol.m in Sources */,
+				1781C5CC18EDB085009826D2 /* Memory.m in Sources */,
+				1781C5C618EDAFC9009826D2 /* Variable.m in Sources */,
+				1781C5C918EDB024009826D2 /* Procedure.m in Sources */,
+				176A498E18F1EA1A00ACB7CE /* Temporal.m in Sources */,
 				1737C44118CE415D00CFF4D0 /* AppDelegate.m in Sources */,
 				1737C43D18CE415D00CFF4D0 /* main.m in Sources */,
 			);

@@ -9,22 +9,32 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SemanticSymbol.h"
 #import "Quadruple.h"
+#import "Memory.h"
+#import "Procedure.h"
+#import "Variable.h"
 #import "Stack.h"
+#import "Temporal.h"
 
-#define FLAG_CREATE 0
-#define FLAG_EVENT 1
-#define FLAG_MODULE 2
+#define INT 0
+#define FLOAT 1
+#define BOOLEAN 2
+#define STRING 3
+#define VOID 4
+
+#define FLAG_CREATE 10
+#define FLAG_EVENT 11
+#define FLAG_MAIN 12
 
 @interface Common : NSObject
 
 /**
+ Implementado para inicializar el objeto.
+ */
++ (void)init;
+
+/**
  Reinicia algunas variables para cada compilación.
- Ejemplo de uso:
- @code
- [Common reset];
- @endcode
  */
 + (void)reset;
 
@@ -43,259 +53,337 @@
 + (NSURL *)applicationDocumentsDirectory;
 
 /**
- Imprime en consola. Adaptador para ser usado por código externo.
- Ejemplo de uso:
- @code
- [Common printToConsole:@"Hello World"];
- @endcode
- @param text
-    Texto a ser impreso en consola.
-*/
-+ (void)printToConsole:(NSString *)text;
+ Retorna si 2 strings son iguales. Este método fue implementado para la clases que no
+ incorporan Foundation.h .
 
-/**
- Inicializa una variable ya instanciada.
- @param key
- Varible a inicializar.
- @param type
- Tipo de simbolo (var, list)
- @param dtype
- Tipo de variable (int, float, string)
- @param pos
- Posición en donde se agregará el simbolo. Para VAR solo sustituye, para LIST: -1 al final.
- @return YES si la variable se inicializó, NO si la variable no existe.
+ @return TRUE si ambos strings son iguales.
  */
-+ (BOOL)initSymbol:(NSString *)key for:(NSString *)type withDType:(NSString *)dtype atPosition:(NSInteger)pos;
++ (Boolean)isString:(NSString *)str1 equalTo:(NSString *)str2;
 
 /**
- Verifica si un simbolo existe en la tabla de variables, y si no existe entonces lo agrega.
- Ejemplo de uso:
- @code
- [Common addSymbolWithName:@"x" Type:"var" dType:@"int" initialize:NO andMemory:0 forKey:@"x"];
- @endcode
+ Agrega un cuadruplo nuevo con sus respectivos valores.
+ 
+ @param operator
+    Operador.
+ @param term1
+    Primer término del cuádruplo.
+ @param term2
+    Segundo término del cuádruplo.
+ @param result
+    Resultado del cuadruplo.
+ */
++ (void)addQuadrupleWithOperator:(NSNumber *)operator Term1:(NSNumber *)term1 Term2:(NSNumber *)term2 andResult:(NSNumber *)result;
+
+/**
+ Almacena en un archivo TXT la lista de cuádruplos generados.
+ */
++ (void)saveQuadruples;
+
+/**
+ Regresa el apuntador que sigue en la lista de cuadruplos. Usado generalmente por
+ los estatutos de control.
+
+ @return Siguiente apuntador.
+ */
++ (NSInteger)nextPointer;
+
+/**
+ Agrega un procedimiento al directorio de procedimientos.
+ 
  @param name
-    Nombre del simbolo.
+    Nombre del procedimiento.
+ */
++ (void)addProcedureWithName:(NSString *)name;
+
+/**
+ Método para insertar un objeto al tope de la pila.
+ 
+ @param stack
+    Pila a la cual se agregará el objeto.
+ @param object
+    Objeto a insertar.
+ */
++ (void)pushToStack:(Stack *)stack Object:(id)object;
+
+/**
+ Método para obtener el objeto del tope de la pila y eliminarlo.
+ 
+ @param stack
+    Pila a la cual se agregará el objeto.
+ @return El objeto al tope de la pila.
+ */
++ (id)popFromStack:(Stack *)stack;
+
+/**
+ Método para obtener el objeto del tope de la pila sin eliminarlo.
+ 
+ @param stack
+    Pila a la cual se agregará el objeto.
+ @return El objeto al tope de la pila.
+ */
++ (id)topFromStack:(Stack *)stack;
+
+/**
+ Retorna la dirección en memoria para cierta variable.
+ 
+ @param variable
+    Nombre de la variable a buscar.
+ @return Dirección en memoria de la variable.
+ */
++ (NSInteger)addressForVariable:(NSString *)variable;
+
+/**
+ Retorna la dirección en memoria para cierta posición de un vector.
+ 
+ @param variable
+    Nombre del vector a buscar.
+ @param position
+    Posición del vector de la variable.
+ @return Dirección en memoria de la posición del vector.
+ */
++ (NSInteger)addressForVariable:(NSString *)variable atPosition:(NSNumber *)position;
+
+/**
+ Retorna si una determinada variable ya existe en la tabla.
+ 
+ @param variable
+    Nombre de la variable a buscar.
+ @return TRUE si ya existe, FASLE si no.
+ */
++ (Boolean)lookupVariable:(NSString *)variable;
+
+/**
+ Retorna el tipo (int, float, boolean, string) para una variable determinada.
+ 
+ @param variable
+    Nombre de la variable a buscar.
+ @return tipo de la variable (0 = INT, 1 = FLOAT, 2 = BOOLEAN, 3 = STRING)
+ */
++ (NSInteger)typeForVariable:(NSString *)variable;
+
+/**
+ Retorna si determinda variable es un vector o no.
+ 
+ @param variable
+    Nombre del vector a verificar.
+ @return TRUE si es vector, FALSE si es una variable escalar.
+ */
++ (Boolean)isVariableList:(NSString *)variable;
+
+/**
+ Retorna el resultado para una cierta operación. Lo verifica con el cubo semántico.
+ 
+ @param operator
+ 	Operador.
+ @param term1
+    Primer término del cuádruplo.
+ @param term2
+    Segundo término del cuádruplo.
+ @return El resultado de la operación. -1 si es inválido.
+ */
++ (NSInteger)operationResultWithOperator:(NSString *)operator Term1:(NSString *)term1 andTerm2:(NSString *)term2;
+
+/**
+ Retorna el código numérico para un determinado operador.
+ 
+ @param key
+    Operador a buscar.
+ @return Código numérico del operador.
+ */
++ (NSInteger)lookupOperatorCodeForKey:(NSString *)key;
+
+/**
+ Retorna el código numérico para un determinado tipo de operando.
+ 
+ @param key
+ Tipo de operando a buscar.
+ @return Código numérico del tipo de operando.
+ */
++ (NSInteger)lookupOperandCodeForKey:(NSString *)key;
+
+/**
+ Retorna el código numérico para un determinado tipo.
+ 
  @param type
-    Tipo de simbolo (var, list).
- @param dtype
-    Tipo de variable (int, float, string)
- @param initialize
-    Si el simbolo esta inicializado o no.
- @param mem
-    Ubicación en memoria virtual.
- @param key
-    Nombre del simbolo, igual que name.
- @return YES si el simbolo se agregó a la tabla, o NO si el simbolo ya existe en la tabla.
+    Tipo a buscar (INT, FLOAT, BOOLEAN, STRING)
+ @return Código numérico: 0, 1, 2 ó 3 respectivamente.
  */
-+ (BOOL)addSymbolWithName:(NSString *)name Type:(NSString *)type dType:(NSString *)dtype initialize:(BOOL)initialize andMemory:(NSInteger)mem forKey:(NSString *)key;
++ (NSInteger)codeForType:(NSString *)type;
 
 /**
- Regresa las propiedades de un simbolo de la tabla.
- Ejemplo de uso:
- @code
- [Common symbolAttr:@"x"];
- @endcode
- @param key
-    Nombre del simbolo a buscar en la tabla
- @return El simbolo como objeto, y contiene toda la información de él. Si el simbolo no existe regresa nil.
+ Retorna el nombre de un tipo para un determinado código numérico.
+ 
+ @param code
+    Código numérico: 0, 1, 2 ó 3 respectivamente.
+ @return Nombre del tipo (INT, FLOAT, BOOLEAN, STRING)
  */
-+ (SemanticSymbol *)symbolAttr:(NSString *)key;
++ (NSString *)typeForCode:(NSInteger)code;
 
 /**
- Elimina un elemento de la lista en cierta posición.
- Ejemplo de uso:
- @code
- [Common deleteFromList:@"x" atPosition:4];
- @endcode
- @param key
-    Lista de la cual se eliminará el elemento.
- @param pos
-    Posición de la lista que será eliminada.
- @return YES si lo eliminó, FALSE si ocurrio algún error.
+ Método para agregar una variable a memoria.
+ 
+ @param name
+    Nombre de la variable.
+ @param type
+    Tipo de la variable (INT, FLOAT, BOOLEAN, STRING)
+ @param list_length
+    Longitud en memoria de la variable. 1 para variable escalar, mayor a 1 para vectores.
+ @return TRUE si la variable se agregó, FALSE si no se pudo (memoria llena).
  */
-+ (BOOL) deleteFromList:(NSString *)key atPosition:(NSInteger)pos;
-
-// hace lookup
-/**
- Busca por un simbolo en la tabla de simbolos.
- Ejemplo de uso:
- @code
- [Common lookupSymbol:@"x"];
- @endcode
- @param key
-    Simbolo a buscar
- @return YES si lo encontró, NO si el simbolo no existe.
- */
-+ (BOOL) lookupSymbol:(NSString *)key;
++ (Boolean)addVariableWithName:(NSString *)name Type:(NSInteger)type andListLength:(NSInteger)list_length;
 
 /**
- Asigna el número de linea en donde se encontró el error.
- Ejemplo de uso:
- @code
- [Common setYyErrorNo:4];
- @endcode
- @param yenum
-    Número de linea en donde hay un error.
+ Retorna la dirección en memoria para una nueva constante. Primero busca si la constante
+ ya existe en memoria, si no entonces la agrega.
+ 
+ @param type
+ 	Tipo de la variable (INT, FLOAT, BOOLEAN, STRING)
+ @param value
+    Contenido de la constante.
+ @return La dirección en memoria de la constante. -1 si la memoria esta llena.
  */
-+ (void) setYyErrorNo:(NSInteger)yenum;
++ (NSInteger)addConstantWithType:(NSInteger)type andValue:(NSString *)value;
 
 /**
- Regresa el número de linea donde hubo un error.
- Ejemplo de uso:
- @code
- [Common yyErrorNo];
- @endcode
- @return El número de linea.
+ Retorna el temporal (objeto Temporal*) que fue agregado a la memoria.
+ 
+ @param type
+ Tipo del temporal (INT, FLOAT, BOOLEAN, STRING)
+ @return El objeto Temporal* con la información relevante en él.
  */
-+ (NSInteger)yyErrorNo;
++ (Temporal *)addTempWithType:(NSInteger)type;
 
 /**
- Asigna la descripción del error.
- Ejemplo de uso:
- @code
- [Common setYyError:@"la variable no existe"];
- @endcode
- @param ye
- Descripción del error encontrado.
+ Obtiene la pila de operandos.
+ 
+ @return Pila de operandos.
  */
-+ (void) setYyError:(NSString *)ye;
++ (Stack *)operands;
+
+/**
+ Obtiene la pila de operadores.
+ 
+ @return Pila de operadores.
+ */
++ (Stack *)operators;
+
+/**
+ Obtiene la pila de los tipos de operandos.
+ 
+ @return Pila de tipos de operandos.
+ */
++ (Stack *)operandsType;
+
+/**
+ Obtiene la pila de saltos.
+ 
+ @return Pila de saltos.
+ */
++ (Stack *)p_jumps;
+
+/**
+ Regresa la bandera que define la sección de código con la que se esta trabajando.
+ 
+ @return La bandera que define la posición acutal del código.
+ */
++ (NSInteger)flag;
+
+/**
+ Asigna la bandera que define la posición en el archivo.
+ 
+ @param new_flag
+    Bandera que define la posición actual en el código.
+ */
++ (void)setFlag:(NSInteger)new_flag;
 
 /**
  Regresa último error encontrado.
- Ejemplo de uso:
- @code
- [Common yyError];
- @endcode
+ 
  @return El último error. NULL si no existe.
  */
 + (NSString *)yyError;
 
 /**
- Asigna un valor para alfa.
- Ejemplo de uso:
- @code
- [Common setAlfa:@"var"];
- @endcode
- @param a
-    Nuevo valor para alfa.
+ Asigna la descripción del error.
+ 
+ @param new_yy_error
+    Descripción del error encontrado.
  */
-+ (void)setAlfa:(NSString *)a;
++ (void)setYyError:(NSString *)new_yyerror;
 
 /**
- Regresa el valor de alfa.
- Ejemplo de uso:
- @code
- [Common alfa];
- @endcode
+ Regresa el número de linea donde hubo un error.
+ 
+ @return El número de linea.
+ */
++ (NSInteger)yyErrorNo;
+
+/**
+ Asigna el número de linea en donde se encontró el error.
+ 
+ @param new_yy_error_no
+    Número de linea en donde hay un error.
+ */
++ (void)setYyErrorNo:(NSInteger)new_yyerrorno;
+
+/**
+ Regresa el valor de alfa. (Para sintaxis)
+ 
  @return El valor actual de alfa. NULL si no existe.
  */
-+ (NSString *)alfa;
++ (NSString *)alpha;
 
 /**
- Asigna un valor para beta.
- Ejemplo de uso:
- @code
- [Common setBeta:@"x"];
- @endcode
- @param b
-    Nuevo valor para beta.
+ Asigna un valor para alfa. (Para sintaxis)
+ 
+ @param new_alpha
+    Nuevo valor para alfa.
  */
-+ (void)setBeta:(NSString *)b;
++ (void)setAlpha:(NSString *)new_alpha;
 
 /**
- Regresa el valor de beta.
- Ejemplo de uso:
- @code
- [Common beta];
- @endcode
+ Regresa el valor de beta. (Para sintaxis)
+ 
  @return El valor actual de beta. NULL si no existe.
  */
 + (NSString *)beta;
 
 /**
- Asigna el tipo de dato.
- Ejemplo de uso:
- @code
- [Common setDType:@"int"];
- @endcode
- @param d
-    Tipo de dato.
+ Asigna un valor para beta. (Para sintaxis)
+ 
+ @param new_beta
+    Nuevo valor para beta.
  */
-+ (void)setDType:(NSString *)d;
++ (void)setBeta:(NSString *)new_beta;
 
 /**
- Regresa el tipo de dato de la variable.
- Ejemplo de uso:
- @code
- [Common dType];
- @endcode
- @return El tipo de dato del valor actual. NULL si no existe.
+ Regresa el valor de sigma. (Para sintaxis)
+ 
+ @return El valor actual de sigma. NULL si no existe.
  */
-+ (NSString *)dType;
++ (NSString *)sigma;
 
 /**
- Asigna la posición en la lista a la que se quiere hacer referencia.
- Ejemplo de uso:
- @code
- [Common setPosition:@"4"];
- @endcode
- @param p
-    Posición a guardar. Se recibe como NSString porque viene de yytext como
-    char*, aunque se convierte a NSInteger.
+ Asigna un valor para sigma. (Para sintaxis)
+ 
+ @param new_sigma
+    Nuevo valor para sigma.
  */
-+ (void)setPosition:(NSString *)p;
++ (void)setSigma:(NSString *)new_sigma;
 
 /**
- Regresa la posición de una lista que se hizo referencia.
- Ejemplo de uso:
- @code
- [Common position];
- @endcode
- @return La posición mencionada en el código.
+ Regresa el valor de la cantidad de parentesis que deben de ser eliminados por la expresión.
+ 
+ @return Cantidad de parentesis a eliminar.
  */
-+ (NSInteger)position;
++ (NSInteger)del_paren;
 
 /**
- Asigna la bandera que define la posición en el archivo.
- Ejemplo de uso:
- @code
- [Common setFlag:FLAG_EVENT];
- @endcode
- @param f
-    Bandera que define la posición actual en el código.
+ Asigna la cantidad de parentesis a eliminar de la expresión.
+ 
+ @param new_del_paren
+    Cantidad de parentesis a eliminar.
  */
-+ (void)setFlag:(NSInteger)f;
-
-/**
- Regresa la bandera que define la sección de código con la que se esta trabajando.
- Ejemplo de uso:
- @code
- [Common flag];
- @endcode
- @return La bandera que define la posición acutal del código.
- */
-+ (NSInteger)flag;
-
-+ (void)setDelParen:(NSInteger)dp;
-+ (NSInteger)delParen;
-
-+ (Stack *)operands;
-+ (Stack *)operators;
-+ (Stack *)operandsTypes;
-
-+ (BOOL)isStringEqual:(NSString *)st1 To:(NSString *)st2;
-+ (BOOL)topOfStackIsOperator;
-+ (NSString *)dTypeForSymbol:(NSString *)key;
-+ (NSString *)nextAvail;
-+ (NSString *)nextAvailWithPush:(BOOL)reuse;
-+ (NSInteger)operationResultWithOperator:(NSString *)operator Term1:(NSString *)term1 andTerm2:(NSString *)term2;
-
-+ (NSString *)avail;
-+ (void)pushToStack:(Stack *)stack Object:(id)object;
-+ (id)popFromStack:(Stack *)stack;
-+ (id)topFromStack:(Stack *)stack;
-+ (id)topFromStack:(Stack *)stack atPosition:(NSInteger)pos;
-+ (void)addQuadrupleWithOperator:(NSString *)operator Term1:(NSString *)term1 Term2:(NSString *)term2 andResult:(NSString *)result;
-+ (void)saveQuadruples;
++ (void)setDelParen:(NSInteger)new_del_paren;
 
 @end

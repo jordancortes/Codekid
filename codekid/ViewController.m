@@ -21,8 +21,7 @@
 - (NSInteger) scanner:(NSString *)nombre
 {
     // se obtiene la ruta del archivo en Documents
-    NSString *path = [[Common applicationDocumentsDirectory].path
-                      stringByAppendingPathComponent:nombre];
+    NSString *path = [[Common applicationDocumentsDirectory].path stringByAppendingPathComponent:nombre];
     
     NSLog(@"%@", path);
     
@@ -32,10 +31,16 @@
     return (NSInteger)ext_scanner(archivo);
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [Common init];
+}
+
 - (IBAction)A_check:(id)sender
 {
-    NSString *path = [[Common applicationDocumentsDirectory].path
-                      stringByAppendingPathComponent:@"test.txt"];
+    NSString *path = [[Common applicationDocumentsDirectory].path stringByAppendingPathComponent:@"code.txt"];
     NSString *code = [_O_code text];
     
     // Copia el texto a un archivo
@@ -44,7 +49,7 @@
     [Common reset];
     
     // Manda checar el archivo
-    NSInteger result = [self scanner:@"test.txt"];
+    NSInteger result = [self scanner:@"code.txt"];
     
     // Imprime el resultado
     if (YYACCEPT == result)
