@@ -12,10 +12,33 @@
 
 @property NSMutableArray *stack;
 
+/**
+ Implementado para inicializar el objeto.
+
+ @return El objeto pila.
+ */
 - (id)init;
+
+/**
+ Método para obtener el objeto del tope de la pila y eliminarlo.
+ 
+ @return El objeto al tope de la pila.
+ */
 - (id)pop;
+
+/**
+ Método para obtener el objeto del tope de la pila sin eliminarlo.
+ 
+ @return El objeto al tope de la pila.
+ */
 - (id)top;
+
+/**
+ Método para insertar un objeto al tope de la pila.
+ 
+ @param object
+    Objeto a insertar.
+ */
 - (void)push:(id)object;
-- (id)top:(NSInteger)pos;
 
 @end

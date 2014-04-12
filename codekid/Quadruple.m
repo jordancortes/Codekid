@@ -10,16 +10,15 @@
 
 @implementation Quadruple
 
-- (id) initQuadrupleWithPointer:(NSInteger)pointer Operator:(NSInteger)operator Term1:(NSString *)term1 Term2:(NSString *)term2 andResult:(NSString *)result
+- (id)initWithOperator:(NSInteger)op Term1:(NSInteger)t1 Term2:(NSInteger)t2 andResult:(NSInteger)result
 {
-    self = [super init];
+    self = [super init]; // inicializa objeto
     
     if (self)
     {
-        _pointer = pointer;
-        _operator = operator;
-        _term1 = term1;
-        _term2 = term2;
+        _operator = op; // asigna valores
+        _term1 = t1;
+        _term2 = t2;
         _result = result;
     }
     

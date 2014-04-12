@@ -10,15 +10,24 @@
 
 @interface Quadruple : NSObject
 
-@property NSInteger pointer; //id
-
-// Posibles operadores:
-// + - / * < > =
 @property NSInteger operator;
-@property NSString *term1;
-@property NSString *term2;
-@property NSString *result;
+@property NSInteger term1;
+@property NSInteger term2;
+@property NSInteger result;
 
-- (id)initQuadrupleWithPointer:(NSInteger)pointer Operator:(NSInteger)operator Term1:(NSString *)term1 Term2:(NSString *)term2 andResult:(NSString *)result;
+/**
+ Implementado para inicializar el objeto con sus atributos.
+ 
+ @param op
+    Operador.
+ @param t1
+    Primer término del cuádruplo.
+ @param t2
+    Segundo término del cuádruplo.
+ @param result
+    Resultado del cuadruplo.
+ @return El objeto cuadruplo.
+ */
+- (id)initWithOperator:(NSInteger)op Term1:(NSInteger)t1 Term2:(NSInteger)t2 andResult:(NSInteger)result;
 
 @end

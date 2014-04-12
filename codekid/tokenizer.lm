@@ -4,7 +4,6 @@
     
     int yyparse(void);
     int yyerror(char*);
-    int at = 0;
 %}
 
 %option yylineno
@@ -12,146 +11,404 @@
 %option noyywrap
 
 %%
-[ \t]+
+
+[ \t]+ {
+    /* salta espacios */
+}
 
 \n {
-    
+    /* salta brincos por yylineno */
+    [Common setYyErrorNo:yylineno];
 }
 
 "-" {
-    if ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"+"] || [Common isStringEqual:[Common topFromStack:[Common operators]] To:@"-"])
+    // 13
+    if ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"+"] || [Common isString:[Common topFromStack:[Common operators]] equalTo:@"-"])
     {
         NSString *op = [Common popFromStack:[Common operators]];
-        NSString *t2 = [Common popFromStack:[Common operands]];
-        NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
-        NSString *t1 = [Common popFromStack:[Common operands]];
-        NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+        id term2 = [Common popFromStack:[Common operands]];
+        NSString *term2_type = [Common popFromStack:[Common operandsType]];
+        id term1 = [Common popFromStack:[Common operands]];
+        NSString *term1_type = [Common popFromStack:[Common operandsType]];
         
-        NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+        NSInteger result = [Common operationResultWithOperator:op Term1:term1_type andTerm2:term2_type];
         
-        if ( -1 != result )
+        if (-1 == result)
         {
-            [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
-            [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
-        }
-        else
-        {
+            [Common setYyError:[NSString stringWithFormat:@"The operation '%@ %@ %@' is invalid.", term1_type, op, term2_type]];
             return yyerror("");
         }
         
-        while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+        NSInteger term1_address, term2_address;
+        
+        // TERM 1
+        if ([term1 isKindOfClass:[Temporal class]])
+        {
+            term1_address = [term1 mem_address];
+        }
+        else if ([Common lookupVariable:(NSString *)term1])
+        {
+            term1_address = [Common addressForVariable:(NSString *)term1];
+        }
+        else
+        {
+            term1_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:term1_type] andValue:(NSString *)term1];
+        }
+        
+        // TERM 2
+        if ([term2 isKindOfClass:[Temporal class]])
+        {
+            term2_address = [term2 mem_address];
+        }
+        else if ([Common lookupVariable:(NSString *)term2])
+        {
+            term2_address = [Common addressForVariable:(NSString *)term2];
+        }
+        else
+        {
+            term2_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:term2_type] andValue:(NSString *)term2];
+        }
+        
+        // CREATE TEMP
+        Temporal *tn = [Common addTempWithType:result];
+        [Common pushToStack:[Common operands] Object:tn];
+        [Common pushToStack:[Common operandsType] Object:[Common typeForCode:result]];
+        
+        // CREATE QUADRUPLE
+        [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:term1_address] Term2:[NSNumber numberWithInt:term2_address] andResult:[NSNumber numberWithInt:[tn mem_address]]];
+        
+        while ( (0 < [Common del_paren]) && ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"("]) )
         {
             [Common popFromStack:[Common operators]];
-            [Common setDelParen:([Common delParen] - 1)];
+            [Common setDelParen:([Common del_paren] - 1)];
         }
     }
 
-    // 2
+    // 11
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-
+    
     return MINUS;
 }
 
 "+" {
-    if ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"+"] || [Common isStringEqual:[Common topFromStack:[Common operators]] To:@"-"])
+    // 13
+    if ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"+"] || [Common isString:[Common topFromStack:[Common operators]] equalTo:@"-"])
     {
         NSString *op = [Common popFromStack:[Common operators]];
-        NSString *t2 = [Common popFromStack:[Common operands]];
-        NSString *type_t2 = [Common popFromStack:[Common operandsTypes]];
-        NSString *t1 = [Common popFromStack:[Common operands]];
-        NSString *type_t1 = [Common popFromStack:[Common operandsTypes]];
+        id term2 = [Common popFromStack:[Common operands]];
+        NSString *term2_type = [Common popFromStack:[Common operandsType]];
+        id term1 = [Common popFromStack:[Common operands]];
+        NSString *term1_type = [Common popFromStack:[Common operandsType]];
         
-        NSInteger result = [Common operationResultWithOperator:op Term1:type_t1 andTerm2:type_t2];
+        NSInteger result = [Common operationResultWithOperator:op Term1:term1_type andTerm2:term2_type];
         
-        if ( -1 != result )
+        if (-1 == result)
         {
-            [Common addQuadrupleWithOperator:op Term1:t1 Term2:t2 andResult:[Common nextAvailWithPush:YES]];
-            [Common pushToStack:[Common operandsTypes] Object:[NSString stringWithFormat:@"%d", result]];
-        }
-        else
-        {
+            [Common setYyError:[NSString stringWithFormat:@"The operation '%@ %@ %@' is invalid.", term1_type, op, term2_type]];
             return yyerror("");
         }
         
-        while ((0 < [Common delParen]) && ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"("]))
+        NSInteger term1_address, term2_address;
+        
+        // TERM 1
+        if ([term1 isKindOfClass:[Temporal class]])
+        {
+            term1_address = [term1 mem_address];
+        }
+        else if ([Common lookupVariable:(NSString *)term1])
+        {
+            term1_address = [Common addressForVariable:(NSString *)term1];
+        }
+        else
+        {
+            term1_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:term1_type] andValue:(NSString *)term1];
+        }
+        
+        // TERM 2
+        if ([term2 isKindOfClass:[Temporal class]])
+        {
+            term2_address = [term2 mem_address];
+        }
+        else if ([Common lookupVariable:(NSString *)term2])
+        {
+            term2_address = [Common addressForVariable:(NSString *)term2];
+        }
+        else
+        {
+            term2_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:term2_type] andValue:(NSString *)term2];
+        }
+        
+        // CREATE TEMP
+        Temporal *tn = [Common addTempWithType:result];
+        [Common pushToStack:[Common operands] Object:tn];
+        [Common pushToStack:[Common operandsType] Object:[Common typeForCode:result]];
+        
+        // CREATE QUADRUPLE
+        [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:term1_address] Term2:[NSNumber numberWithInt:term2_address] andResult:[NSNumber numberWithInt:[tn mem_address]]];
+        
+        while ( (0 < [Common del_paren]) && ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"("]) )
         {
             [Common popFromStack:[Common operators]];
-            [Common setDelParen:([Common delParen] - 1)];
+            [Common setDelParen:([Common del_paren] - 1)];
         }
     }
-    
-    // 2
-    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
 
+    // 11
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
     return PLUS;
 }
 
 "*" {
     // 3
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-    
+
     return MULT;
 }
 
 "/" {
     // 3
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-    
+
     return DIV;
 }
 
 "=" {
-    
+    // 5
+    if ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"+"] || [Common isString:[Common topFromStack:[Common operators]] equalTo:@"-"])
+    {
+        NSString *op = [Common popFromStack:[Common operators]];
+        id term2 = [Common popFromStack:[Common operands]];
+        NSString *term2_type = [Common popFromStack:[Common operandsType]];
+        id term1 = [Common popFromStack:[Common operands]];
+        NSString *term1_type = [Common popFromStack:[Common operandsType]];
+        
+        NSInteger result = [Common operationResultWithOperator:op Term1:term1_type andTerm2:term2_type];
+        
+        if (-1 == result)
+        {
+            [Common setYyError:[NSString stringWithFormat:@"The operation '%@ %@ %@' is invalid.", term1_type, op, term2_type]];
+            return yyerror("");
+        }
+        
+        NSInteger term1_address, term2_address;
+        
+        // TERM 1
+        if ([term1 isKindOfClass:[Temporal class]])
+        {
+            term1_address = [term1 mem_address];
+        }
+        else if ([Common lookupVariable:(NSString *)term1])
+        {
+            term1_address = [Common addressForVariable:(NSString *)term1];
+        }
+        else
+        {
+            term1_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:term1_type] andValue:(NSString *)term1];
+        }
+        
+        // TERM 2
+        if ([term2 isKindOfClass:[Temporal class]])
+        {
+            term2_address = [term2 mem_address];
+        }
+        else if ([Common lookupVariable:(NSString *)term2])
+        {
+            term2_address = [Common addressForVariable:(NSString *)term2];
+        }
+        else
+        {
+            term2_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:term2_type] andValue:(NSString *)term2];
+        }
+        
+        // CREATE TEMP
+        Temporal *tn = [Common addTempWithType:result];
+        [Common pushToStack:[Common operands] Object:tn];
+        [Common pushToStack:[Common operandsType] Object:[Common typeForCode:result]];
+        
+        // CREATE QUADRUPLE
+        [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:term1_address] Term2:[NSNumber numberWithInt:term2_address] andResult:[NSNumber numberWithInt:[tn mem_address]]];
+        
+        while ( (0 < [Common del_paren]) && ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"("]) )
+        {
+            [Common popFromStack:[Common operators]];
+            [Common setDelParen:([Common del_paren] - 1)];
+        }
+    }
+
     // 8
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-    
-    return EQ;
+
+    return EQUAL_THAN;
 }
 
 "<" {
+    // 5
+    if ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"+"] || [Common isString:[Common topFromStack:[Common operators]] equalTo:@"-"])
+    {
+        NSString *op = [Common popFromStack:[Common operators]];
+        id term2 = [Common popFromStack:[Common operands]];
+        NSString *term2_type = [Common popFromStack:[Common operandsType]];
+        id term1 = [Common popFromStack:[Common operands]];
+        NSString *term1_type = [Common popFromStack:[Common operandsType]];
+        
+        NSInteger result = [Common operationResultWithOperator:op Term1:term1_type andTerm2:term2_type];
+        
+        if (-1 == result)
+        {
+            [Common setYyError:[NSString stringWithFormat:@"The operation '%@ %@ %@' is invalid.", term1_type, op, term2_type]];
+            return yyerror("");
+        }
+        
+        NSInteger term1_address, term2_address;
+        
+        // TERM 1
+        if ([term1 isKindOfClass:[Temporal class]])
+        {
+            term1_address = [term1 mem_address];
+        }
+        else if ([Common lookupVariable:(NSString *)term1])
+        {
+            term1_address = [Common addressForVariable:(NSString *)term1];
+        }
+        else
+        {
+            term1_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:term1_type] andValue:(NSString *)term1];
+        }
+        
+        // TERM 2
+        if ([term2 isKindOfClass:[Temporal class]])
+        {
+            term2_address = [term2 mem_address];
+        }
+        else if ([Common lookupVariable:(NSString *)term2])
+        {
+            term2_address = [Common addressForVariable:(NSString *)term2];
+        }
+        else
+        {
+            term2_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:term2_type] andValue:(NSString *)term2];
+        }
+        
+        // CREATE TEMP
+        Temporal *tn = [Common addTempWithType:result];
+        [Common pushToStack:[Common operands] Object:tn];
+        [Common pushToStack:[Common operandsType] Object:[Common typeForCode:result]];
+        
+        // CREATE QUADRUPLE
+        [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:term1_address] Term2:[NSNumber numberWithInt:term2_address] andResult:[NSNumber numberWithInt:[tn mem_address]]];
+        
+        while ( (0 < [Common del_paren]) && ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"("]) )
+        {
+            [Common popFromStack:[Common operators]];
+            [Common setDelParen:([Common del_paren] - 1)];
+        }
+    }
 
     // 8
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
 
-    return LT;
+    return LESS_THAN;
 }
 
 ">" {
-    
+    // 5
+    if ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"+"] || [Common isString:[Common topFromStack:[Common operators]] equalTo:@"-"])
+    {
+        NSString *op = [Common popFromStack:[Common operators]];
+        id term2 = [Common popFromStack:[Common operands]];
+        NSString *term2_type = [Common popFromStack:[Common operandsType]];
+        id term1 = [Common popFromStack:[Common operands]];
+        NSString *term1_type = [Common popFromStack:[Common operandsType]];
+        
+        NSInteger result = [Common operationResultWithOperator:op Term1:term1_type andTerm2:term2_type];
+        
+        if (-1 == result)
+        {
+            [Common setYyError:[NSString stringWithFormat:@"The operation '%@ %@ %@' is invalid.", term1_type, op, term2_type]];
+            return yyerror("");
+        }
+        
+        NSInteger term1_address, term2_address;
+        
+        // TERM 1
+        if ([term1 isKindOfClass:[Temporal class]])
+        {
+            term1_address = [term1 mem_address];
+        }
+        else if ([Common lookupVariable:(NSString *)term1])
+        {
+            term1_address = [Common addressForVariable:(NSString *)term1];
+        }
+        else
+        {
+            term1_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:term1_type] andValue:(NSString *)term1];
+        }
+        
+        // TERM 2
+        if ([term2 isKindOfClass:[Temporal class]])
+        {
+            term2_address = [term2 mem_address];
+        }
+        else if ([Common lookupVariable:(NSString *)term2])
+        {
+            term2_address = [Common addressForVariable:(NSString *)term2];
+        }
+        else
+        {
+            term2_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:term2_type] andValue:(NSString *)term2];
+        }
+        
+        // CREATE TEMP
+        Temporal *tn = [Common addTempWithType:result];
+        [Common pushToStack:[Common operands] Object:tn];
+        [Common pushToStack:[Common operandsType] Object:[Common typeForCode:result]];
+        
+        // CREATE QUADRUPLE
+        [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:term1_address] Term2:[NSNumber numberWithInt:term2_address] andResult:[NSNumber numberWithInt:[tn mem_address]]];
+        
+        while ( (0 < [Common del_paren]) && ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"("]) )
+        {
+            [Common popFromStack:[Common operators]];
+            [Common setDelParen:([Common del_paren] - 1)];
+        }
+    }
+
     // 8
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-    
-    return GT;
+
+    return GREATER_THAN;
 }
 
+
 "(" {
+    // 6
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-    return P_OPEN;
+    
+    return PARENTHESIS_OPEN;
 }
 
 ")" {
-    
-    //[Common popFromStack:[Common operators]];
-    
-    [Common setDelParen:([Common delParen] + 1)];
-    
-    return P_CLOSE;
+    // 7
+    [Common setDelParen:([Common del_paren] + 1)];
+
+    return PARENTHESIS_CLOSE;
 }
 
 "{" {
-    return L_OPEN;
+    return BRACE_OPEN;
 }
 
 "}" {
-    return L_CLOSE;
+    return BRACE_CLOSE;
 }
 
 "[" {
-    return B_OPEN;
+    return BRACKET_OPEN;
 }
 
 "]" {
-    return B_CLOSE;
+    return BRACKET_CLOSE;
 }
 
 ";" {
@@ -174,32 +431,74 @@
     return _AS;
 }
 
-"var"|"list" {
-    // Asigna alfa (semantica)
-    [Common setAlfa:[NSString stringWithUTF8String:yytext]];
-    return _VAR_LIST;
+"int" {
+    // alpha
+    [Common setAlpha:[NSString stringWithUTF8String:yytext]];
+
+    return _INT;
 }
 
-"to" {
-    return _TO;
+"float" {
+    // alpha
+    [Common setAlpha:[NSString stringWithUTF8String:yytext]];
+
+    return _FLOAT;
 }
 
-"say" {
-    // 37
-    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+"string" {
+    // alpha
+    [Common setAlpha:[NSString stringWithUTF8String:yytext]];
 
-    return _SAY;
+    return _STRING;
 }
 
-"for" {
-    return _FOR;
+"bool" {
+    // alpha
+    [Common setAlpha:[NSString stringWithUTF8String:yytext]];
+
+    return _BOOL;
 }
 
 "load" {
-    // 43
+    // 42
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
 
     return _LOAD;
+}
+
+"apply" {
+    // 43
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
+    return _APPLY;
+}
+
+"scale" {
+    // 44
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
+    return _SCALE;
+}
+
+"show" {
+    // 39
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
+    return _SHOW;
+}
+
+"hide" {
+    // 40
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
+    return _HIDE;
+}
+
+"clear" {
+    // 41
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
+    return _CLEAR;
 }
 
 "set" {
@@ -209,39 +508,23 @@
     return _SET;
 }
 
-"apply" {
-    // 44
-    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-
-    return _APPLY;
+"to" {
+    return _TO;
 }
 
-"scale" {
-    // 45
-    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-
-    return _SCALE;
+"at" {
+    return _AT;
 }
 
-"show" {
-    // 40
+"say" {
+    // 37
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-
-    return _SHOW;
+    
+    return _SAY;
 }
 
-"hide" {
-    // 41
-    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-
-    return _HIDE;
-}
-
-"clear" {
-    // 42
-    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-
-    return _CLEAR;
+"for" {
+    return _FOR;
 }
 
 "if" {
@@ -257,39 +540,11 @@
 }
 
 "until" {
-    if ([Common isStringEqual:[Common topFromStack:[Common operators]] To:@"wait"])
-    {
-        [Common popFromStack:[Common operators]];
-        // 31
-        [Common pushToStack:[Common operators] Object:@"WAIT_UNTIL"];
-    }
+    // 38
+    [Common popFromStack:[Common operators]];
+    [Common pushToStack:[Common operators] Object:@"wait_until"];
 
     return _UNTIL;
-}
-
-"add" {
-    // 35
-    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-
-    return _ADD;
-}
-
-"delete" {
-    at = 1;
-    
-    // 34
-    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-    
-    return _DELETE;
-}
-
-"at" {
-    at = 1;
-    
-    // 36
-    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-    
-    return _AT;
 }
 
 "of" {
@@ -297,125 +552,121 @@
 }
 
 "move" {
-    // 31
+    // 38
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
 
     return _MOVE;
 }
 
 "turn" {
-    // 33
+    // 38
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
 
     return _TURN;
 }
 
 "wait" {
-    // 30
+    // 38
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+    
+    // PUSH TO PJUMPS
+    [Common pushToStack:[Common p_jumps] Object:[NSNumber numberWithInt:[Common nextPointer]]];
 
     return _WAIT;
 }
 
 "contains" {
-    // 26
-    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-
     return _CONTAINS;
 }
 
 "length" {
     // 28
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-
+    
     return _LENGTH;
 }
 
 "item" {
     // 29
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-    
+
     return _ITEM;
 }
 
 [0-9]+ {
-    if (1 == at)
+    // beta
+    if ([Common flag] == FLAG_CREATE)
     {
-        [Common setPosition:[NSString stringWithUTF8String:yytext]];
-        at = 0;
+        [Common setSigma:[NSString stringWithUTF8String:yytext]];
     }
     else
     {
-        [Common setDType:@"int"];
+        [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
+        [Common pushToStack:[Common operandsType] Object:@"int"];
     }
-    
-    // 1
-    [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
-    [Common pushToStack:[Common operandsTypes] Object:@"int"];
-    
     return CTE_INT;
 }
 
 [0-9]+"."[0-9]+ {
-    [Common setDType:@"float"];
-    
-    // 1
     [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
-    [Common pushToStack:[Common operandsTypes] Object:@"float"];
-    
+    [Common pushToStack:[Common operandsType] Object:@"float"];
+
     return CTE_FLOAT;
 }
 
-'[a-zA-Z0-9]*[ ","|"."|":"|";"|"<"|">"|"{"|"}"|"‘"|"="|"/"|"*"|"+"|"-"|"_"|"("|")"|"&"|"^"|"%"|"$"|"#"|"@"|"?"|"!"|"[" ]*' {
-    [Common setDType:@"string"];
-    
-    // 1
+"true"|"false" {
     [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
-    [Common pushToStack:[Common operandsTypes] Object:@"string"];
-    
+    [Common pushToStack:[Common operandsType] Object:@"bool"];
+
+    return CTE_BOOL;
+}
+
+'[a-zA-Z0-9]*[ ","|"."|":"|";"|"<"|">"|"{"|"}"|"‘"|"="|"/"|"*"|"+"|"-"|"_"|"("|")"|"&"|"^"|"%"|"$"|"#"|"@"|"?"|"!"|"[" ]*' {
+    [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
+    [Common pushToStack:[Common operandsType] Object:@"string"];
+
     return CTE_STRING;
 }
 
 [a-z][a-zA-Z0-9]* {
-    // Asigna beta (semantica)
-    [Common setBeta:[NSString stringWithUTF8String:yytext]];
-
-    // hace el lookup de la var
-    if([Common flag] != FLAG_CREATE)
+    // beta
+    if ([Common flag] == FLAG_CREATE)
     {
-        if (![Common lookupSymbol:[NSString stringWithUTF8String: yytext]])
+        if ([Common lookupVariable:[NSString stringWithUTF8String:yytext]])
         {
+            [Common setYyError:[NSString stringWithFormat:@"The variable '%@' is already declared.", [NSString stringWithUTF8String:yytext]]];
             return yyerror("");
         }
         
-        // 1
-        [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
-        if ( [Common dTypeForSymbol:[NSString stringWithUTF8String:yytext]] != nil )
-        {
-            [Common pushToStack:[Common operandsTypes] Object:[Common dTypeForSymbol:[NSString stringWithUTF8String:yytext]]];
-        }
-        else
-        {
-            [Common pushToStack:[Common operandsTypes] Object:@"undefined"];
-        }
+        [Common setBeta:[NSString stringWithUTF8String:yytext]];
     }
-    
-    return VARIABLE;
+    else
+    {
+        if (![Common lookupVariable:[NSString stringWithUTF8String:yytext]])
+        {
+            [Common setYyError:[NSString stringWithFormat:@"The variable '%@' does not exists.", [NSString stringWithUTF8String:yytext]]];
+            return yyerror("");
+        }
+        
+        [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
+        [Common pushToStack:[Common operandsType] Object:[Common typeForCode:[Common typeForVariable:[NSString stringWithUTF8String:yytext]]]];
+    }
+
+    return ID;
 }
 
 . {
     yyerror(yytext);
 }
+
 %%
 
-// Metodo que muestra los errores.
 int yyerror(char *yytext)
 {
-    [Common setYyErrorNo:yylineno];
+    printf("%s\n", yytext);
     return 1;
 }
 
-// Metodo principal de para el preprocesador.
 int ext_scanner(const char *archivo)
 {
     //**** INICIA RESET VARIABLES
@@ -434,11 +685,11 @@ int ext_scanner(const char *archivo)
     yyout = NULL;
     yytext = NULL;
     //**** FIN RESET VARIABLES
-
+    
     yyin = fopen(archivo, "r");
     int error = yyparse();
     
-    if (error == 1)
+    if (1 == error)
     {
         return 1;
     }
