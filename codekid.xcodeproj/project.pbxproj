@@ -24,9 +24,12 @@
 		1737C46718CE41DE00CFF4D0 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46618CE41DE00CFF4D0 /* Common.m */; };
 		1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46818CE41ED00CFF4D0 /* tokenizer.lm */; };
 		1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46A18CE41F600CFF4D0 /* parser.ym */; };
-		175FE03B18CE8578006C25B2 /* SemanticSymbol.m in Sources */ = {isa = PBXBuildFile; fileRef = 175FE03A18CE8578006C25B2 /* SemanticSymbol.m */; };
 		17722D7118D8042900E4A3CB /* Quadruple.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7018D8042900E4A3CB /* Quadruple.m */; };
 		17722D7518D807BC00E4A3CB /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7418D807BC00E4A3CB /* Stack.m */; };
+		17E9DB1818F903DB0024EE7A /* Memory.m in Sources */ = {isa = PBXBuildFile; fileRef = 17E9DB1118F903DB0024EE7A /* Memory.m */; };
+		17E9DB1918F903DB0024EE7A /* Procedure.m in Sources */ = {isa = PBXBuildFile; fileRef = 17E9DB1318F903DB0024EE7A /* Procedure.m */; };
+		17E9DB1A18F903DB0024EE7A /* Temporal.m in Sources */ = {isa = PBXBuildFile; fileRef = 17E9DB1518F903DB0024EE7A /* Temporal.m */; };
+		17E9DB1B18F903DB0024EE7A /* Variable.m in Sources */ = {isa = PBXBuildFile; fileRef = 17E9DB1718F903DB0024EE7A /* Variable.m */; };
 		DF3D350018DFC07500F8D6BD /* Project.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D34FF18DFC07500F8D6BD /* Project.m */; };
 		DF3D350518DFCC7000F8D6BD /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3D350218DFCC7000F8D6BD /* edit.png */; };
 		DF3D350618DFCC7000F8D6BD /* plus-76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3D350318DFCC7000F8D6BD /* plus-76x76@2x.png */; };
@@ -86,12 +89,18 @@
 		1737C46618CE41DE00CFF4D0 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
 		1737C46818CE41ED00CFF4D0 /* tokenizer.lm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = tokenizer.lm; sourceTree = "<group>"; };
 		1737C46A18CE41F600CFF4D0 /* parser.ym */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.yacc; path = parser.ym; sourceTree = "<group>"; };
-		175FE03918CE8578006C25B2 /* SemanticSymbol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SemanticSymbol.h; sourceTree = "<group>"; };
-		175FE03A18CE8578006C25B2 /* SemanticSymbol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SemanticSymbol.m; sourceTree = "<group>"; };
 		17722D6F18D8042900E4A3CB /* Quadruple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quadruple.h; sourceTree = "<group>"; };
 		17722D7018D8042900E4A3CB /* Quadruple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quadruple.m; sourceTree = "<group>"; };
 		17722D7318D807BC00E4A3CB /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		17722D7418D807BC00E4A3CB /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
+		17E9DB1018F903DB0024EE7A /* Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memory.h; sourceTree = "<group>"; };
+		17E9DB1118F903DB0024EE7A /* Memory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memory.m; sourceTree = "<group>"; };
+		17E9DB1218F903DB0024EE7A /* Procedure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Procedure.h; sourceTree = "<group>"; };
+		17E9DB1318F903DB0024EE7A /* Procedure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Procedure.m; sourceTree = "<group>"; };
+		17E9DB1418F903DB0024EE7A /* Temporal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Temporal.h; sourceTree = "<group>"; };
+		17E9DB1518F903DB0024EE7A /* Temporal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Temporal.m; sourceTree = "<group>"; };
+		17E9DB1618F903DB0024EE7A /* Variable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Variable.h; sourceTree = "<group>"; };
+		17E9DB1718F903DB0024EE7A /* Variable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Variable.m; sourceTree = "<group>"; };
 		DF3D34FE18DFC07500F8D6BD /* Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Project.h; sourceTree = "<group>"; };
 		DF3D34FF18DFC07500F8D6BD /* Project.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Project.m; sourceTree = "<group>"; };
 		DF3D350218DFCC7000F8D6BD /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edit.png; path = "codekid-img/edit.png"; sourceTree = "<group>"; };
@@ -190,8 +199,8 @@
 				1737C43718CE415D00CFF4D0 /* Supporting Files */,
 				1737C46518CE41DE00CFF4D0 /* Common.h */,
 				1737C46618CE41DE00CFF4D0 /* Common.m */,
-				17D0E8FE18D1504300B0C02C /* flex & bison */,
-				17722D7218D8043100E4A3CB /* Objects */,
+				17D0E8FE18D1504300B0C02C /* Flex & Bison */,
+				17722D7218D8043100E4A3CB /* Compiler Objects */,
 			);
 			path = codekid;
 			sourceTree = "<group>";
@@ -225,26 +234,32 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		17722D7218D8043100E4A3CB /* Objects */ = {
+		17722D7218D8043100E4A3CB /* Compiler Objects */ = {
 			isa = PBXGroup;
 			children = (
-				175FE03918CE8578006C25B2 /* SemanticSymbol.h */,
-				175FE03A18CE8578006C25B2 /* SemanticSymbol.m */,
+				17E9DB1018F903DB0024EE7A /* Memory.h */,
+				17E9DB1118F903DB0024EE7A /* Memory.m */,
+				17E9DB1218F903DB0024EE7A /* Procedure.h */,
+				17E9DB1318F903DB0024EE7A /* Procedure.m */,
+				17E9DB1418F903DB0024EE7A /* Temporal.h */,
+				17E9DB1518F903DB0024EE7A /* Temporal.m */,
+				17E9DB1618F903DB0024EE7A /* Variable.h */,
+				17E9DB1718F903DB0024EE7A /* Variable.m */,
 				17722D6F18D8042900E4A3CB /* Quadruple.h */,
 				17722D7018D8042900E4A3CB /* Quadruple.m */,
 				17722D7318D807BC00E4A3CB /* Stack.h */,
 				17722D7418D807BC00E4A3CB /* Stack.m */,
 			);
-			name = Objects;
+			name = "Compiler Objects";
 			sourceTree = "<group>";
 		};
-		17D0E8FE18D1504300B0C02C /* flex & bison */ = {
+		17D0E8FE18D1504300B0C02C /* Flex & Bison */ = {
 			isa = PBXGroup;
 			children = (
 				1737C46818CE41ED00CFF4D0 /* tokenizer.lm */,
 				1737C46A18CE41F600CFF4D0 /* parser.ym */,
 			);
-			name = "flex & bison";
+			name = "Flex & Bison";
 			sourceTree = "<group>";
 		};
 		DF7F272A18EDFF3A00971329 /* img */ = {
@@ -397,11 +412,14 @@
 				1737C46718CE41DE00CFF4D0 /* Common.m in Sources */,
 				17722D7118D8042900E4A3CB /* Quadruple.m in Sources */,
 				1737C44718CE415D00CFF4D0 /* ViewController.m in Sources */,
+				17E9DB1818F903DB0024EE7A /* Memory.m in Sources */,
 				1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */,
 				1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */,
-				175FE03B18CE8578006C25B2 /* SemanticSymbol.m in Sources */,
+				17E9DB1918F903DB0024EE7A /* Procedure.m in Sources */,
+				17E9DB1A18F903DB0024EE7A /* Temporal.m in Sources */,
 				DF3D350018DFC07500F8D6BD /* Project.m in Sources */,
 				1737C44118CE415D00CFF4D0 /* AppDelegate.m in Sources */,
+				17E9DB1B18F903DB0024EE7A /* Variable.m in Sources */,
 				1737C43D18CE415D00CFF4D0 /* main.m in Sources */,
 				DF7F272D18EDFF6900971329 /* EventsViewController.m in Sources */,
 			);
