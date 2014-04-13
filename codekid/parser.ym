@@ -351,23 +351,10 @@ opEsperaAux:
                 [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:value_address]];
             }
         | _UNTIL BRACKET_OPEN expresion act9 BRACKET_CLOSE
-        ;
-
-act9:
-        /* epsilon */
             {
-                NSString *op = [Common popFromStack:[Common operators]];
                 id value = [Common popFromStack:[Common operands]];
                 NSString *value_type = [Common popFromStack:[Common operandsType]];
                 NSNumber *pointer = [Common popFromStack:[Common p_jumps]];
-                
-                // CHECK VALUE = BOOLEAN
-                if (BOOLEAN != [Common lookupOperandCodeForKey:value_type])
-                {
-                    [Common setYyError:[NSString stringWithFormat:@"The value in the operation '%@' is invalid. Is %@ and must be BOOLEAN.", op, [value_type uppercaseString]]];
-                    return yyerror("");
-                }
-                
                 NSInteger value_address;
                 
                 // VALUE
@@ -392,6 +379,21 @@ act9:
                 }
                 
                 [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"GOTOF"]] Term1:[NSNumber numberWithInt:value_address] Term2:[NSNumber numberWithInt:-1] andResult:pointer];
+            }
+        ;
+
+act9:
+        /* epsilon */
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                NSString *value_type = [Common topFromStack:[Common operandsType]];
+                
+                // CHECK VALUE = BOOLEAN
+                if (BOOLEAN != [Common lookupOperandCodeForKey:value_type])
+                {
+                    [Common setYyError:[NSString stringWithFormat:@"The value in the operation '%@' is invalid. Is %@ and must be BOOLEAN.", op, [value_type uppercaseString]]];
+                    return yyerror("");
+                }
             }
         ;
 
