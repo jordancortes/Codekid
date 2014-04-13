@@ -88,6 +88,15 @@
 + (NSInteger)nextPointer;
 
 /**
+ Asigna un valor de resultado a un cuádruplo especificado.
+ @param pointer
+    El número de cuadruplo que se cambiará.
+ @param result
+    El nuevo valor que tomará el campo @c result del cuádruplo.
+ */
++ (void)setQuadruple:(NSNumber *)pointer withResult:(NSNumber *)result;
+
+/**
  Agrega un procedimiento al directorio de procedimientos.
  
  @param name

@@ -313,6 +313,15 @@ static int _del_paren;
     return [quadruples count] + 1;
 }
 
++ (void)setQuadruple:(NSNumber *)pointer withResult:(NSNumber *)result
+{
+    Quadruple *gotof_quadruple = [quadruples objectAtIndex:[pointer intValue]-1];
+    
+    [gotof_quadruple setResult:[result intValue]];
+
+    [quadruples replaceObjectAtIndex:[pointer intValue]-1 withObject:gotof_quadruple];
+}
+
 //==============================================================================
 //=============================================================== PROCEDIMIENTOS
 //==============================================================================

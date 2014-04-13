@@ -528,6 +528,8 @@
 }
 
 "if" {
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _IF;
 }
 

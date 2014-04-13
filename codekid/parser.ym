@@ -647,12 +647,64 @@ opMovimiento:
         ;
 
 condicion:
-        _IF BRACKET_OPEN expresion BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE condicionAux END_EXP
+        _IF BRACKET_OPEN expresion act9 act91 BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE condicionAux END_EXP
+        ;
+
+act91:
+        /* epsilon */
+            {
+                id value = [Common popFromStack:[Common operands]];
+                NSString *value_type = [Common popFromStack:[Common operandsType]];
+                
+                NSInteger value_address;
+                
+                // VALUE
+                if ([value isKindOfClass:[Temporal class]])
+                {
+                    value_address = [value mem_address];
+                }
+                else if ([Common lookupVariable:(NSString *)value])
+                {
+                    // CHECK TERM1 IS SCALAR
+                    if ([Common isVariableList:value])
+                    {
+                        [Common setYyError:[NSString stringWithFormat:@"The variable '%@' is a list.", value]];
+                        return yyerror("");
+                    }
+                    
+                    value_address = [Common addressForVariable:(NSString *)value];
+                }
+                else
+                {
+                    value_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:value_type] andValue:(NSString *)value];
+                }
+            
+                [Common popFromStack:[Common operandsType]]; // operandType
+                
+                [Common pushToStack:[Common p_jumps] Object:[NSNumber numberWithInt:[Common nextPointer]]];
+                
+                [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"GOTOF"]] Term1:[NSNumber numberWithInt:value_address] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:-1]];
+            }
         ;
 
 condicionAux:
         /* epsilon */
-        | _ELSE BRACE_OPEN modulo moduloAux BRACE_CLOSE
+            {
+                [Common setQuadruple:[Common popFromStack:[Common p_jumps]] withResult:[NSNumber numberWithInt:[Common nextPointer]]];
+            }
+        | act92 _ELSE BRACE_OPEN modulo moduloAux BRACE_CLOSE
+            {
+                [Common setQuadruple:[Common popFromStack:[Common p_jumps]] withResult:[NSNumber numberWithInt:[Common nextPointer]]];
+            }
+        ;
+
+act92:
+        /* epsilon */
+            {
+                [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"GOTO"]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:-1]];
+                [Common setQuadruple:[Common popFromStack:[Common p_jumps]] withResult:[NSNumber numberWithInt:[Common nextPointer]]];
+                [Common pushToStack:[Common p_jumps] Object:[NSNumber numberWithInt:[Common nextPointer]-1]];
+            }
         ;
 
 ciclo:
