@@ -708,12 +708,7 @@ act92:
         ;
 
 ciclo:
-        _REPEAT cicloAux BRACE_OPEN modulo moduloAux BRACE_CLOSE END_EXP
-        ;
-
-cicloAux:
-        cte
-        | _UNTIL BRACKET_OPEN expresion BRACKET_CLOSE
+        _REPEAT _UNTIL BRACKET_OPEN expresion BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE END_EXP
         ;
 
 expresion:
