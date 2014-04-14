@@ -708,7 +708,14 @@ act92:
         ;
 
 ciclo:
-        _REPEAT _UNTIL BRACKET_OPEN expresion BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE END_EXP
+        _REPEAT _UNTIL BRACKET_OPEN expresion act9 act91 BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE END_EXP
+        {
+            NSNumber *last_pointer = [Common popFromStack:[Common p_jumps]];
+            NSNumber *recheck_pointer = [Common popFromStack:[Common p_jumps]];
+            
+            [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"GOTO"]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:recheck_pointer];
+            [Common setQuadruple:last_pointer withResult:[NSNumber numberWithInt:[Common nextPointer]]];
+        }
         ;
 
 expresion:
