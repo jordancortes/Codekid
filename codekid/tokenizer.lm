@@ -543,8 +543,11 @@
 
 "until" {
     // 38
-    [Common popFromStack:[Common operators]];
-    [Common pushToStack:[Common operators] Object:@"wait_until"];
+    if ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"wait"])
+    {
+        [Common popFromStack:[Common operators]];
+        [Common pushToStack:[Common operators] Object:@"wait_until"];
+    }
 
     return _UNTIL;
 }
