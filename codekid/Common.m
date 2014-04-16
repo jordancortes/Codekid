@@ -268,6 +268,10 @@ static int _del_paren;
     _yyErrorNo = 1;
     _yyError = @"";
     _del_paren = 0;
+    
+    // agrega el primer cuadruplo que brinca al main
+    [self addQuadrupleWithOperator:[NSNumber numberWithInt:[self lookupOperatorCodeForKey:@"GOTO"]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:-1]];
+    [self pushToStack:_p_jumps Object:[NSNumber numberWithInt:1]];
 }
 
 //==============================================================================

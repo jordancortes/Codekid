@@ -98,7 +98,14 @@ creaVarAux:
         ;
 
 inicioAux2:
-        /* epsilon */  { [Common setFlag:FLAG_MAIN]; }
+        /* epsilon */
+            {
+                [Common setFlag:FLAG_MAIN];
+                
+                NSNumber *last_pointer = [Common popFromStack:[Common p_jumps]];
+                
+                [Common setQuadruple:last_pointer withResult:[NSNumber numberWithInt:[Common nextPointer]]];
+            }
         | evento inicioAux2
         ;
 
