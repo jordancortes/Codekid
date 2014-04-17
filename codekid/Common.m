@@ -292,6 +292,7 @@ static int _del_paren;
 {
     [self saveQuadruples];
     [self saveProcedures];
+    [mem save];
 }
 
 //==============================================================================

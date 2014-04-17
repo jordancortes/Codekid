@@ -62,6 +62,8 @@
  */
 - (id)init;
 
+- (void)save;
+
 /**
  Método para agregar una variable INT a memoria.
  
