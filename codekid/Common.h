@@ -61,6 +61,8 @@
  */
 + (Boolean)isString:(NSString *)str1 equalTo:(NSString *)str2;
 
++ (void)save;
+
 /**
  Agrega un cuadruplo nuevo con sus respectivos valores.
  
