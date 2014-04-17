@@ -55,6 +55,7 @@
     if (YYACCEPT == result)
     {
         [Common saveQuadruples];
+        [Common saveProcedures];
         _O_result.text = @"Aceptado";
     }
     else if (YYREJECT == result)

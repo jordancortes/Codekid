@@ -102,6 +102,8 @@ inicioAux2:
             {
                 [Common setFlag:FLAG_MAIN];
                 
+                [Common addProcedureOfType:MAIN withPointer:[Common nextPointer]];
+                
                 NSNumber *last_pointer = [Common popFromStack:[Common p_jumps]];
                 
                 [Common setQuadruple:last_pointer withResult:[NSNumber numberWithInt:[Common nextPointer]]];
@@ -110,7 +112,18 @@ inicioAux2:
         ;
 
 evento:
-        _WHEN BRACKET_OPEN expresion BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE END_EXP
+        _WHEN act93 BRACKET_OPEN expresion BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE END_EXP
+        ;
+
+act93:
+        /* epsilon */
+            {
+                if ([Common flag] == FLAG_EVENT)
+                {
+                    [Common addProcedureOfType:VOID withPointer:[Common nextPointer]];
+                    [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"SUB"]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:-1]];
+                }
+            }
         ;
 
 modulo:

@@ -21,6 +21,7 @@
 #define BOOLEAN 2
 #define STRING 3
 #define VOID 4
+#define MAIN 5
 
 #define FLAG_CREATE 10
 #define FLAG_EVENT 11
@@ -105,6 +106,8 @@
     Posición del primer cuádruplo del procedimiento.
  */
 + (void)addProcedureOfType:(NSInteger)type withPointer:(NSInteger)pointer;
+
++ (void)saveProcedures;
 
 /**
  Método para insertar un objeto al tope de la pila.

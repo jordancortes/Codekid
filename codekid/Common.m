@@ -73,11 +73,11 @@ static int _del_paren;
      */
     operatorCode = [[NSDictionary alloc]
                     initWithObjects:[NSArray arrayWithObjects:@"0", @"1", @"2", @"3", @"4", @"5", @"6", @"10",
-                                     @"11", @"12", @"20", @"21", @"22", @"23", @"24",
+                                     @"11", @"12", @"13", @"20", @"21", @"22", @"23", @"24",
                                      @"25", @"26", @"27", @"28", @"29", @"30", @"31",
                                      @"32", @"33", @"34", @"35", @"36", nil]
                     forKeys:[NSArray arrayWithObjects:@"<", @"=", @">", @"+", @"-", @"*", @"/", @"GOTO",
-                             @"GOTOF", @"GOTOT", @"SET", @"LENGTH", @"ITEM", @"WAIT", @"WAIT_UNTIL", @"CONTAINS",
+                             @"GOTOF", @"GOTOT", @"SUB", @"SET", @"LENGTH", @"ITEM", @"WAIT", @"WAIT_UNTIL", @"CONTAINS",
                              @"TURN", @"MOVE", @"ADD", @"DELETE", @"SAY", @"SHOW", @"HIDE", @"CLEAR",
                              @"LOAD", @"APPLY", @"SCALE", nil]];
     
@@ -334,6 +334,20 @@ static int _del_paren;
 + (void)addProcedureOfType:(NSInteger)type withPointer:(NSInteger)pointer
 {
     [table_procedures addObject:[[Procedure alloc] initWithType:type andPointer:pointer]];
+}
+
++ (void)saveProcedures
+{
+    NSError *error;
+    NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"procedures.txt"];
+    NSString *text = [[NSString alloc] init];
+    
+    for (int x = 0; x < [table_procedures count]; x++) {
+        Procedure *p = [table_procedures objectAtIndex:x];
+        text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%d\n", [p type], [p pointer]]];
+    }
+    
+    /*BOOL success = */[text writeToFile:path atomically:YES encoding:NSUnicodeStringEncoding error:&error];
 }
 
 //==============================================================================
