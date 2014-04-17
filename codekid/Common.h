@@ -99,10 +99,12 @@
 /**
  Agrega un procedimiento al directorio de procedimientos.
  
- @param name
-    Nombre del procedimiento.
+ @param type
+    Tipo de procedimiento (void, main)
+ @param pointer
+    Posición del primer cuádruplo del procedimiento.
  */
-+ (void)addProcedureWithName:(NSString *)name;
++ (void)addProcedureOfType:(NSInteger)type withPointer:(NSInteger)pointer;
 
 /**
  Método para insertar un objeto al tope de la pila.

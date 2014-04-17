@@ -10,16 +10,24 @@
 
 @implementation Procedure
 
-- (id)initWithName:(NSString *)name Type:(NSInteger)type andPointer:(NSInteger)pointer
+- (id)initWithType:(NSInteger)type andPointer:(NSInteger)pointer
 {
     self = [super init]; // inicializa el objeto
     
     if (self)
     {
-        _name = name; // asigna valores
-        _type = type;
+        _type = type; // asigna valores
         _pointer = pointer;
-        _size = [[NSArray alloc] initWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], nil], [NSArray arrayWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], [NSNumber numberWithInt:0], nil], nil];
+        
+        // index:0 -> cstInt
+        // index:1 -> cstFloat
+        // index:2 -> cstBoolean
+        // index:3 -> cstString
+        // index:4 -> tmpInt
+        // index:5 -> tmpFloat
+        // index:6 -> tmpBoolean
+        // index:7 -> tmpString
+        _size = [[NSArray alloc] initWithObjects:@"0", @"0", @"0", @"0", @"0" , @"0", nil];
     }
     
     return self;

@@ -8,7 +8,7 @@
 
 #import "Common.h"
 
-static NSMutableDictionary *table_procedures;
+static NSMutableArray *table_procedures;
 static NSMutableDictionary *table_variables;
 static Memory *mem;
 static NSInteger _flag;
@@ -253,7 +253,7 @@ static int _del_paren;
 
     mem = [[Memory alloc] init];
     quadruples = [[NSMutableArray alloc] init];
-    table_procedures = [[NSMutableDictionary alloc] init];
+    table_procedures = [[NSMutableArray alloc] init];
     table_variables = [[NSMutableDictionary alloc] init];
     
     operands = [[Stack alloc] init];
@@ -331,9 +331,9 @@ static int _del_paren;
 //==============================================================================
 
 /*TODO: PENDIENTE */
-+ (void)addProcedureWithName:(NSString *)name
++ (void)addProcedureOfType:(NSInteger)type withPointer:(NSInteger)pointer
 {
-    [table_procedures setObject:[[Procedure alloc] initWithName:name Type:VOID andPointer:[quadruples count]] forKey:name];
+    [table_procedures addObject:[[Procedure alloc] initWithType:type andPointer:pointer]];
 }
 
 //==============================================================================
