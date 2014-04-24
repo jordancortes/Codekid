@@ -10,17 +10,6 @@
 
 @implementation Block
 
-/*- (void)setBlockInsideTo:(BOOL)value ForView:(UIView *)this_view
-{
-    for (NSInteger x = 0; x < [_inner_drop_zones count]; x++)
-    {
-        if ([[_inner_drop_zones objectAtIndex:x] isEqual:this_view])
-        {
-            [_block_inside replaceObjectAtIndex:x withObject:[NSNumber numberWithBool:value]];
-        }
-    }
-}*/
-
 - (void)increaseSize:(CGFloat)size FromTag:(NSInteger)this_tag
 {
     // incrementa el tamaño de main_view
@@ -43,6 +32,22 @@
             this_view.frame = this_frame;
         }
     }
+}
+
+- (BOOL)isChildOfView:(UIView *)this_view
+{
+    UIView *check_view = [self main_view];
+    
+    do {
+        if ([this_view isEqual:check_view])
+        {
+            return YES;
+        }
+    
+        check_view = [check_view superview];
+    } while ([check_view isKindOfClass:[UIView class]]);
+    
+    return NO;
 }
 
 @end

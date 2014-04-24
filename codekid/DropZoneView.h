@@ -12,4 +12,6 @@
 
 @property BOOL is_empty;
 
+- (void)increaseWidth:(CGFloat)width reachingTo:(UIView *)this_super_view;
+
 @end

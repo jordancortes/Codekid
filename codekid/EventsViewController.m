@@ -94,6 +94,7 @@
     if (![[recognizer.view superview] isEqual:_O_dropzone_view]) // si su superview no es drop_zone
     {
         //[(Block *)[recognizer.view superview] setBlock_inside:NO]; // le dice a su padre anterior que ya no lo tiene
+        [(DropZoneView *)[recognizer.view superview] setIs_empty:YES];
         CGPoint view_center = [recognizer.view center];
         view_center.x = super_location.x;
         view_center.y = super_location.y;
@@ -110,13 +111,13 @@
         //verifica con respecto a la posición en drop_zone si está sobre un inner_drop_zone
         for (Block *this_block in _blocks)
         {
-            if (![recognizer.view isEqual:[this_block main_view]]) // si el view no es él mismo
+            if (![[this_block main_view] isEqual:recognizer.view] && ![this_block isChildOfView:recognizer.view]) // si el view no es él mismo
             {
-                for (UIView *this_view in [this_block inner_drop_zones])
+                for (DropZoneView *this_view in [this_block inner_drop_zones])
                 {
                     CGRect this_frame = [this_view convertRect:this_view.bounds toView:_O_dropzone_view]; // saca la posición con respecto al drop_zone
                     
-                    if ([self location:super_location isInsideOfFrame:this_frame]) // si el frame esta sobre un inner_drop_zone
+                    if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty]) // si el frame esta sobre un inner_drop_zone
                     {
                         //cambia su posicion a 0,0
                         CGRect view_frame = [recognizer.view frame];
@@ -128,12 +129,15 @@
                         [recognizer.view removeFromSuperview];
                         [this_view addSubview:recognizer.view];
                         
+                        //le dice que ya lo tiene
+                        [this_view setIs_empty:NO];
+                        
                         // borra el borde que habia dejado
                         [[this_view layer] setBorderWidth:2.0];
                         [[this_view layer] setBorderColor:[UIColor blackColor].CGColor];
                         
-                        //hace más grande el bloque
-                        [this_block increaseSize:recognizer.view.frame.size.width FromTag:[this_view tag]];
+                        //hace más grande el bloque y sus padres
+                        [this_view increaseWidth:recognizer.view.frame.size.width reachingTo:_O_dropzone_view];
                     }
                 }
             }
@@ -151,19 +155,24 @@
         //verifica con respecto a la posición en drop_zone si está sobre un inner_drop_zone
         for (Block *this_block in _blocks)
         {
-            for (UIView *this_view in [this_block inner_drop_zones])
+            // si no es él mismo y no es hijo del mismo
+            if (![[this_block main_view] isEqual:recognizer.view] && ![this_block isChildOfView:recognizer.view])
             {
-                CGRect this_frame = [this_view convertRect:this_view.bounds toView:_O_dropzone_view];
-                
-                if ([self location:super_location isInsideOfFrame:this_frame])
+                for (DropZoneView *this_view in [this_block inner_drop_zones])
                 {
-                    [[this_view layer] setBorderWidth:2.0];
-                    [[this_view layer] setBorderColor:[UIColor redColor].CGColor];
-                }
-                else
-                {
-                    [[this_view layer] setBorderWidth:2.0];
-                    [[this_view layer] setBorderColor:[UIColor blackColor].CGColor];
+                    CGRect this_frame = [this_view convertRect:this_view.bounds toView:_O_dropzone_view];
+                    
+                    /*TODO: QUE SOLO SE AGREGUE A DONDE DEBE Y QUE NO ACTUE RARO*/
+                    if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
+                    {
+                        [[this_view layer] setBorderWidth:2.0];
+                        [[this_view layer] setBorderColor:[UIColor redColor].CGColor];
+                    }
+                    else
+                    {
+                        [[this_view layer] setBorderWidth:2.0];
+                        [[this_view layer] setBorderColor:[UIColor blackColor].CGColor];
+                    }
                 }
             }
         }

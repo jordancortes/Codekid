@@ -19,5 +19,5 @@
 
 //- (void)setBlockInsideTo:(BOOL)value ForView:(UIView *)this_view;
 - (void)increaseSize:(CGFloat)size FromTag:(NSInteger)this_tag;
-
+- (BOOL)isChildOfView:(UIView *)this_view;
 @end
