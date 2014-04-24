@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EventsViewController.h"
 
-@interface ViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
+@interface ViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate>
 
 /**
  Inicializa.
@@ -26,6 +26,11 @@
  Esconde el teclado.
  */
 - (void) hideKeyboard;
+
+/**
+ Si el teclado se oculta y no se esta en modo de edicion muestra los botones de edit y plus
+ */
+- (void)didHide;
 
 /**
  Muestra la 1º alerta donde se confirma que se quiere eliminar el proyecto.
@@ -78,5 +83,15 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *O_Edit;
 @property (weak, nonatomic) IBOutlet UIButton *O_Plus;
+
+
+
+
+
+@property (weak, nonatomic) IBOutlet UIScrollView *O_scroll;
+
+
+
+
 
 @end

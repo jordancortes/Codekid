@@ -24,6 +24,12 @@
 @implementation ViewController
 
 - (void)viewDidLoad{
+    
+    // acciones segun el teclado esté oculto o visible
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    //[center addObserver:self selector:@selector(didShow) name:UIKeyboardDidShowNotification object:nil];
+    [center addObserver:self selector:@selector(didHide) name:UIKeyboardWillHideNotification object:nil];
+    
     [super viewDidLoad];
     plus = 0;
     col = 0;
@@ -40,30 +46,33 @@
     // quitar teclado
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:tap];
-    
+
 }
 
 // Se va a la vista del proyecto "EventsViewController" y muestra el nombre del proyecto actual
 - (void) pushMyNewViewController:(UITapGestureRecognizer *)recognizer {
-    UIView *project_view = [recognizer view];
-    NSInteger index;
     
-    for (int x = 0; x < [projects count]; x++) {
-        if ([[projects objectAtIndex:x] isKindOfClass:[Project class]]) {
-            if ([[projects objectAtIndex:x] preview] == project_view) {
-                index = x;
+    if ([self.O_Plus isEnabled]) {
+        UIView *project_view = [recognizer view];
+        NSInteger index;
+        
+        for (int x = 0; x < [projects count]; x++) {
+            if ([[projects objectAtIndex:x] isKindOfClass:[Project class]]) {
+                if ([[projects objectAtIndex:x] preview] == project_view) {
+                    index = x;
+                }
             }
         }
-    }
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    EventsViewController *events = [storyboard instantiateViewControllerWithIdentifier:@"EventsViewController"];
-    [events setModalPresentationStyle:UIModalPresentationFullScreen];
-    
-    [self presentViewController:events animated:YES completion:nil];
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        EventsViewController *events = [storyboard instantiateViewControllerWithIdentifier:@"EventsViewController"];
+        [events setModalPresentationStyle:UIModalPresentationFullScreen];
+        
+        [self presentViewController:events animated:YES completion:nil];
 
-    // muestra el nombre del proyecto seleccionado.
-    [[events O_NameProject] setText:[[[projects objectAtIndex:index] project_title] text]];
+        // muestra el nombre del proyecto seleccionado.
+        [[events O_NameProject] setText:[[[projects objectAtIndex:index] project_title] text]];
+    }
 
 }
 
@@ -71,6 +80,24 @@
 - (void) hideKeyboard{
     if (![[[[projects lastObject] project_title] text] isEqualToString:@""]){
         [self.view endEditing:YES];
+        
+        // habilita el "edit" y "+"
+        if (edit == NO) {
+            [self.O_Plus setEnabled:YES];
+            [self.O_Edit setEnabled:YES];
+        }
+    }
+}
+
+// Si el teclado se oculta y no se esta en modo de edicion muestra los botones de edit y plus
+- (void)didHide {
+    if (edit == NO) {
+        CGRect scroll_frame = self.O_scroll.frame;
+        scroll_frame.size.height = 628;
+        self.O_scroll.frame = scroll_frame;
+        
+        [self.O_Plus setEnabled:YES];
+        [self.O_Edit setEnabled:YES];
     }
 }
 
@@ -222,6 +249,12 @@
 
 // Agrega un nuevo view de proyecto al momento en que se oprime el "+"
 - (IBAction)A_plus:(UIButton *)sender{
+    
+    // deshabilita el "edit" y "+"
+    [self.O_Plus setEnabled:NO];
+    [self.O_Edit setEnabled:NO];
+    
+    
     plus++;
     
     col++;
@@ -231,7 +264,7 @@
         row++;
     }
 
-    Project *p = [[Project alloc]initWithFrame:CGRectMake(75 + (col - 1) * 320, 211 + (row - 1) * 213, 253, 153) forCont:plus];
+    Project *p = [[Project alloc]initWithFrame:CGRectMake(75 + (col - 1) * 320, 20 + (row - 1) * 209, 253, 153) forCont:plus];
     [projects addObject:p];
     
     // asigna accion de eliminar proyecto
@@ -246,8 +279,22 @@
     [[[projects lastObject] btn_title] addTarget:self action:@selector(changeName:) forControlEvents:UIControlEventTouchUpInside];
     [[projects lastObject] btn_title].tag = [projects count] - 1; // indice en el arreglo
 
-    [self.view addSubview:[[projects lastObject] preview]]; // la agrega al main view
-
+//    [self.view addSubview:[[projects lastObject] preview]]; // la agrega al main view
+    
+    /*========== muestra la foto en el scrollview ===========*/
+    [self.O_scroll addSubview:[[projects lastObject] preview]];
+    
+    
+    [self.O_scroll setContentSize: CGSizeMake(self.O_scroll.frame.size.width, 209.33333333333333 * row)];
+    
+    CGRect scroll_frame = self.O_scroll.frame;
+    scroll_frame.size.height = 276;
+    self.O_scroll.frame = scroll_frame;
+    
+        //[self.O_scroll setContentOffset:CGPointMake(0, 0 - 265)];
+    
+   // [self.O_scroll setContentOffset: CGPointMake(CGSizeMake(730.00, 150.0*row).width/2, CGSizeMake(730.00, 150.0*row).height/2)];
+    
 }
 
 
