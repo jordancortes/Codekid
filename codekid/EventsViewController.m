@@ -91,21 +91,25 @@
     CGPoint location = [recognizer locationInView:[recognizer.view superview]];
     CGPoint super_location = [recognizer locationInView:_O_dropzone_view];
 
-    if (![[recognizer.view superview] isEqual:_O_dropzone_view]) // si su superview no es drop_zone
-    {
-        //[(Block *)[recognizer.view superview] setBlock_inside:NO]; // le dice a su padre anterior que ya no lo tiene
-        [(DropZoneView *)[recognizer.view superview] setIs_empty:YES];
-        CGPoint view_center = [recognizer.view center];
-        view_center.x = super_location.x;
-        view_center.y = super_location.y;
-        recognizer.view.center = view_center;
-        [recognizer.view removeFromSuperview]; // lo saca
-        [_O_dropzone_view addSubview:recognizer.view]; // lo regresa al drop_zone
-    }
-
     [_O_dropzone_view bringSubviewToFront:recognizer.view]; // al que arrastra lo trae hasta adelante
 
-    if (recognizer.state == UIGestureRecognizerStateEnded) // cuando acaba de arrastrar
+    if (recognizer.state == UIGestureRecognizerStateBegan)
+    {
+        if (![[recognizer.view superview] isEqual:_O_dropzone_view] && [recognizer numberOfTouches] == 2) // si su superview no es drop_zone
+        {
+            [(DropZoneView *)[recognizer.view superview] setIs_empty:YES];
+            CGPoint view_center = [recognizer.view center];
+            view_center.x = super_location.x;
+            view_center.y = super_location.y;
+            recognizer.view.center = view_center;
+            
+            [(DropZoneView *)[recognizer.view superview] decreaseWidth:NORMAL_INNER_DROPZONE_WIDTH reachingTo:_O_dropzone_view];
+            
+            [recognizer.view removeFromSuperview]; // lo saca
+            [_O_dropzone_view addSubview:recognizer.view]; // lo regresa al drop_zone
+        }
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded) // cuando acaba de arrastrar
     {
         //ahora que el objeto esta en drop_zone se verificará si esta sobre un inner_drop_zone para meterlo
         //verifica con respecto a la posición en drop_zone si está sobre un inner_drop_zone

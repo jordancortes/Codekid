@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SidebarBlockViewCell.h"
 #import "BlockFactory.h"
+#import "DropZoneView.h"
 
 @interface EventsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource>
 
@@ -23,6 +24,8 @@
 #define BLOCK_VARAIBLES 5
 #define BLOCK_LISTS 6
 #define BLOCK_CHARACTERS 7
+
+#define NORMAL_INNER_DROPZONE_WIDTH 40
 
 @property NSInteger block_selected;
 @property BlockFactory *factory;
