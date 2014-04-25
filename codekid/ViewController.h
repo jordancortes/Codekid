@@ -19,6 +19,7 @@
 /**
  Se va a la vista del proyecto "EventsViewController" y muestra el nombre del proyecto actual.
  @param recognizer
+    Reconocedor del gesto TAP.
  */
 - (void) pushMyNewViewController:(UITapGestureRecognizer *)recognizer;
 
@@ -35,27 +36,34 @@
 /**
  Muestra la 1º alerta donde se confirma que se quiere eliminar el proyecto.
  @param sender
+    Quien manda la acción.
  */
 - (void)deleteProject:(id)sender;
 
 /**
  Muestra la 2º alerta donde se confirma que se quiere cambiar el nombre del proyecto.
  @param sender
+    Quien manda la acción.
  */
 - (void)changeName:(id)sender;
 
 /**
  Recibe la respuesta del AlertView seleccionada por el usuario; checa la respuesta segun el tag del AlertView y se encarga de eliminar o cambiar el nombre del view seleccionado.
  @param alertView
+    De quien recibe la respuesta
  @param buttonIndex
+    Que botón seleccionó
  */
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 
 /**
  Verifica que el textfield para asignar el nombre del proyecto no este vacio.
  @param textField
+    Campo del texto
  @param range
+    Longitud del texto
  @param string
+    Texto
  @return bool
  */
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
@@ -68,12 +76,14 @@
 /**
  Cambia el estatus del boton "EDIT", si esta en modo de edición permite eliminar y cambiar el nombre de proyectos y deshabilita el boton de agregar proyectos. Si no esta en modo de edición solo permite agregar nuevos proyectos. 
  @param sender
+    Quien manda la acción.
  */
 - (IBAction)A_Edit:(UIButton *)sender;
 
 /**
  Agrega un nuevo view de proyecto al momento en que se oprime el "+".
  @param sender
+    Quien manda la acción.
  */
 - (IBAction)A_plus:(UIButton *)sender;
 

@@ -322,7 +322,7 @@
 /**
  Asigna la descripción del error.
  
- @param new_yy_error
+ @param new_yyerror
     Descripción del error encontrado.
  */
 + (void)setYyError:(NSString *)new_yyerror;
@@ -337,7 +337,7 @@
 /**
  Asigna el número de linea en donde se encontró el error.
  
- @param new_yy_error_no
+ @param new_yyerrorno
     Número de linea en donde hay un error.
  */
 + (void)setYyErrorNo:(NSInteger)new_yyerrorno;
