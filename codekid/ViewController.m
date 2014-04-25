@@ -139,7 +139,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if(alertView.tag == 1){
         if (1 == buttonIndex) {
-            for (UIView *subView in self.view.subviews)
+            for (UIView *subView in _O_scroll.subviews)
             {
                 if ([[projects objectAtIndex:_project_to_delete] preview] == subView)
                 {
@@ -155,7 +155,7 @@
         if (1 == buttonIndex) {
             NSString *trimmedString = [[[alertView textFieldAtIndex:0] text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             if (![trimmedString isEqualToString:@""]) {
-                for (UIView *subView in self.view.subviews) {
+                for (UIView *subView in _O_scroll.subviews) {
                     if ([[projects objectAtIndex:_project_to_rename] preview] == subView){
                         [[projects objectAtIndex:_project_to_rename] project_title ].text = [NSString stringWithFormat:@"%@", [[alertView textFieldAtIndex:0] text]];
                     }
@@ -226,8 +226,8 @@
             [[[projects objectAtIndex:x] preview] removeFromSuperview];
             
             // los vuelve a poner sin brincar espacios
-            [[[projects objectAtIndex:x] preview] setFrame:CGRectMake(75 + (col - 1) * 320, 211 + (row - 1) * 213, 253, 153)];
-            [self.view addSubview:[[projects objectAtIndex:x] preview]];
+            [[[projects objectAtIndex:x] preview] setFrame:CGRectMake(75 + (col - 1) * 320, 20 + (row - 1) * 209, 253, 153)];
+            [_O_scroll addSubview:[[projects objectAtIndex:x] preview]];
             
             col++;
             if (4 == col) {
