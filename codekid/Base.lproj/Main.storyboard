@@ -45,6 +45,10 @@
                                 <rect key="frame" x="258" y="25" width="509" height="90"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XM6-xt-tjI">
+                                <rect key="frame" x="0.0" y="140" width="1024" height="628"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -55,6 +59,7 @@
                     <connections>
                         <outlet property="O_Edit" destination="zZM-17-dUD" id="zfd-hu-edQ"/>
                         <outlet property="O_Plus" destination="oL4-wX-NTC" id="OVg-Sf-m2s"/>
+                        <outlet property="O_scroll" destination="XM6-xt-tjI" id="N1P-ws-URa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

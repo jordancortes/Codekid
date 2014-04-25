@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ViewController.h"
 
 @interface Project : NSObject <UITextFieldDelegate>
 
