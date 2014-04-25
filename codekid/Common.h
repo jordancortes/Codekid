@@ -21,6 +21,7 @@
 #define BOOLEAN 2
 #define STRING 3
 #define VOID 4
+#define MAIN 5
 
 #define FLAG_CREATE 10
 #define FLAG_EVENT 11
@@ -60,6 +61,8 @@
  */
 + (Boolean)isString:(NSString *)str1 equalTo:(NSString *)str2;
 
++ (void)save;
+
 /**
  Agrega un cuadruplo nuevo con sus respectivos valores.
  
@@ -88,12 +91,25 @@
 + (NSInteger)nextPointer;
 
 /**
+ Asigna un valor de resultado a un cuádruplo especificado.
+ @param pointer
+    El número de cuadruplo que se cambiará.
+ @param result
+    El nuevo valor que tomará el campo @c result del cuádruplo.
+ */
++ (void)setQuadruple:(NSNumber *)pointer withResult:(NSNumber *)result;
+
+/**
  Agrega un procedimiento al directorio de procedimientos.
  
- @param name
-    Nombre del procedimiento.
+ @param type
+    Tipo de procedimiento (void, main)
+ @param pointer
+    Posición del primer cuádruplo del procedimiento.
  */
-+ (void)addProcedureWithName:(NSString *)name;
++ (void)addProcedureOfType:(NSInteger)type withPointer:(NSInteger)pointer;
+
++ (void)saveProcedures;
 
 /**
  Método para insertar un objeto al tope de la pila.

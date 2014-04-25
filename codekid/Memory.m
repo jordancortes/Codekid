@@ -33,6 +33,38 @@
     return self;
 }
 
+- (void)save
+{
+    NSError *error;
+    
+    NSURL *applicationPath = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    
+    NSString *path = [applicationPath.path stringByAppendingPathComponent:@"memory.txt"];
+    NSString *text = [[NSString alloc] init];
+    
+    for (NSInteger x = 0; x < [_cst_int count]; x++)
+    {
+        text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%d\n", BASE_CST_INT + x, [[_cst_int objectAtIndex:x] intValue]]];
+    }
+    
+    for (NSInteger x = 0; x < [_cst_float count]; x++)
+    {
+        text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%f\n", BASE_CST_FLOAT + x, [[_cst_float objectAtIndex:x] floatValue]]];
+    }
+    
+    for (NSInteger x = 0; x < [_cst_boolean count]; x++)
+    {
+        text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%d\n", BASE_CST_BOOLEAN + x, [[_cst_boolean objectAtIndex:x] boolValue]]];
+    }
+    
+    for (NSInteger x = 0; x < [_cst_string count]; x++)
+    {
+        text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%@\n", BASE_CST_STRING + x, [_cst_string objectAtIndex:x]]];
+    }
+    
+    /*BOOL success = */[text writeToFile:path atomically:YES encoding:NSUnicodeStringEncoding error:&error];
+}
+
 - (NSInteger)addVariableIntWithListLength:(NSInteger)list_length
 {
     NSInteger pointer;

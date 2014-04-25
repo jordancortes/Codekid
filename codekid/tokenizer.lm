@@ -528,6 +528,8 @@
 }
 
 "if" {
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _IF;
 }
 
@@ -536,13 +538,21 @@
 }
 
 "repeat" {
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
     return _REPEAT;
 }
 
 "until" {
     // 38
-    [Common popFromStack:[Common operators]];
-    [Common pushToStack:[Common operators] Object:@"wait_until"];
+    if ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"wait"])
+    {
+        [Common popFromStack:[Common operators]];
+        [Common pushToStack:[Common operators] Object:@"wait_until"];
+    }
+    
+    // PUSH TO PJUMPS
+    [Common pushToStack:[Common p_jumps] Object:[NSNumber numberWithInt:[Common nextPointer]]];
 
     return _UNTIL;
 }
@@ -568,9 +578,6 @@
 "wait" {
     // 38
     [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
-    
-    // PUSH TO PJUMPS
-    [Common pushToStack:[Common p_jumps] Object:[NSNumber numberWithInt:[Common nextPointer]]];
 
     return _WAIT;
 }
