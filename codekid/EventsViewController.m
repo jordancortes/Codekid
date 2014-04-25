@@ -9,280 +9,304 @@
 #import "EventsViewController.h"
 #import "ViewController.h"
 
-@interface EventsViewController () {
-    UIButton *button; // utilizado en "dragAll" para crear el nuevo  boton de bloque a manipular
-    
-    NSInteger pickerStatus; // cuando mostrar u ocultar el picker
-    NSInteger menu; // cuando mostrar u ocultar el picker
-    Boolean change; // vista del picker, segun el menu actual
+@interface EventsViewController ()
 
-    NSInteger num; // numero de menu seleccionado (7 events-lists)
-
-    NSMutableArray *events; // arreglo con imgs de cada menu (events - lists)
-}
 @end
 
 @implementation EventsViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    pickerStatus = 0;
-    menu = 1;
-    change = 0;
-
-    num = 1; // EVENTS esta seleccionado
-    [self blocks:@"Events"]; // bloques a mostrar segun el menu
+    // Sidebar
+    _sidebar_state = SIDEBAR_BLOCKS;
+    _block_selected = BLOCK_EVENTS;
+    _sidebar_select_block_images = [[NSArray alloc] initWithObjects:
+                             [UIImage imageNamed:@"sidebar_block_events"],
+                             [UIImage imageNamed:@"sidebar_block_appearance"],
+                             [UIImage imageNamed:@"sidebar_block_movement"],
+                             [UIImage imageNamed:@"sidebar_block_control"],
+                             [UIImage imageNamed:@"sidebar_block_operators"],
+                             [UIImage imageNamed:@"sidebar_block_variables"],
+                             [UIImage imageNamed:@"sidebar_block_lists"],
+                             [UIImage imageNamed:@"sidebar_block_characters"],
+                             nil];
+    _block_images = [[NSArray alloc] initWithObjects:
+                     [[NSArray alloc] initWithObjects:
+                      [UIImage imageNamed:@"block_events_start"],
+                      nil],
+                     [[NSArray alloc] initWithObjects:
+                      [UIImage imageNamed:@"block_events_start"],
+                      nil],
+                     [[NSArray alloc] initWithObjects:
+                      [UIImage imageNamed:@"block_movement_turn"],
+                      nil],
+                     [[NSArray alloc] initWithObjects:
+                      [UIImage imageNamed:@"block_events_start"],
+                      nil],
+                     [[NSArray alloc] initWithObjects:
+                      [UIImage imageNamed:@"block_operators_plus"],
+                      [UIImage imageNamed:@"block_operators_minus"],
+                      nil],
+                     [[NSArray alloc] initWithObjects:
+                      [UIImage imageNamed:@"block_events_start"],
+                      nil],
+                     [[NSArray alloc] initWithObjects:
+                      [UIImage imageNamed:@"block_events_start"],
+                      nil],
+                     nil];
+    _O_sidebar_image_arrow_blocks.transform = CGAffineTransformMakeRotation(-M_PI_2);
+    [_O_sidebar_button_blocks setTitle:@"" forState:UIControlStateNormal];
+    [_O_sidebar_button_blocks setBackgroundImage:[_sidebar_select_block_images objectAtIndex:_block_selected] forState:UIControlStateNormal];
+    [_O_sidebar_button_characters setTitle:@"" forState:UIControlStateNormal];
+    [_O_sidebar_button_characters setBackgroundImage:[_sidebar_select_block_images objectAtIndex:BLOCK_CHARACTERS] forState:UIControlStateNormal];
     
-    // inicia con menu de events
-    UIImage *btnEdit = [UIImage imageNamed:@"Events.png"];
-    [self.O_opcMenu1 setImage:btnEdit forState:UIControlStateNormal];
+    // Picker Change Block Type
+    _picker_block_statements = [[NSArray alloc] initWithObjects:
+                                [UIImage imageNamed:@"picker_block_events"],
+                                [UIImage imageNamed:@"picker_block_appearance"],
+                                [UIImage imageNamed:@"picker_block_movement"],
+                                [UIImage imageNamed:@"picker_block_control"],
+                                [UIImage imageNamed:@"picker_block_operators"],
+                                [UIImage imageNamed:@"picker_block_variables"],
+                                [UIImage imageNamed:@"picker_block_lists"],
+                                nil];
+    [_O_picker_block_button_cancel setTitle:@"" forState:UIControlStateNormal];
+    [_O_picker_block_button_cancel setBackgroundImage:[UIImage imageNamed:@"picker_block_button_cancel"] forState:UIControlStateNormal];
+    [_O_picker_block_button_change setTitle:@"" forState:UIControlStateNormal];
+    [_O_picker_block_button_change setBackgroundImage:[UIImage imageNamed:@"picker_block_button_change"] forState:UIControlStateNormal];
+    [_O_picker_block_view setHidden:YES];
     
-    // bloques del menu eventos (events se modifica segun el menu elegido)
-    events = [[NSMutableArray alloc]initWithObjects:@"bloques/1-Events/1-1.png",@"bloques/1-Events/1-2.png", nil];
-    
-    
-    // inicia con picker y boton "change" ocultos
-    self.O_pickerEvents.hidden = YES;
-    self.O_changePicker.hidden = YES;
-    self.O_changePicker.enabled = NO;
-    
-    self.O_errors.text = @" Not Compiled ";
-    
-    // opciones del picker view
-    self.actionsEvent = [[NSArray alloc] initWithObjects:@"Events",@"Appearance",@"Movement",@"Control",@"Operators",@"Variables",@"Lists", nil];
+    // DropZone
+    _factory = [[BlockFactory alloc] init];
+    _blocks = [[NSMutableArray alloc] init];
 }
 
-// regresa al view inicial de creacion de proyectos
-- (IBAction)A_projects:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+#pragma mark Handle Gesture Event
 
-- (IBAction)A_run:(UIButton *)sender{
-}
-
-// Muestra el primer menu de eventos moviendo de posicion el menu de "Characters" y maneja la visibilidad del pickerView y boton "Change"
-- (IBAction)A_opcMenu1:(UIButton *)sender{
-    if (pickerStatus == 1 || menu == 1) {
-        self.O_pickerEvents.hidden = YES;
-        self.O_changePicker.hidden = YES;
-        self.O_changePicker.enabled = NO;
-        pickerStatus = 0;
-        menu = 2;
-    } else{
-        self.O_pickerEvents.hidden = NO;
-        self.O_changePicker.hidden = NO;
-        self.O_changePicker.enabled = YES;
-        menu = 1;
-    }
-    
-    if(change == 1){
-        self.O_pickerEvents.hidden = NO;
-        self.O_changePicker.hidden = NO;
-        self.O_changePicker.enabled = YES;
-        menu = 1;
-        change = 0;
-    }
-    
-    CGRect view2 = _O_2viewChar.frame;
-    view2.origin.x = 0;
-    view2.origin.y = 696;
-    [UIView beginAnimations:nil context:NULL];
-    _O_2viewChar.frame = view2;
-    [UIView setAnimationDuration:0.2];
-    [UIView commitAnimations];
-}
-
-// Muestra el segundo menu moviendolo de posicion en Y hacia arriba y oculta el pickerView.
-- (IBAction)A_opcMenu2:(UIButton *)sender{
-    menu = 2;
-    if (pickerStatus == 0) {
-        pickerStatus = 1;
-    }
-    self.O_pickerEvents.hidden = YES;
-    self.O_changePicker.hidden = YES;
-    self.O_changePicker.enabled = NO;
-    
-    CGRect view2 = _O_2viewChar.frame;
-    view2.origin.x = 0;
-    view2.origin.y = 214;
-    [UIView beginAnimations:nil context:NULL];
-    _O_2viewChar.frame = view2;
-    [UIView setAnimationDuration:0.2];
-    [UIView commitAnimations];
-}
-
-// Maneja el evento de drag en la vista general donde se manipularan los bloques
-- (IBAction) handleDrag:(UIButton *)sender forEvent:(UIEvent *)event
+//The event handling method
+- (void)handlePan:(UIPanGestureRecognizer *)recognizer
 {
-    CGPoint point = [[[event allTouches] anyObject] locationInView:self.O_viewGeneral];
-    
-    if ([self.O_viewGeneral pointInside:point withEvent:nil]) {
-        sender.center = point;
+    CGPoint location = [recognizer locationInView:[recognizer.view superview]];
+    CGPoint super_location = [recognizer locationInView:_O_dropzone_view];
+
+    [_O_dropzone_view bringSubviewToFront:recognizer.view]; // al que arrastra lo trae hasta adelante
+
+    if (recognizer.state == UIGestureRecognizerStateBegan)
+    {
+        if (![[recognizer.view superview] isEqual:_O_dropzone_view] && [recognizer numberOfTouches] == 2) // si su superview no es drop_zone
+        {
+            [(DropZoneView *)[recognizer.view superview] setIs_empty:YES];
+            CGPoint view_center = [recognizer.view center];
+            view_center.x = super_location.x;
+            view_center.y = super_location.y;
+            recognizer.view.center = view_center;
+            
+            [(DropZoneView *)[recognizer.view superview] decreaseWidth:NORMAL_INNER_DROPZONE_WIDTH reachingTo:_O_dropzone_view];
+            
+            [recognizer.view removeFromSuperview]; // lo saca
+            [_O_dropzone_view addSubview:recognizer.view]; // lo regresa al drop_zone
+        }
     }
-}
-
-// Si en el picker se va a mostrar texto, regresa los datos que mostrara
-- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger) component {
-    
-    return [self.actionsEvent objectAtIndex:row];
-}
-
-
-// método del data source obligatorio para el picker; número de componentes
-- (NSInteger) numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
-}
-
-// métodos del data source obligatorios
-- (NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    
-    return [self.actionsEvent count];
-}
-
-// Realiza acción cuando el usuario selecciona un valor del picker
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    // obtiene el string seleccionado en el pickerView
-    NSString *x = [NSString stringWithFormat:@"%@", [self.actionsEvent objectAtIndex:[self.O_pickerEvents selectedRowInComponent:0]]];
-    
-    // manda la variable elegida al picker para que se muestren los bloques correspondientes al menu
-    [self blocks:x];
-    
-    // asigna el titulo correspondiente al menu
-    x = [x stringByAppendingString:@".png"];
-    UIImage *btnEdit = [UIImage imageNamed:x];
-    [self.O_opcMenu1 setImage:btnEdit forState:UIControlStateNormal];
-}
-
-// Esconde el pickerView y botón "Change"
-- (IBAction)A_changePicker:(UIButton *)sender {
-    self.O_changePicker.hidden = YES;
-    self.O_changePicker.enabled = NO;
-    self.O_pickerEvents.hidden = YES;
-    change = 1;
-}
-
-// cambia los objetos del arreglo "events" segun el menu actual y muestra los bloques que corresponden
-- (void) blocks: (NSString *)n {
-    UIImage *btnOpc;
-
-    // limpian aareglo
-    events = nil;
-
-    // asigna los valores al arreglo
-    if([n isEqualToString:@"Events"]){
-        num = 1;
-        events = [[NSMutableArray alloc]initWithObjects:@"bloques/1-Events/1-1.png",@"bloques/1-Events/1-2.png", nil];
-    } else if ([n isEqualToString:@"Appearance"]){
-        num = 2;
-        events = [[NSMutableArray alloc]initWithObjects:@"bloques/2-Appearance/2-1.png",@"bloques/2-Appearance/2-2.png",@"bloques/2-Appearance/2-3.png",@"bloques/2-Appearance/2-4.png",@"bloques/2-Appearance/2-5.png",@"bloques/2-Appearance/2-6.png",@"bloques/2-Appearance/2-7.png",  nil];
-    } else if ([n isEqualToString:@"Movement"]){
-        num = 3;
-        events = [[NSMutableArray alloc]initWithObjects:@"bloques/3-Movement/3-1.png",@"bloques/3-Movement/3-2.png", nil];
-    } else if ([n isEqualToString:@"Control"]){
-        num = 4;
-        events = [[NSMutableArray alloc]initWithObjects:@"bloques/4-Control/4-1.png",@"bloques/4-Control/4-2.png",@"bloques/4-Control/4-3.png",@"bloques/4-Control/4-4.png",@"bloques/4-Control/4-5.png",@"bloques/4-Control/4-6.png", nil];
-    } else if ([n isEqualToString:@"Operators"]){
-        num = 5;
-        events = [[NSMutableArray alloc]initWithObjects:@"bloques/5-Operators/5-1.png",@"bloques/5-Operators/5-2.png",@"bloques/5-Operators/5-3.png",@"bloques/5-Operators/5-4.png",@"bloques/5-Operators/5-5.png",@"bloques/5-Operators/5-6.png",@"bloques/5-Operators/5-7.png", nil];
-    } else if ([n isEqualToString:@"Variables"]){
-        num = 6;
-        events = [[NSMutableArray alloc]initWithObjects:@"bloques/6-Variables/6-1.png", nil];
-    } else if ([n isEqualToString:@"Lists"]){
-        num = 7;
-        events = [[NSMutableArray alloc]initWithObjects:@"bloques/7-Lists/7-1.png",@"bloques/7-Lists/7-2.png",@"bloques/7-Lists/7-3.png",@"bloques/7-Lists/7-4.png", nil];
+    else if (recognizer.state == UIGestureRecognizerStateEnded) // cuando acaba de arrastrar
+    {
+        //ahora que el objeto esta en drop_zone se verificará si esta sobre un inner_drop_zone para meterlo
+        //verifica con respecto a la posición en drop_zone si está sobre un inner_drop_zone
+        for (Block *this_block in _blocks)
+        {
+            if (![[this_block main_view] isEqual:recognizer.view] && ![this_block isChildOfView:recognizer.view]) // si el view no es él mismo
+            {
+                for (DropZoneView *this_view in [this_block inner_drop_zones])
+                {
+                    CGRect this_frame = [this_view convertRect:this_view.bounds toView:_O_dropzone_view]; // saca la posición con respecto al drop_zone
+                    
+                    if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty]) // si el frame esta sobre un inner_drop_zone
+                    {
+                        //cambia su posicion a 0,0
+                        CGRect view_frame = [recognizer.view frame];
+                        view_frame.origin.x = 0;
+                        view_frame.origin.y = 0;
+                        recognizer.view.frame = view_frame;
+                        
+                        //mete el view
+                        [recognizer.view removeFromSuperview];
+                        [this_view addSubview:recognizer.view];
+                        
+                        //le dice que ya lo tiene
+                        [this_view setIs_empty:NO];
+                        
+                        // borra el borde que habia dejado
+                        [[this_view layer] setBorderWidth:2.0];
+                        [[this_view layer] setBorderColor:[UIColor blackColor].CGColor];
+                        
+                        //hace más grande el bloque y sus padres
+                        [this_view increaseWidth:recognizer.view.frame.size.width reachingTo:_O_dropzone_view];
+                    }
+                }
+            }
+        }
     }
-    
-    // deshabilita botones
-    self.O_drag1.enabled = NO;
-    self.O_drag2.enabled = NO;
-    self.O_drag3.enabled = NO;
-    self.O_drag4.enabled = NO;
-    self.O_drag5.enabled = NO;
-    self.O_drag6.enabled = NO;
-    self.O_drag7.enabled = NO;
-    // borra imagenes de los botones
-    [self.O_drag1 setImage:nil forState:UIControlStateNormal];
-    [self.O_drag2 setImage:nil forState:UIControlStateNormal];
-    [self.O_drag3 setImage:nil forState:UIControlStateNormal];
-    [self.O_drag4 setImage:nil forState:UIControlStateNormal];
-    [self.O_drag5 setImage:nil forState:UIControlStateNormal];
-    [self.O_drag6 setImage:nil forState:UIControlStateNormal];
-    [self.O_drag7 setImage:nil forState:UIControlStateNormal];
-    
-    // a
-    for(int i = 0; i < events.count; i++){
-        btnOpc = [UIImage imageNamed:[events objectAtIndex:i]];
-        switch (i){
-            case 0: self.O_drag1.enabled = YES; [self.O_drag1 setImage:btnOpc forState:UIControlStateNormal]; break;
-            case 1: self.O_drag2.enabled = YES; [self.O_drag2 setImage:btnOpc forState:UIControlStateNormal]; break;
-            case 2: self.O_drag3.enabled = YES; [self.O_drag3 setImage:btnOpc forState:UIControlStateNormal]; break;
-            case 3: self.O_drag4.enabled = YES; [self.O_drag4 setImage:btnOpc forState:UIControlStateNormal]; break;
-            case 4: self.O_drag5.enabled = YES; [self.O_drag5 setImage:btnOpc forState:UIControlStateNormal]; break;
-            case 5: self.O_drag6.enabled = YES; [self.O_drag6 setImage:btnOpc forState:UIControlStateNormal]; break;
-            case 6: self.O_drag7.enabled = YES; [self.O_drag7 setImage:btnOpc forState:UIControlStateNormal]; break;
-            default:
-            break;
+    // cuando esta arrastrando
+    else if (recognizer.state == UIGestureRecognizerStateChanged)
+    {
+        // lo mueve
+        CGPoint view_center = [recognizer.view center];
+        view_center.x = location.x;
+        view_center.y = location.y;
+        recognizer.view.center = view_center;
+        
+        //verifica con respecto a la posición en drop_zone si está sobre un inner_drop_zone
+        for (Block *this_block in _blocks)
+        {
+            // si no es él mismo y no es hijo del mismo
+            if (![[this_block main_view] isEqual:recognizer.view] && ![this_block isChildOfView:recognizer.view])
+            {
+                for (DropZoneView *this_view in [this_block inner_drop_zones])
+                {
+                    CGRect this_frame = [this_view convertRect:this_view.bounds toView:_O_dropzone_view];
+                    
+                    /*TODO: QUE SOLO SE AGREGUE A DONDE DEBE Y QUE NO ACTUE RARO*/
+                    if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
+                    {
+                        [[this_view layer] setBorderWidth:2.0];
+                        [[this_view layer] setBorderColor:[UIColor redColor].CGColor];
+                    }
+                    else
+                    {
+                        [[this_view layer] setBorderWidth:2.0];
+                        [[this_view layer] setBorderColor:[UIColor blackColor].CGColor];
+                    }
+                }
+            }
         }
     }
 }
 
-// es llamado por los botones de bloques del menu lateral y se encarga de duplicar el bloque que corresponde en el view de trabajo, controla el drag del mismo.
-- (void)dragAll:(int)num2{
-   // saca el nombre de la imagen que duplicará
-    NSString *name = [[NSString stringWithFormat:@"%.d-", num] stringByAppendingString:[NSString stringWithFormat:@"%.d.png", num2]];
-    // segun el numero de carpeta (num) saca la imagen de donde corresponde
-    switch (num){
-        case 1: name = [@"bloques/1-Events/" stringByAppendingString:name]; break;
-        case 2: name = [@"bloques/2-Appearance/" stringByAppendingString:name]; break;
-        case 3: name = [@"bloques/3-Movement/" stringByAppendingString:name]; break;
-        case 4: name = [@"bloques/4-Control/" stringByAppendingString:name]; break;
-        case 5: name = [@"bloques/5-Operators/" stringByAppendingString:name]; break;
-        case 6: name = [@"bloques/6-Variables/" stringByAppendingString:name]; break;
-        case 7: name = [@"bloques/7-Lists/" stringByAppendingString:name]; break;
-        default: break;
-    }
-    
-    // asigna la imagen al boton a crear y controla el drag sin dejarlo salir del view
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button addTarget:self action:@selector(handleDrag:forEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [button setImage:[UIImage imageNamed:name] forState:UIControlStateNormal];
-    [button setFrame:CGRectMake(80, 20, 316, 67)];
-    [self.O_viewGeneral addSubview:button];
+- (BOOL)location:(CGPoint)location isInsideOfFrame:(CGRect)frame
+{
+    return ((location.x > frame.origin.x && location.x < frame.origin.x + frame.size.width) && (location.y > frame.origin.y && location.y < frame.origin.y + frame.size.height));
 }
 
-// Mandan su numero a "dragAll" para duplicar la img correspondiente.
-- (IBAction)A_drag1:(UIButton *)sender {
-    [self dragAll:1];
+#pragma mark Picker Data Source Methods
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
 }
-- (IBAction)A_drag2:(UIButton *)sender {
-    [self dragAll:2];
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [_picker_block_statements count];
 }
-- (IBAction)A_drag3:(UIButton *)sender {
-    [self dragAll:3];
+
+#pragma mark Picker Delegate Methods
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    UIImageView *picker_block_image_view = [[UIImageView alloc] initWithImage:[_picker_block_statements objectAtIndex:row]];
+    [picker_block_image_view setFrame:CGRectMake(0, 0, 472, 35)];
+    
+    return picker_block_image_view;
 }
-- (IBAction)A_drag4:(UIButton *)sender {
-    [self dragAll:4];
+
+#pragma mark Table Data Source Methods
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [[_block_images objectAtIndex:_block_selected] count];
 }
-- (IBAction)A_drag5:(UIButton *)sender {
-    [self dragAll:5];
+
+#pragma mark Table Delegate Methods
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *sidebar_table_identifier = @"Cell";
+    
+    SidebarBlockViewCell *cell = [tableView dequeueReusableCellWithIdentifier:sidebar_table_identifier];
+    
+    cell.O_sidebar_table_cell.image = [[_block_images objectAtIndex:_block_selected] objectAtIndex:indexPath.row];
+    
+    return cell;
 }
-- (IBAction)A_drag6:(UIButton *)sender {
-    [self dragAll:6];
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [_blocks addObject:[_factory createBlockOfType:(_block_selected * 10) + indexPath.row]];
+    
+    for (UIView *this_view in [[_blocks lastObject] inner_drop_zones]) // para los inner_drop_zones agrega el gesture
+    {
+        [[[_blocks lastObject] main_view] addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
+        [[[_blocks lastObject] main_view] addSubview:this_view];
+    }
+    [_O_dropzone_view addSubview:[[_blocks lastObject] main_view]]; // agrega el objeto al drop_zone
+
+    [_O_sidebar_table_blocks deselectRowAtIndexPath:indexPath animated:YES]; // desmarca la opción seleccionada
 }
-- (IBAction)A_drag7:(UIButton *)sender {
-    [self dragAll:7];
+
+#pragma mark Sidebar
+
+- (void)slideView:(UIView *)myView toX:(NSInteger)x andY:(NSInteger)y duringSeconds:(NSTimeInterval)seconds
+{
+    CGRect sidebar_frame = [myView frame];
+    sidebar_frame.origin.x = x;
+    sidebar_frame.origin.y = y;
+    
+    [UIView animateWithDuration:seconds
+                     animations:^{
+                         myView.frame = sidebar_frame;
+                     }];
+}
+
+- (IBAction)A_sidebar_button_blocks:(id)sender
+{
+    if (_sidebar_state == SIDEBAR_CHARACTERS)
+    {
+        _sidebar_state = SIDEBAR_BLOCKS;
+        
+        [self slideView:_O_sidebar_characters toX:_O_sidebar_characters.frame.origin.x andY:558 duringSeconds:.4];
+    }
+    else
+    {
+        [_O_picker_block selectRow:0 inComponent:0 animated:NO];
+        [_O_picker_block selectRow:_block_selected inComponent:0 animated:YES];
+        [_O_picker_block_view setHidden:NO];
+    }
+}
+
+- (IBAction)A_sidebar_button_characters:(id)sender
+{
+    if (_sidebar_state == SIDEBAR_BLOCKS)
+    {
+        _sidebar_state = SIDEBAR_CHARACTERS;
+        
+        [self slideView:_O_sidebar_characters toX:_O_sidebar_characters.frame.origin.x andY:70 duringSeconds:.4];
+    }
+}
+
+#pragma mark Picker Buttons
+
+- (IBAction)A_picker_button_change:(id)sender
+{
+    _block_selected = [_O_picker_block selectedRowInComponent:0];
+    [_O_sidebar_button_blocks setBackgroundImage:[_sidebar_select_block_images objectAtIndex:_block_selected] forState:UIControlStateNormal];
+    [_O_picker_block_view setHidden:YES];
+    [_O_sidebar_table_blocks reloadData];
+}
+
+- (IBAction)A_picker_button_cancel:(id)sender
+{
+    [_O_picker_block_view setHidden:YES];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    UITouch *touch = [[event allTouches] anyObject];
+    
+    if (![[touch view] isKindOfClass:[UITextField class]]) {
+        [self.view endEditing:YES];
+    }
+    [super touchesBegan:touches withEvent:event];
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-

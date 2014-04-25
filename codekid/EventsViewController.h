@@ -7,129 +7,55 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SidebarBlockViewCell.h"
+#import "BlockFactory.h"
+#import "DropZoneView.h"
 
-@interface EventsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
-/**
- Inicializa
- oculta el picker, muestra el menu events y sus bloques, etc.
- */
-- (void)viewDidLoad;
+@interface EventsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource>
 
-/**
- Maneja el evento de drag en la vista general donde se manipularan los bloques.
- */
-- (IBAction) handleDrag:(UIButton *)sender forEvent:(UIEvent *)event;
+#define SIDEBAR_BLOCKS 0
+#define SIDEBAR_CHARACTERS 1
 
-/**
- Si en el picker se va a mostrar texto, regresa los datos que mostrara.
- @param pickerView
- @param row
- @param component
- @return datos a mostrar del picker
- */
-- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger) component;
+#define BLOCK_EVENTS 0
+#define BLOCK_APPEARANCE 1
+#define BLOCK_MOVEMENT 2
+#define BLOCK_CONTROL 3
+#define BLOCK_OPERATORS 4
+#define BLOCK_VARAIBLES 5
+#define BLOCK_LISTS 6
+#define BLOCK_CHARACTERS 7
 
-/**
- Método del data source obligatorio para el picker; número de componentes.
- @param pickerView
- @param component
- @return numero de componentes del pickerView
- */
-- (NSInteger) numberOfComponentsInPickerView:(UIPickerView *)pickerView;
+#define NORMAL_INNER_DROPZONE_WIDTH 40
 
-/**
- Método del data source obligatorio para el picker; número de componentes.
- @param pickerView
- @param row
- @param component
- @return numero de componentes del pickerView
- */
-- (NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
+@property NSInteger block_selected;
+@property BlockFactory *factory;
 
-/**
- Realiza acción cuando el usuario selecciona un valor del picker. Obtiene el string seleccionado en el pickerView, lo manda al método "Blocks" y cambia el titulo del menu segun la opción seleccionada.
- @param pickerView
- @param row
- @param component
- */
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component;
+// Sidebar
+@property NSInteger sidebar_state;
+@property NSArray *sidebar_select_block_images;
+@property NSArray *block_images;
+@property (weak, nonatomic) IBOutlet UIButton *O_sidebar_button_blocks;
+@property (weak, nonatomic) IBOutlet UIImageView *O_sidebar_image_arrow_blocks;
+@property (weak, nonatomic) IBOutlet UIView *O_sidebar_blocks;
+@property (weak, nonatomic) IBOutlet UIButton *O_sidebar_button_characters;
+@property (weak, nonatomic) IBOutlet UIImageView *O_sidebar_image_arrow_characters;
+@property (weak, nonatomic) IBOutlet UIView *O_sidebar_characters;
+@property (weak, nonatomic) IBOutlet UITableView *O_sidebar_table_blocks;
+- (IBAction)A_sidebar_button_blocks:(id)sender;
+- (IBAction)A_sidebar_button_characters:(id)sender;
 
-/**
- Cambia los objetos del arreglo "events" segun el menu actual y muestra los bloques que corresponden.
- @param n -> variable actual elegida por el picker (events-lists)
- */
-- (void)blocks: (NSString *)n;
+// Picker Change Block Type
+@property NSArray *picker_block_statements;
+@property (weak, nonatomic) IBOutlet UIView *O_picker_block_view;
+@property (weak, nonatomic) IBOutlet UIPickerView *O_picker_block;
+@property (weak, nonatomic) IBOutlet UIButton *O_picker_block_button_change;
+@property (weak, nonatomic) IBOutlet UIButton *O_picker_block_button_cancel;
+- (IBAction)A_picker_button_change:(id)sender;
+- (IBAction)A_picker_button_cancel:(id)sender;
 
-/**
- Es llamado por los botones de bloques del menu lateral y se encarga de  duplicar el bloque que corresponde en el view de trabajo, controla el drag del mismo.
- @param num2 -> menu seleccionado (1-7 events-lists)
- */
-- (void)dragAll:(int)num2;
-
-
-// view donde se trabajara armando con los bloques
-@property (weak, nonatomic) IBOutlet UIView *O_viewGeneral;
-// picker con las opciones del menu EVENTS
-@property (weak, nonatomic) IBOutlet UIPickerView *O_pickerEvents;
-/**
- Esconde el pickerView y botón "Change"
- */
-- (IBAction)A_changePicker:(UIButton *)sender;
-// boton "change" que confirma la opcion seleccionada en el picker
-@property (weak, nonatomic) IBOutlet UIButton *O_changePicker;
-// arreglo que contiene las opciones mostradas en el picker
-@property (nonatomic, strong) NSArray *actionsEvent;
-
-
-// ========== Actions y Outlets de la barra superior ==========
-/**
- Regresa al view inicial de creacion de proyectos.
- */
-- (IBAction)A_projects:(UIButton *)sender;
-- (IBAction)A_run:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet UIImageView *O_statusBar;
-@property (weak, nonatomic) IBOutlet UILabel *O_NameProject;
-@property (weak, nonatomic) IBOutlet UITextView *O_errors;
-
-
-/* ==================== Actions y Outlets de MENU LATERAL ==================== */
-
-// ========== Actions y Outlets de 1º vista events ==========
-/**
- Muestra el primer menu de eventos moviendo de posicion el menu de "Characters" y maneja la visibilidad del pickerView y boton "Change".
-*/
-- (IBAction)A_opcMenu1:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet UIView *O_1viewEvents;
-@property (weak, nonatomic) IBOutlet UIImageView *O_bgMenu1;
-@property (weak, nonatomic) IBOutlet UIButton *O_opcMenu1;
-
-@property (weak, nonatomic) IBOutlet UIButton *O_drag1;
-@property (weak, nonatomic) IBOutlet UIButton *O_drag2;
-@property (weak, nonatomic) IBOutlet UIButton *O_drag3;
-@property (weak, nonatomic) IBOutlet UIButton *O_drag4;
-@property (weak, nonatomic) IBOutlet UIButton *O_drag5;
-@property (weak, nonatomic) IBOutlet UIButton *O_drag6;
-@property (weak, nonatomic) IBOutlet UIButton *O_drag7;
-/**
- Mandan su numero a "dragAll" para duplicar la img correspondiente.
- */
-- (IBAction)A_drag1:(UIButton *)sender;
-- (IBAction)A_drag2:(UIButton *)sender;
-- (IBAction)A_drag3:(UIButton *)sender;
-- (IBAction)A_drag4:(UIButton *)sender;
-- (IBAction)A_drag5:(UIButton *)sender;
-- (IBAction)A_drag6:(UIButton *)sender;
-- (IBAction)A_drag7:(UIButton *)sender;
-
-// ========== Actions y Outlets de 2º vista character ==========
-/**
- Muestra el segundo menu moviendolo de posicion en Y hacia arriba y oculta el pickerView.
- */
-- (IBAction)A_opcMenu2:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet UIView *O_2viewChar;
-@property (weak, nonatomic) IBOutlet UIImageView *O_bgMenu2;
-@property (weak, nonatomic) IBOutlet UIButton *O_opcMenu2;
-
+// DropZone
+@property (weak, nonatomic) IBOutlet UIView *O_dropzone_view;
+@property NSMutableArray *blocks;
 
 @end
 

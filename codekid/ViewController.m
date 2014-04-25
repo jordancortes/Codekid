@@ -62,7 +62,7 @@
     // do any setup you need for myNewVC
     [self presentViewController:events animated:YES completion:nil];
     
-    [[events O_NameProject] setText:[[[projects objectAtIndex:index] project_title] text]];
+    //[[events O_NameProject] setText:[[[projects objectAtIndex:index] project_title] text]];
 
 }
 

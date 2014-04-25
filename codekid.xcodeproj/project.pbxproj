@@ -26,6 +26,11 @@
 		1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46A18CE41F600CFF4D0 /* parser.ym */; };
 		17722D7118D8042900E4A3CB /* Quadruple.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7018D8042900E4A3CB /* Quadruple.m */; };
 		17722D7518D807BC00E4A3CB /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7418D807BC00E4A3CB /* Stack.m */; };
+		17DE3A29190A10F700C57B0E /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A22190A10F700C57B0E /* Block.m */; };
+		17DE3A2A190A10F700C57B0E /* BlockFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A24190A10F700C57B0E /* BlockFactory.m */; };
+		17DE3A2B190A10F700C57B0E /* DropZoneTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A26190A10F700C57B0E /* DropZoneTextField.m */; };
+		17DE3A2C190A10F700C57B0E /* DropZoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A28190A10F700C57B0E /* DropZoneView.m */; };
+		17DE3A2F190A110100C57B0E /* SidebarBlockViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A2E190A110100C57B0E /* SidebarBlockViewCell.m */; };
 		17E9DB1818F903DB0024EE7A /* Memory.m in Sources */ = {isa = PBXBuildFile; fileRef = 17E9DB1118F903DB0024EE7A /* Memory.m */; };
 		17E9DB1918F903DB0024EE7A /* Procedure.m in Sources */ = {isa = PBXBuildFile; fileRef = 17E9DB1318F903DB0024EE7A /* Procedure.m */; };
 		17E9DB1A18F903DB0024EE7A /* Temporal.m in Sources */ = {isa = PBXBuildFile; fileRef = 17E9DB1518F903DB0024EE7A /* Temporal.m */; };
@@ -93,6 +98,16 @@
 		17722D7018D8042900E4A3CB /* Quadruple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quadruple.m; sourceTree = "<group>"; };
 		17722D7318D807BC00E4A3CB /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		17722D7418D807BC00E4A3CB /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
+		17DE3A21190A10F700C57B0E /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
+		17DE3A22190A10F700C57B0E /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
+		17DE3A23190A10F700C57B0E /* BlockFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockFactory.h; sourceTree = "<group>"; };
+		17DE3A24190A10F700C57B0E /* BlockFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockFactory.m; sourceTree = "<group>"; };
+		17DE3A25190A10F700C57B0E /* DropZoneTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropZoneTextField.h; sourceTree = "<group>"; };
+		17DE3A26190A10F700C57B0E /* DropZoneTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropZoneTextField.m; sourceTree = "<group>"; };
+		17DE3A27190A10F700C57B0E /* DropZoneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropZoneView.h; sourceTree = "<group>"; };
+		17DE3A28190A10F700C57B0E /* DropZoneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropZoneView.m; sourceTree = "<group>"; };
+		17DE3A2D190A110100C57B0E /* SidebarBlockViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarBlockViewCell.h; sourceTree = "<group>"; };
+		17DE3A2E190A110100C57B0E /* SidebarBlockViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarBlockViewCell.m; sourceTree = "<group>"; };
 		17E9DB1018F903DB0024EE7A /* Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memory.h; sourceTree = "<group>"; };
 		17E9DB1118F903DB0024EE7A /* Memory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memory.m; sourceTree = "<group>"; };
 		17E9DB1218F903DB0024EE7A /* Procedure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Procedure.h; sourceTree = "<group>"; };
@@ -186,6 +201,9 @@
 		1737C43618CE415D00CFF4D0 /* codekid */ = {
 			isa = PBXGroup;
 			children = (
+				17DE3A2D190A110100C57B0E /* SidebarBlockViewCell.h */,
+				17DE3A2E190A110100C57B0E /* SidebarBlockViewCell.m */,
+				17DE3A20190A10D900C57B0E /* Blocks */,
 				1737C43F18CE415D00CFF4D0 /* AppDelegate.h */,
 				1737C44018CE415D00CFF4D0 /* AppDelegate.m */,
 				1737C44218CE415D00CFF4D0 /* Main.storyboard */,
@@ -260,6 +278,21 @@
 				1737C46A18CE41F600CFF4D0 /* parser.ym */,
 			);
 			name = "Flex & Bison";
+			sourceTree = "<group>";
+		};
+		17DE3A20190A10D900C57B0E /* Blocks */ = {
+			isa = PBXGroup;
+			children = (
+				17DE3A21190A10F700C57B0E /* Block.h */,
+				17DE3A22190A10F700C57B0E /* Block.m */,
+				17DE3A23190A10F700C57B0E /* BlockFactory.h */,
+				17DE3A24190A10F700C57B0E /* BlockFactory.m */,
+				17DE3A25190A10F700C57B0E /* DropZoneTextField.h */,
+				17DE3A26190A10F700C57B0E /* DropZoneTextField.m */,
+				17DE3A27190A10F700C57B0E /* DropZoneView.h */,
+				17DE3A28190A10F700C57B0E /* DropZoneView.m */,
+			);
+			name = Blocks;
 			sourceTree = "<group>";
 		};
 		DF7F272A18EDFF3A00971329 /* img */ = {
@@ -411,15 +444,20 @@
 				17722D7518D807BC00E4A3CB /* Stack.m in Sources */,
 				1737C46718CE41DE00CFF4D0 /* Common.m in Sources */,
 				17722D7118D8042900E4A3CB /* Quadruple.m in Sources */,
+				17DE3A29190A10F700C57B0E /* Block.m in Sources */,
 				1737C44718CE415D00CFF4D0 /* ViewController.m in Sources */,
+				17DE3A2C190A10F700C57B0E /* DropZoneView.m in Sources */,
 				17E9DB1818F903DB0024EE7A /* Memory.m in Sources */,
 				1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */,
 				1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */,
+				17DE3A2B190A10F700C57B0E /* DropZoneTextField.m in Sources */,
 				17E9DB1918F903DB0024EE7A /* Procedure.m in Sources */,
 				17E9DB1A18F903DB0024EE7A /* Temporal.m in Sources */,
 				DF3D350018DFC07500F8D6BD /* Project.m in Sources */,
 				1737C44118CE415D00CFF4D0 /* AppDelegate.m in Sources */,
+				17DE3A2A190A10F700C57B0E /* BlockFactory.m in Sources */,
 				17E9DB1B18F903DB0024EE7A /* Variable.m in Sources */,
+				17DE3A2F190A110100C57B0E /* SidebarBlockViewCell.m in Sources */,
 				1737C43D18CE415D00CFF4D0 /* main.m in Sources */,
 				DF7F272D18EDFF6900971329 /* EventsViewController.m in Sources */,
 			);
