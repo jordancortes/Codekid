@@ -123,6 +123,9 @@
                     
                     if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty]) // si el frame esta sobre un inner_drop_zone
                     {
+                        // borra el texto que habia dentro del DropZoneView
+                        [[this_view textfield] setText:@""];
+                    
                         //cambia su posicion a 0,0
                         CGRect view_frame = [recognizer.view frame];
                         view_frame.origin.x = 0;

@@ -105,4 +105,10 @@
     [self.layer setBorderColor:[UIColor blackColor].CGColor];
 }
 
+- (void)addBackTextField:(DropZoneTextField *)this_textfield
+{
+    _textfield = this_textfield;
+    [self addSubview:_textfield];
+}
+
 @end

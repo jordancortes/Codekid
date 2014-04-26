@@ -43,7 +43,7 @@
             // Primer Dropzone
             DropZoneView *first_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(10, 0, 40, 59)];
             [first_drop_zone setTag:1];
-            [first_drop_zone addSubview:[[DropZoneTextField alloc] initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)]];
+            [first_drop_zone addBackTextField:[[DropZoneTextField alloc] initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             // Imagen del signo
@@ -55,7 +55,7 @@
             // Primer Dropzone
             DropZoneView *second_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(90, 0, 40, 59)];
             [second_drop_zone setTag:3];
-            [second_drop_zone addSubview:[[DropZoneTextField alloc] initWithFrame:CGRectMake(0, 0, second_drop_zone.frame.size.width, second_drop_zone.frame.size.height)]];
+            [second_drop_zone addBackTextField:[[DropZoneTextField alloc] initWithFrame:CGRectMake(0, 0, second_drop_zone.frame.size.width, second_drop_zone.frame.size.height)]];
             [[temp inner_drop_zones] addObject:second_drop_zone];
         }
             break;
