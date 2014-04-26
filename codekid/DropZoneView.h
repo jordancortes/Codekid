@@ -15,4 +15,7 @@
 - (void)increaseWidth:(CGFloat)width reachingTo:(UIView *)this_super_view;
 - (void)decreaseWidth:(CGFloat)width reachingTo:(UIView *)this_super_view;
 
+- (void)highlightBorder;
+- (void)resetBorder;
+
 @end

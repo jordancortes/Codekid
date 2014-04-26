@@ -10,12 +10,11 @@
 #import "Block.h"
 #import "DropZoneView.h"
 #import "DropZoneTextField.h"
+#import "BlockView.h"
 
 #define BLOCK_MOVEMENT_TURN 20
 #define BLOCK_OPERATOR_PLUS 40
 #define BLOCK_OPERATOR_MINUS 41
-
-// TODO: cuando se este escribiendo, que los textField se hagan mas grandes, de aqui el ANCHO de los inner_drop_Zones ya no es fijo, hay que sacarlo para hacer el main_view mas grande cuando se agregue uno
 
 @interface BlockFactory : NSObject
 

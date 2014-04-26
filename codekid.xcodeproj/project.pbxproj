@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		170664D4190B60DD00A6C3C9 /* BlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 170664D3190B60DD00A6C3C9 /* BlockView.m */; };
 		1737C43118CE415D00CFF4D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1737C43018CE415D00CFF4D0 /* Foundation.framework */; };
 		1737C43318CE415D00CFF4D0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1737C43218CE415D00CFF4D0 /* CoreGraphics.framework */; };
 		1737C43518CE415D00CFF4D0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1737C43418CE415D00CFF4D0 /* UIKit.framework */; };
@@ -71,6 +72,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		170664D2190B60DD00A6C3C9 /* BlockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockView.h; sourceTree = "<group>"; };
+		170664D3190B60DD00A6C3C9 /* BlockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockView.m; sourceTree = "<group>"; };
 		1737C42D18CE415D00CFF4D0 /* codekid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = codekid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1737C43018CE415D00CFF4D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1737C43218CE415D00CFF4D0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -283,10 +286,12 @@
 		17DE3A20190A10D900C57B0E /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
-				17DE3A21190A10F700C57B0E /* Block.h */,
-				17DE3A22190A10F700C57B0E /* Block.m */,
 				17DE3A23190A10F700C57B0E /* BlockFactory.h */,
 				17DE3A24190A10F700C57B0E /* BlockFactory.m */,
+				17DE3A21190A10F700C57B0E /* Block.h */,
+				17DE3A22190A10F700C57B0E /* Block.m */,
+				170664D2190B60DD00A6C3C9 /* BlockView.h */,
+				170664D3190B60DD00A6C3C9 /* BlockView.m */,
 				17DE3A25190A10F700C57B0E /* DropZoneTextField.h */,
 				17DE3A26190A10F700C57B0E /* DropZoneTextField.m */,
 				17DE3A27190A10F700C57B0E /* DropZoneView.h */,
@@ -445,6 +450,7 @@
 				1737C46718CE41DE00CFF4D0 /* Common.m in Sources */,
 				17722D7118D8042900E4A3CB /* Quadruple.m in Sources */,
 				17DE3A29190A10F700C57B0E /* Block.m in Sources */,
+				170664D4190B60DD00A6C3C9 /* BlockView.m in Sources */,
 				1737C44718CE415D00CFF4D0 /* ViewController.m in Sources */,
 				17DE3A2C190A10F700C57B0E /* DropZoneView.m in Sources */,
 				17E9DB1818F903DB0024EE7A /* Memory.m in Sources */,

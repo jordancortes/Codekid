@@ -13,8 +13,11 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
         _is_empty = YES;
+        [self.layer setBorderWidth:2.0];
+        [self.layer setBorderColor:[UIColor blackColor].CGColor];
     }
     return self;
 }
@@ -90,6 +93,16 @@
         new_width = main_view_frame.size.width;
         this_view = [[this_view superview] superview];
     } while (![this_view isEqual:this_super_view]);
+}
+
+- (void)highlightBorder
+{
+    [self.layer setBorderColor:[UIColor redColor].CGColor];
+}
+
+- (void)resetBorder
+{
+    [self.layer setBorderColor:[UIColor blackColor].CGColor];
 }
 
 @end

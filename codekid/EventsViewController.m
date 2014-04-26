@@ -137,8 +137,7 @@
                         [this_view setIs_empty:NO];
                         
                         // borra el borde que habia dejado
-                        [[this_view layer] setBorderWidth:2.0];
-                        [[this_view layer] setBorderColor:[UIColor blackColor].CGColor];
+                        [this_view resetBorder];
                         
                         //hace más grande el bloque y sus padres
                         [this_view increaseWidth:recognizer.view.frame.size.width reachingTo:_O_dropzone_view];
@@ -166,16 +165,13 @@
                 {
                     CGRect this_frame = [this_view convertRect:this_view.bounds toView:_O_dropzone_view];
                     
-                    /*TODO: QUE SOLO SE AGREGUE A DONDE DEBE Y QUE NO ACTUE RARO*/
                     if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
                     {
-                        [[this_view layer] setBorderWidth:2.0];
-                        [[this_view layer] setBorderColor:[UIColor redColor].CGColor];
+                        [this_view highlightBorder];
                     }
                     else
                     {
-                        [[this_view layer] setBorderWidth:2.0];
-                        [[this_view layer] setBorderColor:[UIColor blackColor].CGColor];
+                        [this_view resetBorder];
                     }
                 }
             }

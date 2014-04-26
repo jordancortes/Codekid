@@ -18,7 +18,7 @@ static Stack *operators;
 static Stack *operandsType;
 static Stack *_p_jumps;
 
-static int cube[4][4][21]; // TODO: NO LO QUIERO VOLVER A VER, REHACER CON OBJECTIVE-C
+static int cube[4][4][21];
 
 // Agregar variables
 static NSString *_alpha;
@@ -337,7 +337,6 @@ static int _del_paren;
 //=============================================================== PROCEDIMIENTOS
 //==============================================================================
 
-/*TODO: PENDIENTE */
 + (void)addProcedureOfType:(NSInteger)type withPointer:(NSInteger)pointer
 {
     [table_procedures addObject:[[Procedure alloc] initWithType:type andPointer:pointer]];
