@@ -38,12 +38,18 @@
             break;
         case BLOCK_OPERATOR_PLUS:
         {
-            temp.main_view = [[BlockView alloc] initWithFrame:CGRectMake(0, 0, 140, 59) andColor:[UIColor colorWithRed:0.145098039 green:0.552941176 blue:0.2 alpha:1.0]];
+            temp.main_view = [
+                              [BlockView alloc]
+                              initWithFrame:CGRectMake(0, 0, 140, 59)
+                              andColor:[UIColor colorWithRed:0.145098039 green:0.552941176 blue:0.2 alpha:1.0]];
             
             // Primer Dropzone
             DropZoneView *first_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(10, 0, 40, 59)];
             [first_drop_zone setTag:1];
-            [first_drop_zone addBackTextField:[[DropZoneTextField alloc] initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)]];
+            [first_drop_zone addBackTextField:[
+                                               [DropZoneTextField alloc]
+                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
+                                                andType:TEXT_TYPE_FLOAT]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             // Imagen del signo
@@ -55,7 +61,10 @@
             // Primer Dropzone
             DropZoneView *second_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(90, 0, 40, 59)];
             [second_drop_zone setTag:3];
-            [second_drop_zone addBackTextField:[[DropZoneTextField alloc] initWithFrame:CGRectMake(0, 0, second_drop_zone.frame.size.width, second_drop_zone.frame.size.height)]];
+            [second_drop_zone addBackTextField:[
+                                                [DropZoneTextField alloc]
+                                                initWithFrame:CGRectMake(0, 0, second_drop_zone.frame.size.width, second_drop_zone.frame.size.height)
+                                                andType:TEXT_TYPE_FLOAT]];
             [[temp inner_drop_zones] addObject:second_drop_zone];
         }
             break;

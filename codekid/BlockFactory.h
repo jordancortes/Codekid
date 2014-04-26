@@ -16,6 +16,10 @@
 #define BLOCK_OPERATOR_PLUS 40
 #define BLOCK_OPERATOR_MINUS 41
 
+#define TEXT_TYPE_INTEGER    0
+#define TEXT_TYPE_FLOAT      1
+#define TEXT_TYPE_STRING     2
+
 @interface BlockFactory : NSObject
 
 @property NSNotificationCenter *notificationCenter;

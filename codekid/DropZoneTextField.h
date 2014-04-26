@@ -10,11 +10,21 @@
 
 #define INNER_TEXT_INCREMENT 16
 
-@interface DropZoneTextField : UITextField
+#define ALPHA           @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+#define NUMERIC_DOT     @"."
+#define NUMERIC         @"1234567890"
+#define ALPHA_NUMERIC   ALPHA NUMERIC
+
+#define TEXT_TYPE_INTEGER    0
+#define TEXT_TYPE_FLOAT      1
+#define TEXT_TYPE_STRING     2
+
+@interface DropZoneTextField : UITextField <UITextFieldDelegate>
 
 @property NSInteger last_length;
+@property NSInteger input_type;
 
-- (id)initWithFrame:(CGRect)frame;
+- (id)initWithFrame:(CGRect)frame andType:(NSInteger)type;
 - (void) textFieldTextChange:(NSNotification *)notification;
 - (void)resizeToFitView:(UIView *)this_view;
 
