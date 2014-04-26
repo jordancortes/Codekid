@@ -125,6 +125,10 @@
                     {
                         // borra el texto que habia dentro del DropZoneView
                         [[this_view textfield] setText:@""];
+                        [[this_view textfield] setLast_length:0];
+                        CGRect textfield_frame = [[this_view textfield] frame];
+                        textfield_frame.size.width = 40.0;
+                        [[this_view textfield] setFrame:textfield_frame];
                     
                         //cambia su posicion a 0,0
                         CGRect view_frame = [recognizer.view frame];
