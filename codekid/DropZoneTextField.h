@@ -15,7 +15,7 @@
 @property NSInteger last_length;
 
 - (id)initWithFrame:(CGRect)frame;
-- (void) textFieldText:(NSNotification *)notification;
+- (void) textFieldTextChange:(NSNotification *)notification;
 - (void)resizeToFitView:(UIView *)this_view;
 
 @end

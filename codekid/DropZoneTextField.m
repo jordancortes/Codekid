@@ -16,67 +16,61 @@
     if (self) {
         [self setFont:[UIFont boldSystemFontOfSize:30]];
         [self setTextAlignment:NSTextAlignmentCenter];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldText:) name:UITextFieldTextDidChangeNotification object:self];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextChange:) name:UITextFieldTextDidChangeNotification object:self];
         [self setKeyboardType:UIKeyboardTypeNumberPad];
         _last_length = 0;
     }
     return self;
 }
 
-- (void) textFieldText:(NSNotification *)notification
+- (void) textFieldTextChange:(NSNotification *)notification
 {
     NSScanner *scanner = [NSScanner scannerWithString:[self text]];
 
     if ([scanner scanInteger:NULL] && [scanner isAtEnd])
     {
-        if ([[self text] length] > _last_length && [[self text] length] > 1)
+        BOOL change_sizes = NO;
+        NSInteger text_increment = INNER_TEXT_INCREMENT;
+        
+        if ([[self text] length] > _last_length && [[self text] length] > 1) // si se esta escribiendo
         {
-            // Incrementa el tamaño del main_view
-            CGRect main_view_frame = [[self superview] superview].frame;
-            main_view_frame.size.width += INNER_TEXT_INCREMENT;
-            [[self superview] superview].frame = main_view_frame;
-            
-            // Mueve el resto de los views del lado derecho
-            for (UIView *this_view in [[self superview] superview].subviews)
-            {
-                if ([this_view tag] > [[self superview] tag])
-                {
-                    CGRect this_view_frame = this_view.frame;
-                    this_view_frame.origin.x += INNER_TEXT_INCREMENT;
-                    this_view.frame = this_view_frame;
-                }
-            }
-            
-            // Incrmenta el tamaño del inner_view donde esta el UITextField
-            CGRect inner_view_frame = [self superview].frame;
-            inner_view_frame.size.width += INNER_TEXT_INCREMENT;
-            [self superview].frame = inner_view_frame;
-            
-            // Incrementa el tamaño del UITextField
-            [self resizeToFitView:[self superview]];
+            change_sizes = YES;
         }
-        else if ([[self text] length] < _last_length && [[self text] length] > 0)
+        else if ([[self text] length] < _last_length && [[self text] length] > 0) // si se esta borrando
         {
-            // Disminuye el tamaño del main_view
-            CGRect main_view_frame = [[self superview] superview].frame;
-            main_view_frame.size.width -= INNER_TEXT_INCREMENT;
-            [[self superview] superview].frame = main_view_frame;
+            text_increment = -text_increment; // invierte el valor para disminuir el tamaño
+            change_sizes = YES;
+        }
+        
+        if (change_sizes)
+        {
+            UIView *this_view = [self superview];
+            Class dropzone_class = [this_view class];
             
-            // Mueve el resto de los views del lado derecho
-            for (UIView *this_view in [[self superview] superview].subviews)
-            {
-                if ([this_view tag] > [[self superview] tag])
+            do {
+                // incremento tamaño de main_view
+                CGRect main_view_frame = [[this_view superview] frame];
+                main_view_frame.size.width += text_increment;
+                [[this_view superview] setFrame:main_view_frame];
+                
+                // incrementa el tamaño del drop_zone (self)
+                CGRect this_view_frame = [this_view frame];
+                this_view_frame.size.width += text_increment;
+                [this_view setFrame:this_view_frame];
+                
+                // mueve todo lo que este a la derecho del drop_zone (self)
+                for (UIView *move_view in [this_view superview].subviews)
                 {
-                    CGRect this_view_frame = this_view.frame;
-                    this_view_frame.origin.x -= INNER_TEXT_INCREMENT;
-                    this_view.frame = this_view_frame;
+                    if ([move_view tag] > [this_view tag])
+                    {
+                        CGRect move_view_frame = [move_view frame];
+                        move_view_frame.origin.x += text_increment;
+                        [move_view setFrame:move_view_frame];
+                    }
                 }
-            }
-            
-            // Incrmenta el tamaño del inner_view donde esta el UITextField
-            CGRect inner_view_frame = [self superview].frame;
-            inner_view_frame.size.width -= INNER_TEXT_INCREMENT;
-            [self superview].frame = inner_view_frame;
+                
+                this_view = [[this_view superview] superview];
+            } while ([this_view isKindOfClass:dropzone_class]);
             
             // Incrementa el tamaño del UITextField
             [self resizeToFitView:[self superview]];
