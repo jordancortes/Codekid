@@ -295,6 +295,22 @@
     [_O_sidebar_button_blocks setBackgroundImage:[_sidebar_select_block_images objectAtIndex:_block_selected] forState:UIControlStateNormal];
     [_O_picker_block_view setHidden:YES];
     [_O_sidebar_table_blocks reloadData];
+    
+    CGRect sidebar_table_frame = [_O_sidebar_table_blocks frame];
+    
+    if ((_block_selected == BLOCK_VARAIBLES) || (_block_selected == BLOCK_LISTS))
+    {
+        sidebar_table_frame.origin.y = 140.0;
+    }
+    else
+    {
+        sidebar_table_frame.origin.y = 70.0;
+    }
+    
+    [UITableView animateWithDuration:0.4
+                     animations:^{
+                         _O_sidebar_table_blocks.frame = sidebar_table_frame;
+                     }];
 }
 
 - (IBAction)A_picker_button_cancel:(id)sender
