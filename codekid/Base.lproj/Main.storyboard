@@ -94,23 +94,81 @@
                                         </connections>
                                     </button>
                                     <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="of3-S5-gyX">
-                                        <rect key="frame" x="10" y="80" width="100" height="50"/>
+                                        <rect key="frame" x="10" y="80" width="90" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Create">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="A_create_variableList:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="7ay-8w-2ET"/>
+                                        </connections>
                                     </button>
                                     <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Fup-gL-Ev4">
-                                        <rect key="frame" x="130" y="80" width="100" height="50"/>
+                                        <rect key="frame" x="140" y="80" width="90" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Delete">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="A_delete_variableList:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="5FJ-bm-Qkk"/>
+                                        </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" id="3qQ-fR-Izy">
+                                        <rect key="frame" x="0.0" y="130" width="240" height="428"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sidebar_createvar_background" id="9lC-9k-ZC3">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="428"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bgF-6C-NMn">
+                                                <rect key="frame" x="140" y="380" width="90" height="40"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" title="Create Var">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="A_createvar_button_create:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="PjX-en-ZeZ"/>
+                                                </connections>
+                                            </button>
+                                            <textField autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="I70-hs-7Rt">
+                                                <rect key="frame" x="10" y="40" width="220" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <textField autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="0ir-7F-8EM">
+                                                <rect key="frame" x="10" y="115" width="220" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sidebar_createvar_title_name" id="w7e-8k-7Vt">
+                                                <rect key="frame" x="10" y="10" width="220" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sidebar_createvar_title_dimension" id="v0p-1s-aim">
+                                                <rect key="frame" x="10" y="85" width="220" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sidebar_createvar_title_type" id="DKb-cq-kze">
+                                                <rect key="frame" x="10" y="160" width="220" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <pickerView autoresizesSubviews="NO" contentMode="scaleToFill" id="b7K-uz-WtN">
+                                                <rect key="frame" x="20" y="170" width="200" height="216"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="dFT-pX-Fh0" id="LCQ-i2-dCd"/>
+                                                    <outlet property="delegate" destination="dFT-pX-Fh0" id="b37-Po-a1Z"/>
+                                                </connections>
+                                            </pickerView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
                                     <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="1" sectionFooterHeight="1" id="E1P-Mo-diB">
                                         <rect key="frame" x="0.0" y="70" width="240" height="488"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -161,7 +219,7 @@
                                         <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view autoresizesSubviews="NO" contentMode="scaleToFill" id="Qbc-Is-oG9">
                                 <rect key="frame" x="240" y="140" width="784" height="628"/>
@@ -213,6 +271,11 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="O_createvar_background" destination="9lC-9k-ZC3" id="cro-XE-Ab9"/>
+                        <outlet property="O_createvar_button_create" destination="bgF-6C-NMn" id="GrU-Hs-Gda"/>
+                        <outlet property="O_createvar_dimension" destination="0ir-7F-8EM" id="spb-2e-qhZ"/>
+                        <outlet property="O_createvar_name" destination="I70-hs-7Rt" id="o2e-Uu-xrq"/>
+                        <outlet property="O_createvar_type" destination="b7K-uz-WtN" id="qE2-O7-v8e"/>
                         <outlet property="O_dropzone_view" destination="Qbc-Is-oG9" id="tzc-dX-Sew"/>
                         <outlet property="O_picker_block" destination="jJv-TB-i9B" id="3iL-uL-6v5"/>
                         <outlet property="O_picker_block_button_cancel" destination="Af9-8e-GaS" id="qIl-z6-ZV4"/>
@@ -222,6 +285,8 @@
                         <outlet property="O_sidebar_button_blocks" destination="Uji-Pg-yRf" id="f6A-2A-TiH"/>
                         <outlet property="O_sidebar_button_characters" destination="uKQ-ix-OlM" id="Esu-ex-JZl"/>
                         <outlet property="O_sidebar_characters" destination="aKd-6j-1YS" id="TEM-ib-ngK"/>
+                        <outlet property="O_sidebar_createvar_button_create" destination="of3-S5-gyX" id="j7N-aq-Zfw"/>
+                        <outlet property="O_sidebar_createvar_button_delete" destination="Fup-gL-Ev4" id="F5R-hF-OUS"/>
                         <outlet property="O_sidebar_image_arrow_blocks" destination="bXs-RO-xqw" id="R9G-ng-bap"/>
                         <outlet property="O_sidebar_image_arrow_characters" destination="CzF-w6-e4x" id="9dE-e8-lwv"/>
                         <outlet property="O_sidebar_table_blocks" destination="E1P-Mo-diB" id="UaR-UR-MkO"/>
@@ -238,6 +303,10 @@
         <image name="picker_block_background" width="512" height="326"/>
         <image name="plus-76x76.png" width="76" height="76"/>
         <image name="sidebar_block_arrow" width="70" height="70"/>
+        <image name="sidebar_createvar_background" width="240" height="428"/>
+        <image name="sidebar_createvar_title_dimension" width="220" height="25"/>
+        <image name="sidebar_createvar_title_name" width="220" height="25"/>
+        <image name="sidebar_createvar_title_type" width="220" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>

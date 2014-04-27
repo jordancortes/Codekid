@@ -76,6 +76,22 @@
     [_O_picker_block_button_cancel setBackgroundImage:[UIImage imageNamed:@"picker_block_button_cancel"] forState:UIControlStateNormal];
     [_O_picker_block_button_change setTitle:@"" forState:UIControlStateNormal];
     [_O_picker_block_button_change setBackgroundImage:[UIImage imageNamed:@"picker_block_button_change"] forState:UIControlStateNormal];
+    [_O_sidebar_createvar_button_create setTitle:@"" forState:UIControlStateNormal];
+    [_O_sidebar_createvar_button_create setBackgroundImage:[UIImage imageNamed:@"sidebar_createvar_button_create"] forState:UIControlStateNormal];
+    [_O_sidebar_createvar_button_delete setTitle:@"" forState:UIControlStateNormal];
+    [_O_sidebar_createvar_button_delete setBackgroundImage:[UIImage imageNamed:@"sidebar_createvar_button_delete"] forState:UIControlStateNormal];
+    [_O_createvar_button_create setTitle:@"" forState:UIControlStateNormal];
+    [_O_createvar_button_create setBackgroundImage:[UIImage imageNamed:@"sidebar_createvar_button_create"] forState:UIControlStateNormal];
+    
+    // CreateVar Sidebar
+    _picker_createvar_type = [[NSArray alloc] initWithObjects:
+                                [UIImage imageNamed:@"sidebar_createvar_picker_integer"],
+                                [UIImage imageNamed:@"sidebar_createvar_picker_float"],
+                                [UIImage imageNamed:@"sidebar_createvar_picker_boolean"],
+                                [UIImage imageNamed:@"sidebar_createvar_picker_string"],
+                                nil];
+    [_O_createvar_dimension setText:@"1"];
+    
     [_O_picker_block_view setHidden:YES];
     
     // DropZone
@@ -200,17 +216,38 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [_picker_block_statements count];
+    if ([pickerView isEqual:_O_picker_block])
+    {
+        return [_picker_block_statements count];
+    }
+    else if ([pickerView isEqual:_O_createvar_type])
+    {
+        return [_picker_createvar_type count];
+    }
+
+    return 0;
 }
 
 #pragma mark Picker Delegate Methods
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
-    UIImageView *picker_block_image_view = [[UIImageView alloc] initWithImage:[_picker_block_statements objectAtIndex:row]];
-    [picker_block_image_view setFrame:CGRectMake(0, 0, 472, 35)];
+    if ([pickerView isEqual:_O_picker_block])
+    {
+        UIImageView *picker_block_image_view = [[UIImageView alloc] initWithImage:[_picker_block_statements objectAtIndex:row]];
+        [picker_block_image_view setFrame:CGRectMake(0, 0, 472, 35)];
+        
+        return picker_block_image_view;
+    }
+    else if ([pickerView isEqual:_O_createvar_type])
+    {
+        UIImageView *picker_createvar_image_view = [[UIImageView alloc] initWithImage:[_picker_createvar_type objectAtIndex:row]];
+        [picker_createvar_image_view setFrame:CGRectMake(0, 0, 400, 30)];
+        
+        return picker_createvar_image_view;
+    }
     
-    return picker_block_image_view;
+    return nil;
 }
 
 #pragma mark Table Data Source Methods
@@ -261,6 +298,8 @@
                      }];
 }
 
+#pragma mark Sidebar Sections Buttons
+
 - (IBAction)A_sidebar_button_blocks:(id)sender
 {
     if (_sidebar_state == SIDEBAR_CHARACTERS)
@@ -287,6 +326,32 @@
     }
 }
 
+#pragma mark Sidebar Create Var/Lists Buttons
+
+- (IBAction)A_create_variableList:(id)sender
+{
+    CGRect sidebar_table_frame = [_O_sidebar_table_blocks frame];
+    
+    if (_O_sidebar_table_blocks.frame.origin.y == CREATE_VAR_HIDE)
+    {
+        sidebar_table_frame.origin.y = CREATE_VAR_SHOW;
+    }
+    else
+    {
+        sidebar_table_frame.origin.y = CREATE_VAR_HIDE;
+    }
+    
+    [UITableView animateWithDuration:ANIMATION_SPEED
+                          animations:^{
+                              _O_sidebar_table_blocks.frame = sidebar_table_frame;
+                          }];
+}
+
+- (IBAction)A_delete_variableList:(id)sender
+{
+
+}
+
 #pragma mark Picker Buttons
 
 - (IBAction)A_picker_button_change:(id)sender
@@ -300,14 +365,14 @@
     
     if ((_block_selected == BLOCK_VARAIBLES) || (_block_selected == BLOCK_LISTS))
     {
-        sidebar_table_frame.origin.y = 140.0;
+        sidebar_table_frame.origin.y = CREATE_VAR_BUTTONS_SHOW;
     }
     else
     {
-        sidebar_table_frame.origin.y = 70.0;
+        sidebar_table_frame.origin.y = CREATE_VAR_BUTTONS_HIDE;
     }
     
-    [UITableView animateWithDuration:0.4
+    [UITableView animateWithDuration:ANIMATION_SPEED
                      animations:^{
                          _O_sidebar_table_blocks.frame = sidebar_table_frame;
                      }];
@@ -328,4 +393,61 @@
     [super touchesBegan:touches withEvent:event];
 }
 
+- (IBAction)A_createvar_button_create:(id)sender
+{
+    NSString *variable_name = [_O_createvar_name text];
+    NSInteger variable_dimension = [[_O_createvar_dimension text] integerValue]; /* TODO: que el textField solo acepte numeros */
+    NSInteger variable_type = [_O_createvar_type selectedRowInComponent:0];
+    NSError  *error  = nil;
+    
+    // verifica que el nombre de la variable sea válido
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:@"^[A-Za-z]+[A-Za-z0-9]*$"
+                                  options:NSRegularExpressionCaseInsensitive
+                                  error:&error];
+    NSTextCheckingResult *match = [regex firstMatchInString:variable_name options:0 range:NSMakeRange(0, [variable_name length])];
+    
+    if (match)
+    {
+        if (variable_dimension != 0)
+        {
+            /* TODO: faltan variables dimensionadas */
+            [_variables_lists addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:variable_dimension]];
+            
+            // limpia los campos
+            [_O_createvar_name setText:@""];
+            [_O_createvar_dimension setText:@"1"];
+            [_O_createvar_type selectRow:0 inComponent:0 animated:YES];
+            
+            // Oculta el editor de variables
+            CGRect sidebar_table_frame = [_O_sidebar_table_blocks frame];
+            sidebar_table_frame.origin.y = CREATE_VAR_BUTTONS_SHOW;
+            
+            [UITableView animateWithDuration:ANIMATION_SPEED
+                                  animations:^{
+                                      _O_sidebar_table_blocks.frame = sidebar_table_frame;
+                                  }];
+            
+            // muestra las nuevas variables en la tabla NEXT:
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Illegal dimension"
+                                                            message:@"The dimension size must be 1 or higher."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Illegal variable name"
+                                                        message:@"The variable name should begin with a letter followed by any character or number."
+                                                       delegate:self
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
 @end
