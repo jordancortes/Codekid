@@ -53,9 +53,10 @@
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             // Imagen del signo
-            UIImageView *plus_sign = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"block_sign_plus"]];
+            UILabel *plus_sign = [[VariableLabel alloc] initWithName:@"+" fontSize:55 andPosition:CGPointMake(48, 0)];
+            //UIImageView *plus_sign = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"block_sign_plus"]];
             [plus_sign setTag:2];
-            [plus_sign setFrame:CGRectMake(60.627, 19.764, 19.888, 19.4715)];
+            //[plus_sign setFrame:CGRectMake(60.627, 19.764, 19.888, 19.4715)];
             [temp.main_view addSubview:plus_sign];
             
             // Primer Dropzone
@@ -78,9 +79,13 @@
         case BLOCK_VARIABLE:
         {
             Variable *this_var = (Variable *)data;
-            VariableLabel *name = [[VariableLabel alloc] initWithName:[this_var name]];
+            VariableLabel *name = [[VariableLabel alloc] initWithName:[this_var name] andFontSize:35];
             
-            [temp setMain_view:[[BlockView alloc] initWithFrame:CGRectMake(0, 0, name.frame.size.width, 59) andColor:[UIColor redColor]]];
+            [temp setMain_view:[
+                                [BlockView alloc]
+                                initWithFrame:CGRectMake(0, 0, name.frame.size.width, 59)
+                                andColor:[UIColor colorWithRed:0.933333333333333 green:0.494117647058824 blue:0 alpha:1.0]]
+             ];
             [[temp main_view] addSubview:name];
         }
             break;

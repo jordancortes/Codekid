@@ -10,6 +10,7 @@
 
 @interface VariableLabel : UILabel
 
-- (id)initWithName:(NSString *)name;
+- (id)initWithName:(NSString *)name andFontSize:(NSInteger)font_size;
+- (id)initWithName:(NSString *)name fontSize:(NSInteger)font_size andPosition:(CGPoint)position;
 
 @end

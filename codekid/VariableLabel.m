@@ -10,13 +10,13 @@
 
 @implementation VariableLabel
 
-- (id)initWithName:(NSString *)name
+- (id)initWithName:(NSString *)name andFontSize:(NSInteger)font_size
 {
     self = [super init];
     
     if (self) {
         // define propiedades base
-        [self setFont:[UIFont fontWithName:@"ActionMan-Bold" size:35]];
+        [self setFont:[UIFont fontWithName:@"ActionMan-Bold" size:font_size]];
         [self setTextColor:[UIColor whiteColor]];
         [self setTextAlignment:NSTextAlignmentCenter];
         
@@ -28,6 +28,18 @@
         CGFloat text_width = text_size.width;
         [self setFrame:CGRectMake(0, 0, text_width + 20, 59)];
     }
+    return self;
+}
+
+- (id)initWithName:(NSString *)name fontSize:(NSInteger)font_size andPosition:(CGPoint)position
+{
+    self = [self initWithName:name andFontSize:font_size];
+    
+    if (self)
+    {
+        [self setFrame:CGRectMake(position.x, position.y, self.frame.size.width, self.frame.size.height)];
+    }
+    
     return self;
 }
 
