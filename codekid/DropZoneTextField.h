@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define INNER_TEXT_INCREMENT 16
+#define INNER_TEXT_INCREMENT 18
 
 #define ALPHA           @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 #define NUMERIC_DOT     @"."
