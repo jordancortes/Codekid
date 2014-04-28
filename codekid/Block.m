@@ -10,6 +10,18 @@
 
 @implementation Block
 
+- (id)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _sticks = NO;
+    }
+    
+    return self;
+}
+
 - (BOOL)isChildOfView:(UIView *)this_view
 {
     UIView *check_view = [self main_view];

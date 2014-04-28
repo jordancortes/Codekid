@@ -67,6 +67,8 @@
                                                 initWithFrame:CGRectMake(0, 0, second_drop_zone.frame.size.width, second_drop_zone.frame.size.height)
                                                 andType:TEXT_TYPE_FLOAT]];
             [[temp inner_drop_zones] addObject:second_drop_zone];
+            
+            [temp setSticks:YES];
         }
             break;
         case BLOCK_OPERATOR_MINUS:

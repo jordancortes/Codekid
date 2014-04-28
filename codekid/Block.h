@@ -12,6 +12,8 @@
 
 @property UIView *main_view;
 @property NSMutableArray *inner_drop_zones;
+@property BOOL sticks;
 
+- (id)init;
 - (BOOL)isChildOfView:(UIView *)this_view;
 @end

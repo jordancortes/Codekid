@@ -103,9 +103,42 @@
 
 #pragma mark Handle Gesture Event
 
+- (void)checkStickPan:(UIPanGestureRecognizer *)recognizer
+{
+    if (recognizer.state == UIGestureRecognizerStateChanged)
+    {
+        for (Block *this_block in _blocks)
+        {
+            BlockView *this_view = (BlockView *)[this_block main_view];
+        
+            if (![this_view isEqual:recognizer.view] && [this_block sticks]) // si no soy yo y el bloque permite anidarse
+            {
+                if (
+                    (recognizer.view.frame.origin.y < this_view.frame.origin.y + this_view.frame.size.height)
+                    &&
+                    (recognizer.view.frame.origin.y > this_view.frame.origin.y + this_view.frame.size.height - STICK_BORDER)
+                    &&
+                    (recognizer.view.frame.origin.x < this_view.frame.origin.x + this_view.frame.size.width)
+                    &&
+                    (recognizer.view.frame.origin.x > this_view.frame.origin.x + STICK_BORDER)
+                   )
+                {
+                    [this_view highlightBorder];
+                }
+                else
+                {
+                    [this_view resetBorder];
+                }
+            }
+        }
+    }
+}
+
 //The event handling method
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer
 {
+    [self checkStickPan:recognizer];
+
     CGPoint location = [recognizer locationInView:[recognizer.view superview]];
     CGPoint super_location = [recognizer locationInView:_O_dropzone_view];
 
