@@ -84,7 +84,7 @@
             [temp setMain_view:[
                                 [BlockView alloc]
                                 initWithFrame:CGRectMake(0, 0, name.frame.size.width, 59)
-                                andColor:[UIColor colorWithRed:0.933333333333333 green:0.494117647058824 blue:0 alpha:1.0]]
+                                andColor:[UIColor colorWithRed:0.250980392156863 green:0.619607843137255 blue:1 alpha:1.0]]
              ];
             [[temp main_view] addSubview:name];
         }
