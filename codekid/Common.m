@@ -53,6 +53,7 @@ static int _del_paren;
      10  ->  GOTO
      11  ->  GOTOF
      12  ->  GOTOV
+     13  ->  SUB
      20  ->  SET
      21  ->  LENGTH
      22  ->  ITEM
@@ -60,7 +61,7 @@ static int _del_paren;
      24  ->  WAIT_UNTIL
      25  ->  CONTAINS
      26  ->  TURN
-     27  ->  GO_TO
+     27  ->  MOVE
      28  ->  ADD
      29  ->  DELETE
      30  ->  SAY
@@ -68,7 +69,7 @@ static int _del_paren;
      32  ->  HIDE
      33  ->  CLEAR
      34  ->  LOAD
-     35  ->  SET
+     35  ->  APPLY
      36  ->  SCALE
      */
     operatorCode = [[NSDictionary alloc]
