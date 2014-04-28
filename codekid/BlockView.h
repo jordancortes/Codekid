@@ -12,4 +12,7 @@
 
 - (id)initWithFrame:(CGRect)frame andColor:(UIColor *)color;
 
+- (void)highlightBorder;
+- (void)resetBorder;
+
 @end

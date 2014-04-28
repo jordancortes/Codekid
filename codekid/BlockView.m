@@ -22,4 +22,14 @@
     return self;
 }
 
+- (void)highlightBorder
+{
+    [self.layer setBorderColor:[UIColor blueColor].CGColor];
+}
+
+- (void)resetBorder
+{
+    [self.layer setBorderColor:[UIColor blackColor].CGColor];
+}
+
 @end
