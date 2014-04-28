@@ -35,19 +35,36 @@
     _block_images = [[NSArray alloc] initWithObjects:
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_events_start"],
+                      [UIImage imageNamed:@"block_events_when"],
                       nil],
                      [[NSArray alloc] initWithObjects:
-                      [UIImage imageNamed:@"block_events_start"],
+                      [UIImage imageNamed:@"block_appearance_show"],
+                      [UIImage imageNamed:@"block_appearance_clear"],
+                      [UIImage imageNamed:@"block_appearance_hide"],
+                      [UIImage imageNamed:@"block_appearance_load"],
+                      [UIImage imageNamed:@"block_appearance_scale"],
+                      [UIImage imageNamed:@"block_appearance_set"],
+                      [UIImage imageNamed:@"block_appearance_say"],
                       nil],
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_movement_turn"],
+                      [UIImage imageNamed:@"block_movement_move"],
                       nil],
                      [[NSArray alloc] initWithObjects:
-                      [UIImage imageNamed:@"block_events_start"],
+                      [UIImage imageNamed:@"block_control_if"],
+                      [UIImage imageNamed:@"block_control_repeatUntil"],
+                      [UIImage imageNamed:@"block_control_set"],
+                      [UIImage imageNamed:@"block_control_wait"],
+                      [UIImage imageNamed:@"block_control_waitUntil"],
                       nil],
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_operators_plus"],
                       [UIImage imageNamed:@"block_operators_minus"],
+                      [UIImage imageNamed:@"block_operators_multiplication"],
+                      [UIImage imageNamed:@"block_operators_division"],
+                      [UIImage imageNamed:@"block_operators_equals"],
+                      [UIImage imageNamed:@"block_operators_greaterThan"],
+                      [UIImage imageNamed:@"block_operators_lessThan"],
                       nil],
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_events_start"],
