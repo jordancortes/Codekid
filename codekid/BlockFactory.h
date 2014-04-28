@@ -11,10 +11,13 @@
 #import "DropZoneView.h"
 #import "DropZoneTextField.h"
 #import "BlockView.h"
+#import "Variable.h"
+#import "VariableLabel.h"
 
 #define BLOCK_MOVEMENT_TURN 20
 #define BLOCK_OPERATOR_PLUS 40
 #define BLOCK_OPERATOR_MINUS 41
+#define BLOCK_VARIABLE 50
 
 #define TEXT_TYPE_INTEGER    0
 #define TEXT_TYPE_FLOAT      1
@@ -24,6 +27,6 @@
 
 @property NSNotificationCenter *notificationCenter;
 
-- (Block *)createBlockOfType:(NSInteger)type;
+- (Block *)createBlockOfType:(NSInteger)type withData:(id)data;
 
 @end

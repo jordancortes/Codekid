@@ -22,7 +22,7 @@
     return self;
 }
 
-- (Block *)createBlockOfType:(NSInteger)type
+- (Block *)createBlockOfType:(NSInteger)type withData:(id)data
 {
     Block *temp = [[Block alloc] init];
     temp.inner_drop_zones = [[NSMutableArray alloc] init];
@@ -73,6 +73,15 @@
             temp.main_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 140, 59)];
             temp.main_view.backgroundColor = [UIColor blueColor];
             [[temp inner_drop_zones] addObject:[[DropZoneView alloc] initWithFrame:CGRectMake(20, 0, 10, 50)]];
+        }
+            break;
+        case BLOCK_VARIABLE:
+        {
+            Variable *this_var = (Variable *)data;
+            VariableLabel *name = [[VariableLabel alloc] initWithName:[this_var name]];
+            
+            [temp setMain_view:[[BlockView alloc] initWithFrame:CGRectMake(0, 0, name.frame.size.width, 59) andColor:[UIColor redColor]]];
+            [[temp main_view] addSubview:name];
         }
             break;
         default:

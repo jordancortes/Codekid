@@ -334,7 +334,9 @@
 {
     if (_block_selected == BLOCK_VARIABLES)
     {
-        
+        [_blocks addObject:[_factory createBlockOfType:BLOCK_VARIABLE withData:[_variables objectAtIndex:indexPath.row]]];
+        [[[_blocks lastObject] main_view] addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
+        [_O_dropzone_view addSubview:[[_blocks lastObject] main_view]];
     }
     else if (_block_selected == BLOCK_LISTS)
     {
@@ -342,7 +344,7 @@
     }
     else
     {
-        [_blocks addObject:[_factory createBlockOfType:(_block_selected * 10) + indexPath.row]];
+        [_blocks addObject:[_factory createBlockOfType:(_block_selected * 10) + indexPath.row withData:nil]];
         
         for (UIView *this_view in [[_blocks lastObject] inner_drop_zones]) // para los inner_drop_zones agrega el gesture
         {

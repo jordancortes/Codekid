@@ -27,6 +27,8 @@
 		1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46A18CE41F600CFF4D0 /* parser.ym */; };
 		17722D7118D8042900E4A3CB /* Quadruple.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7018D8042900E4A3CB /* Quadruple.m */; };
 		17722D7518D807BC00E4A3CB /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7418D807BC00E4A3CB /* Stack.m */; };
+		17AD02BC190EC92300C12643 /* VariableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AD02BB190EC92300C12643 /* VariableLabel.m */; };
+		17AD02BF190ECC3F00C12643 /* Action_Man_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17AD02BE190ECC3F00C12643 /* Action_Man_Bold.ttf */; };
 		17DE3A29190A10F700C57B0E /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A22190A10F700C57B0E /* Block.m */; };
 		17DE3A2A190A10F700C57B0E /* BlockFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A24190A10F700C57B0E /* BlockFactory.m */; };
 		17DE3A2B190A10F700C57B0E /* DropZoneTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A26190A10F700C57B0E /* DropZoneTextField.m */; };
@@ -101,6 +103,9 @@
 		17722D7018D8042900E4A3CB /* Quadruple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quadruple.m; sourceTree = "<group>"; };
 		17722D7318D807BC00E4A3CB /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		17722D7418D807BC00E4A3CB /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
+		17AD02BA190EC92300C12643 /* VariableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableLabel.h; sourceTree = "<group>"; };
+		17AD02BB190EC92300C12643 /* VariableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableLabel.m; sourceTree = "<group>"; };
+		17AD02BE190ECC3F00C12643 /* Action_Man_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Bold.ttf; sourceTree = "<group>"; };
 		17DE3A21190A10F700C57B0E /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
 		17DE3A22190A10F700C57B0E /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
 		17DE3A23190A10F700C57B0E /* BlockFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockFactory.h; sourceTree = "<group>"; };
@@ -204,6 +209,7 @@
 		1737C43618CE415D00CFF4D0 /* codekid */ = {
 			isa = PBXGroup;
 			children = (
+				17AD02BD190ECC3200C12643 /* Fonts */,
 				17DE3A2D190A110100C57B0E /* SidebarBlockViewCell.h */,
 				17DE3A2E190A110100C57B0E /* SidebarBlockViewCell.m */,
 				17DE3A20190A10D900C57B0E /* Blocks */,
@@ -274,6 +280,14 @@
 			name = "Compiler Objects";
 			sourceTree = "<group>";
 		};
+		17AD02BD190ECC3200C12643 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				17AD02BE190ECC3F00C12643 /* Action_Man_Bold.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		17D0E8FE18D1504300B0C02C /* Flex & Bison */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +310,8 @@
 				17DE3A26190A10F700C57B0E /* DropZoneTextField.m */,
 				17DE3A27190A10F700C57B0E /* DropZoneView.h */,
 				17DE3A28190A10F700C57B0E /* DropZoneView.m */,
+				17AD02BA190EC92300C12643 /* VariableLabel.h */,
+				17AD02BB190EC92300C12643 /* VariableLabel.m */,
 			);
 			name = Blocks;
 			sourceTree = "<group>";
@@ -422,6 +438,7 @@
 				DF3D350E18E0F5F300F8D6BD /* Default.png in Resources */,
 				1737C44418CE415D00CFF4D0 /* Main.storyboard in Resources */,
 				DF7F273318EE33D000971329 /* codekid-48.png in Resources */,
+				17AD02BF190ECC3F00C12643 /* Action_Man_Bold.ttf in Resources */,
 				DFA14A4918F60EE60061FB40 /* bloques in Resources */,
 				DF3D350A18E0F56400F8D6BD /* codekid.png in Resources */,
 				DFE0BDDB18EA6ED400F87F18 /* rename.png in Resources */,
@@ -448,6 +465,7 @@
 			files = (
 				17722D7518D807BC00E4A3CB /* Stack.m in Sources */,
 				1737C46718CE41DE00CFF4D0 /* Common.m in Sources */,
+				17AD02BC190EC92300C12643 /* VariableLabel.m in Sources */,
 				17722D7118D8042900E4A3CB /* Quadruple.m in Sources */,
 				17DE3A29190A10F700C57B0E /* Block.m in Sources */,
 				170664D4190B60DD00A6C3C9 /* BlockView.m in Sources */,
