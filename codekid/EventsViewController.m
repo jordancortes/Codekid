@@ -340,18 +340,22 @@
     }
     else if (_block_selected == BLOCK_LISTS)
     {
-        
+        [_blocks addObject:[_factory createBlockOfType:BLOCK_VARIABLE withData:[_lists objectAtIndex:indexPath.row]]];
+        [[[_blocks lastObject] main_view] addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
+        [_O_dropzone_view addSubview:[[_blocks lastObject] main_view]];
     }
     else
     {
-        [_blocks addObject:[_factory createBlockOfType:(_block_selected * 10) + indexPath.row withData:nil]];
+        Block *this_block = [_factory createBlockOfType:(_block_selected * 10) + indexPath.row withData:nil];
+    
+        [[this_block main_view] addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
         
-        for (UIView *this_view in [[_blocks lastObject] inner_drop_zones]) // para los inner_drop_zones agrega el gesture
+        for (UIView *this_view in [this_block inner_drop_zones]) // para los inner_drop_zones agrega el gesture
         {
-            [[[_blocks lastObject] main_view] addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
-            [[[_blocks lastObject] main_view] addSubview:this_view];
+            [[this_block main_view] addSubview:this_view];
         }
-        [_O_dropzone_view addSubview:[[_blocks lastObject] main_view]]; // agrega el objeto al drop_zone
+        [_O_dropzone_view addSubview:[this_block main_view]]; // agrega el objeto al drop_zone
+        
     }
     
     [_O_sidebar_table_blocks deselectRowAtIndexPath:indexPath animated:YES]; // desmarca la opción seleccionada
