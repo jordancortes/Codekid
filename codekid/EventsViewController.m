@@ -84,6 +84,8 @@
     [_O_createvar_button_create setBackgroundImage:[UIImage imageNamed:@"sidebar_createvar_button_create"] forState:UIControlStateNormal];
     
     // CreateVar Sidebar
+    _variables = [[NSMutableArray alloc] init];
+    _lists = [[NSMutableArray alloc] init];
     _picker_createvar_type = [[NSArray alloc] initWithObjects:
                                 [UIImage imageNamed:@"sidebar_createvar_picker_integer"],
                                 [UIImage imageNamed:@"sidebar_createvar_picker_float"],
@@ -254,33 +256,102 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[_block_images objectAtIndex:_block_selected] count];
+    if (_block_selected == BLOCK_VARIABLES)
+    {
+        return [_variables count];
+    }
+    else if (_block_selected == BLOCK_LISTS)
+    {
+        return [_lists count];
+    }
+    else
+    {
+        return [[_block_images objectAtIndex:_block_selected] count];
+    }
 }
 
 #pragma mark Table Delegate Methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *sidebar_table_identifier = @"Cell";
-    
-    SidebarBlockViewCell *cell = [tableView dequeueReusableCellWithIdentifier:sidebar_table_identifier];
-    
-    cell.O_sidebar_table_cell.image = [[_block_images objectAtIndex:_block_selected] objectAtIndex:indexPath.row];
-    
-    return cell;
+    if (_block_selected == BLOCK_VARIABLES)
+    {
+        static NSString *sidebar_table_identifier = @"Variable";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:sidebar_table_identifier];
+        NSString *var_type = [[Common typeForCode:[(Variable *)[_variables objectAtIndex:indexPath.row] type]] uppercaseString];
+        NSInteger var_dim = [[_variables objectAtIndex:indexPath.row] dimension];
+        
+        
+        [[cell textLabel] setText:[[_variables objectAtIndex:indexPath.row] name]];
+        
+        if ([var_type isEqual:@"INT"])
+        {
+            [[cell detailTextLabel] setText:[NSString stringWithFormat:@"Type: %@\t\t\tDimension: %d", var_type, var_dim]];
+        }
+        else
+        {
+            [[cell detailTextLabel] setText:[NSString stringWithFormat:@"Type: %@\t\tDimension: %d", var_type, var_dim]];
+        }
+        
+        return cell;
+    }
+    else if (_block_selected == BLOCK_LISTS)
+    {
+        static NSString *sidebar_table_identifier = @"Variable";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:sidebar_table_identifier];
+        NSString *var_type = [[Common typeForCode:[(Variable *)[_lists objectAtIndex:indexPath.row] type]] uppercaseString];
+        NSInteger var_dim = [[_lists objectAtIndex:indexPath.row] dimension];
+        
+        
+        [[cell textLabel] setText:[[_lists objectAtIndex:indexPath.row] name]];
+        
+        if ([var_type isEqual:@"INT"])
+        {
+            [[cell detailTextLabel] setText:[NSString stringWithFormat:@"Type: %@\t\t\tDimension: %d", var_type, var_dim]];
+        }
+        else
+        {
+            [[cell detailTextLabel] setText:[NSString stringWithFormat:@"Type: %@\t\tDimension: %d", var_type, var_dim]];
+        }
+        
+        return cell;
+    }
+    else
+    {
+        static NSString *sidebar_table_identifier = @"Cell";
+        
+        SidebarBlockViewCell *cell = [tableView dequeueReusableCellWithIdentifier:sidebar_table_identifier];
+        
+        cell.O_sidebar_table_cell.image = [[_block_images objectAtIndex:_block_selected] objectAtIndex:indexPath.row];
+        
+        return cell;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [_blocks addObject:[_factory createBlockOfType:(_block_selected * 10) + indexPath.row]];
-    
-    for (UIView *this_view in [[_blocks lastObject] inner_drop_zones]) // para los inner_drop_zones agrega el gesture
+    if (_block_selected == BLOCK_VARIABLES)
     {
-        [[[_blocks lastObject] main_view] addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
-        [[[_blocks lastObject] main_view] addSubview:this_view];
+        
     }
-    [_O_dropzone_view addSubview:[[_blocks lastObject] main_view]]; // agrega el objeto al drop_zone
-
+    else if (_block_selected == BLOCK_LISTS)
+    {
+        
+    }
+    else
+    {
+        [_blocks addObject:[_factory createBlockOfType:(_block_selected * 10) + indexPath.row]];
+        
+        for (UIView *this_view in [[_blocks lastObject] inner_drop_zones]) // para los inner_drop_zones agrega el gesture
+        {
+            [[[_blocks lastObject] main_view] addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
+            [[[_blocks lastObject] main_view] addSubview:this_view];
+        }
+        [_O_dropzone_view addSubview:[[_blocks lastObject] main_view]]; // agrega el objeto al drop_zone
+    }
+    
     [_O_sidebar_table_blocks deselectRowAtIndexPath:indexPath animated:YES]; // desmarca la opción seleccionada
 }
 
@@ -363,7 +434,7 @@
     
     CGRect sidebar_table_frame = [_O_sidebar_table_blocks frame];
     
-    if ((_block_selected == BLOCK_VARAIBLES) || (_block_selected == BLOCK_LISTS))
+    if ((_block_selected == BLOCK_VARIABLES) || (_block_selected == BLOCK_LISTS))
     {
         sidebar_table_frame.origin.y = CREATE_VAR_BUTTONS_SHOW;
     }
@@ -409,10 +480,16 @@
     
     if (match)
     {
-        if (variable_dimension != 0)
+        if (0 != variable_dimension)
         {
-            /* TODO: faltan variables dimensionadas */
-            [_variables_lists addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:variable_dimension]];
+            if (1 == variable_dimension)
+            {
+                [_variables addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:1]];
+            }
+            else
+            {
+                [_lists addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:variable_dimension]];
+            }
             
             // limpia los campos
             [_O_createvar_name setText:@""];
@@ -429,6 +506,7 @@
                                   }];
             
             // muestra las nuevas variables en la tabla NEXT:
+            [_O_sidebar_table_blocks reloadData];
         }
         else
         {

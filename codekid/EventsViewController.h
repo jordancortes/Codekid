@@ -11,6 +11,7 @@
 #import "BlockFactory.h"
 #import "DropZoneView.h"
 #import "Variable.h"
+#import "Common.h"
 
 @interface EventsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource>
 
@@ -22,7 +23,7 @@
 #define BLOCK_MOVEMENT 2
 #define BLOCK_CONTROL 3
 #define BLOCK_OPERATORS 4
-#define BLOCK_VARAIBLES 5
+#define BLOCK_VARIABLES 5
 #define BLOCK_LISTS 6
 #define BLOCK_CHARACTERS 7
 
@@ -57,7 +58,8 @@
 - (IBAction)A_delete_variableList:(id)sender;
 
 // Sidebar Creating Variables and Lists
-@property NSMutableArray *variables_lists;
+@property NSMutableArray *variables;
+@property NSMutableArray *lists;
 @property NSArray *picker_createvar_type;
 @property (weak, nonatomic) IBOutlet UIImageView *O_createvar_background;
 @property (weak, nonatomic) IBOutlet UITextField *O_createvar_name;
