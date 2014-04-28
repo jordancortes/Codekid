@@ -13,14 +13,20 @@
 - (id)initWithFrame:(CGRect)frame andType:(NSInteger)type
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        [self setFont:[UIFont boldSystemFontOfSize:30]];
-        [self setTextAlignment:NSTextAlignmentCenter];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextChange:) name:UITextFieldTextDidChangeNotification object:self];
-        [self setKeyboardType:UIKeyboardTypeNumberPad];
-        [self setDelegate:self];
+    if (self)
+    {
+        // iniciliza variables de control
         _input_type = type;
         _last_length = 0;
+        
+        // define propiedades de diseño
+        [self setFont:[UIFont fontWithName:@"ActionMan-Bold" size:35]];
+        [self setTextAlignment:NSTextAlignmentCenter];
+        [self setKeyboardType:UIKeyboardTypeNumberPad];
+        
+        // agrega observadores
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextChange:) name:UITextFieldTextDidChangeNotification object:self];
+        [self setDelegate:self];
     }
     return self;
 }
