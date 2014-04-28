@@ -355,7 +355,7 @@
             [[this_block main_view] addSubview:this_view];
         }
         [_O_dropzone_view addSubview:[this_block main_view]]; // agrega el objeto al drop_zone
-        
+        [_blocks addObject:this_block];
     }
     
     [_O_sidebar_table_blocks deselectRowAtIndexPath:indexPath animated:YES]; // desmarca la opción seleccionada
