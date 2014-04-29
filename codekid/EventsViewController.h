@@ -31,7 +31,7 @@
 
 #define ANIMATION_SPEED 0.4
 
-#define STICK_BORDER 5
+#define STICK_BORDER 10
 
 #define CREATE_VAR_SHOW 558
 #define CREATE_VAR_HIDE 130

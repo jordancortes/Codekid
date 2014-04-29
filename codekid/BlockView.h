@@ -10,6 +10,8 @@
 
 @interface BlockView : UIView
 
+@property BOOL inside_another;
+
 - (id)initWithFrame:(CGRect)frame andColor:(UIColor *)color;
 
 - (void)highlightBorder;
