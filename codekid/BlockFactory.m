@@ -40,6 +40,8 @@
             UILabel *first_text = [[VariableLabel alloc] initWithName:@"WHEN START" fontSize:35 andPosition:CGPointMake(5, 0)];
             [first_text setTag:1];
             [temp.main_view addSubview:first_text];
+            
+            [temp setSticks:YES];
         }
             break;
         case BLOCK_EVENTS_WHEN:
@@ -774,6 +776,11 @@
             break;
         default:
             break;
+    }
+    
+    for (UIView *this_view in [temp inner_drop_zones])
+    {
+        [[temp main_view] addSubview:this_view];
     }
     
     return temp;

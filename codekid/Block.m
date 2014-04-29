@@ -21,6 +21,7 @@
         _child = nil;
         _sticks = NO;
         _should_indent = NO;
+        _inside_another = NO;
     }
     
     return self;
@@ -40,6 +41,140 @@
     } while ([check_view isKindOfClass:[UIView class]]);
     
     return NO;
+}
+
+- (BOOL)location:(CGPoint)location isInsideOfFrame:(CGRect)frame
+{
+    return ((location.x > frame.origin.x && location.x < frame.origin.x + frame.size.width) && (location.y > frame.origin.y && location.y < frame.origin.y + frame.size.height));
+}
+
+#pragma mark Handle Gesture Event
+
+- (void)handleMainViewPan:(BlockHandePanGestureRecognizer *)recognizer
+{
+    CGPoint super_location = [recognizer locationInView:_super_parent_view];
+    
+    // Al iniciar el drag se encarga de sacar todo bloque de donde este
+    if (recognizer.state == UIGestureRecognizerStateBegan)
+    {
+        if (![[recognizer.view superview] isEqual:_super_parent_view] && [recognizer numberOfTouches] == 2) // si su superview no es drop_zone
+        {
+            [(DropZoneView *)[recognizer.view superview] setIs_empty:YES];
+            CGPoint view_center = [recognizer.view center];
+            view_center.x = super_location.x;
+            view_center.y = super_location.y;
+            recognizer.view.center = view_center;
+            
+            [(DropZoneView *)[recognizer.view superview] decreaseWidth:NORMAL_INNER_DROPZONE_WIDTH reachingTo:_super_parent_view];
+            
+            [recognizer.view removeFromSuperview]; // lo saca
+            [_super_parent_view addSubview:recognizer.view]; // lo regresa al drop_zone
+            
+            // avisa que ya no esta dentro de algun bloque
+            [self setInside_another:NO];
+        }
+    }
+    else if (recognizer.state == UIGestureRecognizerStateChanged)
+    {
+        if (![self inside_another])
+        {
+            CGPoint location = [recognizer locationInView:[recognizer.view superview]];
+            
+            // lo mueve
+            CGPoint view_center = [recognizer.view center];
+            view_center.x = location.x;
+            view_center.y = location.y;
+            recognizer.view.center = view_center;
+            
+            for (Block *this_block in [recognizer blocks])
+            {
+                if (![self isEqual:this_block] && ![this_block isChildOfView:[self main_view]])
+                {
+                    for (DropZoneView *this_view in [this_block inner_drop_zones])
+                    {
+                        CGRect this_frame = [this_view convertRect:this_view.bounds toView:_super_parent_view];
+                        
+                        if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
+                        {
+                            [this_view highlightBorder];
+                        }
+                        else
+                        {
+                            [this_view resetBorder];
+                        }
+                    }
+                    
+                    // CHECA BORDE INFERIOR
+                    if ([this_block sticks])
+                    {
+                        CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
+                        
+                        if ( // lo detecta por abajo
+                            (top_center.y < [this_block main_view].frame.origin.y + [this_block main_view].frame.size.height)
+                            &&
+                            (top_center.y > [this_block main_view].frame.origin.y + [this_block main_view].frame.size.height - STICK_BORDER)
+                            &&
+                            (top_center.x < [this_block main_view].frame.origin.x + [this_block main_view].frame.size.width)
+                            &&
+                            (top_center.x > [this_block main_view].frame.origin.x + STICK_BORDER)
+                            )
+                        {
+                            [[this_block main_view] highlightBorder]; // NEXT:
+                        }
+                        else
+                        {
+                            [[this_block main_view] resetBorder];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded)
+    {
+        for (Block *this_block in [recognizer blocks])
+        {
+            if (![self isEqual:this_block] && ![this_block isChildOfView:[self main_view]])
+            {
+                for (DropZoneView *this_view in [this_block inner_drop_zones])
+                {
+                    CGRect this_frame = [this_view convertRect:this_view.bounds toView:_super_parent_view];
+                    
+                    if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
+                    {
+                        // borra el texto que habia dentro del DropZoneView
+                        [[this_view textfield] setText:@""];
+                        [[this_view textfield] setLast_length:0];
+                        CGRect textfield_frame = [[this_view textfield] frame];
+                        textfield_frame.size.width = 40.0;
+                        [[this_view textfield] setFrame:textfield_frame];
+                        
+                        //cambia su posicion a 0,0
+                        CGRect view_frame = [recognizer.view frame];
+                        view_frame.origin.x = 0;
+                        view_frame.origin.y = 0;
+                        recognizer.view.frame = view_frame;
+                        
+                        //mete el view
+                        [recognizer.view removeFromSuperview];
+                        [this_view addSubview:recognizer.view];
+                        
+                        //le dice que ya lo tiene
+                        [this_view setIs_empty:NO];
+                        
+                        // dice que este ya está dentro de otro
+                        [self setInside_another:YES];
+                        
+                        // borra el borde que habia dejado
+                        [this_view resetBorder];
+                        
+                        //hace más grande el bloque y sus padres
+                        [this_view increaseWidth:recognizer.view.frame.size.width reachingTo:_super_parent_view];
+                    }
+                }
+            }
+        }
+    }
 }
 
 @end

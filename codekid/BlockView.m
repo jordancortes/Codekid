@@ -18,8 +18,6 @@
         [self.layer setBorderWidth:2.0];
         [self.layer setBorderColor:[UIColor blackColor].CGColor];
         [self setBackgroundColor:color];
-        
-        _inside_another = NO;
     }
     return self;
 }

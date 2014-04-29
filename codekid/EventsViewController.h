@@ -12,6 +12,7 @@
 #import "DropZoneView.h"
 #import "Variable.h"
 #import "Common.h"
+#import "BlockHandePanGestureRecognizer.h"
 
 @interface EventsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource>
 
@@ -28,11 +29,7 @@
 #define BLOCK_LISTS 7
 #define BLOCK_CHARACTERS 8
 
-#define NORMAL_INNER_DROPZONE_WIDTH 40
-
 #define ANIMATION_SPEED 0.4
-
-#define STICK_BORDER 10
 
 #define CREATE_VAR_SHOW 558
 #define CREATE_VAR_HIDE 130

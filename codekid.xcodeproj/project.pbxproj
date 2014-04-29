@@ -27,6 +27,7 @@
 		1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46A18CE41F600CFF4D0 /* parser.ym */; };
 		17722D7118D8042900E4A3CB /* Quadruple.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7018D8042900E4A3CB /* Quadruple.m */; };
 		17722D7518D807BC00E4A3CB /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7418D807BC00E4A3CB /* Stack.m */; };
+		17A9B6B71910588500DB5054 /* BlockHandePanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A9B6B61910588500DB5054 /* BlockHandePanGestureRecognizer.m */; };
 		17AD02BC190EC92300C12643 /* VariableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AD02BB190EC92300C12643 /* VariableLabel.m */; };
 		17AD02BF190ECC3F00C12643 /* Action_Man_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17AD02BE190ECC3F00C12643 /* Action_Man_Bold.ttf */; };
 		17DE3A29190A10F700C57B0E /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A22190A10F700C57B0E /* Block.m */; };
@@ -103,6 +104,8 @@
 		17722D7018D8042900E4A3CB /* Quadruple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quadruple.m; sourceTree = "<group>"; };
 		17722D7318D807BC00E4A3CB /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		17722D7418D807BC00E4A3CB /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
+		17A9B6B51910588500DB5054 /* BlockHandePanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockHandePanGestureRecognizer.h; sourceTree = "<group>"; };
+		17A9B6B61910588500DB5054 /* BlockHandePanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockHandePanGestureRecognizer.m; sourceTree = "<group>"; };
 		17AD02BA190EC92300C12643 /* VariableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableLabel.h; sourceTree = "<group>"; };
 		17AD02BB190EC92300C12643 /* VariableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableLabel.m; sourceTree = "<group>"; };
 		17AD02BE190ECC3F00C12643 /* Action_Man_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Bold.ttf; sourceTree = "<group>"; };
@@ -312,6 +315,8 @@
 				17DE3A28190A10F700C57B0E /* DropZoneView.m */,
 				17AD02BA190EC92300C12643 /* VariableLabel.h */,
 				17AD02BB190EC92300C12643 /* VariableLabel.m */,
+				17A9B6B51910588500DB5054 /* BlockHandePanGestureRecognizer.h */,
+				17A9B6B61910588500DB5054 /* BlockHandePanGestureRecognizer.m */,
 			);
 			name = Blocks;
 			sourceTree = "<group>";
@@ -477,6 +482,7 @@
 				17DE3A2B190A10F700C57B0E /* DropZoneTextField.m in Sources */,
 				17E9DB1918F903DB0024EE7A /* Procedure.m in Sources */,
 				17E9DB1A18F903DB0024EE7A /* Temporal.m in Sources */,
+				17A9B6B71910588500DB5054 /* BlockHandePanGestureRecognizer.m in Sources */,
 				DF3D350018DFC07500F8D6BD /* Project.m in Sources */,
 				1737C44118CE415D00CFF4D0 /* AppDelegate.m in Sources */,
 				17DE3A2A190A10F700C57B0E /* BlockFactory.m in Sources */,

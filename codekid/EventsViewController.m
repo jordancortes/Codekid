@@ -126,146 +126,6 @@
     _blocks = [[NSMutableArray alloc] init];
 }
 
-#pragma mark Handle Gesture Event
-
-- (void)handlePan:(UIPanGestureRecognizer *)recognizer
-{
-    CGPoint super_location = [recognizer locationInView:_O_dropzone_view];
-
-    // Al iniciar el drag se encarga de sacar todo bloque de donde este
-    if (recognizer.state == UIGestureRecognizerStateBegan)
-    {
-        if (![[recognizer.view superview] isEqual:_O_dropzone_view] && [recognizer numberOfTouches] == 2) // si su superview no es drop_zone
-        {
-            [(DropZoneView *)[recognizer.view superview] setIs_empty:YES];
-            CGPoint view_center = [recognizer.view center];
-            view_center.x = super_location.x;
-            view_center.y = super_location.y;
-            recognizer.view.center = view_center;
-            
-            [(DropZoneView *)[recognizer.view superview] decreaseWidth:NORMAL_INNER_DROPZONE_WIDTH reachingTo:_O_dropzone_view];
-            
-            [recognizer.view removeFromSuperview]; // lo saca
-            [_O_dropzone_view addSubview:recognizer.view]; // lo regresa al drop_zone
-            
-            // avisa que ya no esta dentro de algun bloque
-            [(BlockView *)recognizer.view setInside_another:NO];
-        }
-    }
-    else if (recognizer.state == UIGestureRecognizerStateChanged)
-    {
-        if (![(BlockView *)recognizer.view inside_another])
-        {
-            CGPoint location = [recognizer locationInView:[recognizer.view superview]];
-            
-            // lo mueve
-            CGPoint view_center = [recognizer.view center];
-            view_center.x = location.x;
-            view_center.y = location.y;
-            recognizer.view.center = view_center;
-            
-            //verifica con respecto a la posición en drop_zone si está sobre un inner_drop_zone
-            for (Block *this_block in _blocks)
-            {
-                BlockView *this_block_main_view = (BlockView *)[this_block main_view];
-            
-                // si no es él mismo y no es hijo del mismo
-                if (![[this_block main_view] isEqual:recognizer.view] && ![this_block isChildOfView:recognizer.view])
-                {
-                    for (DropZoneView *this_view in [this_block inner_drop_zones])
-                    {
-                        CGRect this_frame = [this_view convertRect:this_view.bounds toView:_O_dropzone_view];
-                        
-                        if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
-                        {
-                            [this_view highlightBorder];
-                        }
-                        else
-                        {
-                            [this_view resetBorder];
-                        }
-                    }
-                    
-                    // AQUI SE CHECA BORDE
-                    if ([this_block sticks])
-                    {
-                        CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
-                        
-                        if ( // lo detecta por abajo
-                            (top_center.y < this_block_main_view.frame.origin.y + this_block_main_view.frame.size.height)
-                            &&
-                            (top_center.y > this_block_main_view.frame.origin.y + this_block_main_view.frame.size.height - STICK_BORDER)
-                            &&
-                            (top_center.x < this_block_main_view.frame.origin.x + this_block_main_view.frame.size.width)
-                            &&
-                            (top_center.x > this_block_main_view.frame.origin.x + STICK_BORDER)
-                            )
-                        {
-                            [this_block_main_view highlightBorder]; // NEXT:
-                        }
-                        else
-                        {
-                            [this_block_main_view resetBorder];
-                        }
-                    }
-                }
-            }
-        }
-    }
-    else if (recognizer.state == UIGestureRecognizerStateEnded)
-    {
-        //ahora que el objeto esta en drop_zone se verificará si esta sobre un inner_drop_zone para meterlo
-        //verifica con respecto a la posición en drop_zone si está sobre un inner_drop_zone
-        for (Block *this_block in _blocks)
-        {
-            if (![[this_block main_view] isEqual:recognizer.view] && ![this_block isChildOfView:recognizer.view]) // si el view no es él mismo
-            {
-                for (DropZoneView *this_view in [this_block inner_drop_zones])
-                {
-                    CGRect this_frame = [this_view convertRect:this_view.bounds toView:_O_dropzone_view]; // saca la posición con respecto al drop_zone
-                    
-                    if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty]) // si el frame esta sobre un inner_drop_zone
-                    {
-                        // borra el texto que habia dentro del DropZoneView
-                        [[this_view textfield] setText:@""];
-                        [[this_view textfield] setLast_length:0];
-                        CGRect textfield_frame = [[this_view textfield] frame];
-                        textfield_frame.size.width = 40.0;
-                        [[this_view textfield] setFrame:textfield_frame];
-                        
-                        //cambia su posicion a 0,0
-                        CGRect view_frame = [recognizer.view frame];
-                        view_frame.origin.x = 0;
-                        view_frame.origin.y = 0;
-                        recognizer.view.frame = view_frame;
-                        
-                        //mete el view
-                        [recognizer.view removeFromSuperview];
-                        [this_view addSubview:recognizer.view];
-                        
-                        //le dice que ya lo tiene
-                        [this_view setIs_empty:NO];
-                        
-                        // dice que este ya está dentro de otro
-                        [(BlockView *)recognizer.view setInside_another:YES];
-                        
-                        // borra el borde que habia dejado
-                        [this_view resetBorder];
-                        
-                        //hace más grande el bloque y sus padres
-                        [this_view increaseWidth:recognizer.view.frame.size.width reachingTo:_O_dropzone_view];
-                    }
-                }
-            }
-        }
-    }
-}
-
-- (BOOL)location:(CGPoint)location isInsideOfFrame:(CGRect)frame
-{
-    return ((location.x > frame.origin.x && location.x < frame.origin.x + frame.size.width) && (location.y > frame.origin.y && location.y < frame.origin.y + frame.size.height));
-}
-
 #pragma mark Picker Data Source Methods
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -389,31 +249,25 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Block *this_block;
+
     if (_block_selected == BLOCK_VARIABLES)
     {
-        [_blocks addObject:[_factory createBlockOfType:BLOCK_VARIABLE withData:[_variables objectAtIndex:indexPath.row]]];
-        [[[_blocks lastObject] main_view] addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
-        [_O_dropzone_view addSubview:[[_blocks lastObject] main_view]];
+        this_block = [_factory createBlockOfType:BLOCK_VARIABLE withData:[_variables objectAtIndex:indexPath.row]];
     }
     else if (_block_selected == BLOCK_LISTS)
     {
-        [_blocks addObject:[_factory createBlockOfType:BLOCK_VARIABLE withData:[_lists objectAtIndex:indexPath.row]]];
-        [[[_blocks lastObject] main_view] addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
-        [_O_dropzone_view addSubview:[[_blocks lastObject] main_view]];
+        this_block = [_factory createBlockOfType:BLOCK_VARIABLE withData:[_lists objectAtIndex:indexPath.row]];
     }
     else
     {
-        Block *this_block = [_factory createBlockOfType:(_block_selected * 10) + indexPath.row withData:nil];
-    
-        [[this_block main_view] addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)]];
-        
-        for (UIView *this_view in [this_block inner_drop_zones]) // para los inner_drop_zones agrega el gesture
-        {
-            [[this_block main_view] addSubview:this_view];
-        }
-        [_O_dropzone_view addSubview:[this_block main_view]]; // agrega el objeto al drop_zone
-        [_blocks addObject:this_block];
+        this_block = [_factory createBlockOfType:(_block_selected * 10) + indexPath.row withData:nil];
     }
+    
+    [[this_block main_view] addGestureRecognizer:[[BlockHandePanGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewPan:) andBlocks:_blocks]];
+    [this_block setSuper_parent_view:_O_dropzone_view];
+    [_O_dropzone_view addSubview:[this_block main_view]];
+    [_blocks addObject:this_block];
     
     [_O_sidebar_table_blocks deselectRowAtIndexPath:indexPath animated:YES]; // desmarca la opción seleccionada
 }
