@@ -18,13 +18,15 @@
         [self.layer setBorderWidth:2.0];
         [self.layer setBorderColor:[UIColor blackColor].CGColor];
         [self setBackgroundColor:color];
+        
+        _inside_another = NO;
     }
     return self;
 }
 
 - (void)highlightBorder
 {
-    [self.layer setBorderColor:[UIColor blueColor].CGColor];
+    [self.layer setBorderColor:[UIColor greenColor].CGColor];
 }
 
 - (void)resetBorder

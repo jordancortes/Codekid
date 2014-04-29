@@ -24,7 +24,7 @@
 
 - (Block *)createBlockOfType:(NSInteger)type withData:(id)data
 {
-    Block *temp = [[Block alloc] init];
+    Block *temp = [[Block alloc] initWithBlockType:type];
     temp.inner_drop_zones = [[NSMutableArray alloc] init];
     
     switch (type)

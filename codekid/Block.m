@@ -10,13 +10,17 @@
 
 @implementation Block
 
-- (id)init
+- (id)initWithBlockType:(NSInteger)type
 {
     self = [super init];
     
     if (self)
     {
+        _block_type = type;
+        _parent = nil;
+        _child = nil;
         _sticks = NO;
+        _should_indent = NO;
     }
     
     return self;
