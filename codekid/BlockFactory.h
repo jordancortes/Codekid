@@ -37,7 +37,11 @@
 #define BLOCK_OPERATOR_EQUALS           44
 #define BLOCK_OPERATOR_GREATER_THAN     45
 #define BLOCK_OPERATOR_LESS_THAN        46
-#define BLOCK_VARIABLE                  50
+#define BLOCK_DATA_LENGTH               50
+#define BLOCK_DATA_ITEM                 51
+#define BLOCK_DATA_ADDAT                52
+#define BLOCK_DATA_SET                  53
+#define BLOCK_VARIABLE                  60
 
 #define TEXT_TYPE_INTEGER    0
 #define TEXT_TYPE_FLOAT      1

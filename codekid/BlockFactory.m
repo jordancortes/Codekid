@@ -599,6 +599,166 @@
             [[temp inner_drop_zones] addObject:second_drop_zone];
         }
             break;
+        case BLOCK_DATA_LENGTH:
+        {
+            temp.main_view = [
+                              [BlockView alloc]
+                              initWithFrame:CGRectMake(0, 0, 191, 59)
+                              andColor:[UIColor colorWithRed:0.76078431372549 green:0.313725490196078 blue:0.149019607843137 alpha:1.0]];
+            
+            // Texto
+            UILabel *first_text = [[VariableLabel alloc] initWithName:@"LENGTH" fontSize:35 andPosition:CGPointMake(0, 0)];
+            [first_text setTag:1];
+            [temp.main_view addSubview:first_text];
+            
+            // Primer Dropzone
+            DropZoneView *first_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(139, 0, 40, 59)];
+            [first_drop_zone setTag:2];
+            [first_drop_zone addBackTextField:[
+                                               [DropZoneTextField alloc]
+                                               initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
+                                               andType:TEXT_TYPE_STRING]];
+            [[temp inner_drop_zones] addObject:first_drop_zone];
+        }
+            break;
+        case BLOCK_DATA_ITEM:
+        {
+            temp.main_view = [
+                              [BlockView alloc]
+                              initWithFrame:CGRectMake(0, 0, 230, 59)
+                              andColor:[UIColor colorWithRed:0.76078431372549 green:0.313725490196078 blue:0.149019607843137 alpha:1.0]];
+            
+            // Primer Texto
+            UILabel *first_text = [[VariableLabel alloc] initWithName:@"item" fontSize:35 andPosition:CGPointMake(0, 0)];
+            [first_text setTag:1];
+            [temp.main_view addSubview:first_text];
+            
+            // Primer Dropzone
+            DropZoneView *first_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(88, 0, 40, 59)];
+            [first_drop_zone setTag:2];
+            [first_drop_zone addBackTextField:[
+                                               [DropZoneTextField alloc]
+                                               initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
+                                               andType:TEXT_TYPE_INTEGER]];
+            [[temp inner_drop_zones] addObject:first_drop_zone];
+            
+            // Segundo Texto
+            UILabel *second_text = [[VariableLabel alloc] initWithName:@"OF" fontSize:35 andPosition:CGPointMake(123, 0)];
+            [second_text setTag:3];
+            [temp.main_view addSubview:second_text];
+            
+            // Segundo Dropzone
+            DropZoneView *second_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(178, 0, 40, 59)];
+            [second_drop_zone setTag:4];
+            [second_drop_zone addBackTextField:[
+                                               [DropZoneTextField alloc]
+                                               initWithFrame:CGRectMake(0, 0, second_drop_zone.frame.size.width, second_drop_zone.frame.size.height)
+                                               andType:TEXT_TYPE_STRING]];
+            [[temp inner_drop_zones] addObject:second_drop_zone];
+        }
+            break;
+        case BLOCK_DATA_ADDAT:
+        {
+            temp.main_view = [
+                              [BlockView alloc]
+                              initWithFrame:CGRectMake(0, 0, 230, 59)
+                              andColor:[UIColor colorWithRed:0.76078431372549 green:0.313725490196078 blue:0.149019607843137 alpha:1.0]];
+            
+            // Primer Texto
+            UILabel *first_text = [[VariableLabel alloc] initWithName:@"ADD" fontSize:23 andPosition:CGPointMake(-7, 0)];
+            [first_text setTag:1];
+            [temp.main_view addSubview:first_text];
+            
+            // Primer Dropzone
+            DropZoneView *first_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(45, 0, 40, 59)];
+            [first_drop_zone setTag:2];
+            [first_drop_zone addBackTextField:[
+                                               [DropZoneTextField alloc]
+                                               initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
+                                               andType:TEXT_TYPE_STRING]];
+            [[temp inner_drop_zones] addObject:first_drop_zone];
+            
+            // Segundo Texto
+            UILabel *second_text = [[VariableLabel alloc] initWithName:@"TO" fontSize:25 andPosition:CGPointMake(77, 0)];
+            [second_text setTag:3];
+            [temp.main_view addSubview:second_text];
+            
+            // Segundo Dropzone
+            DropZoneView *second_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(118, 0, 40, 59)];
+            [second_drop_zone setTag:4];
+            [second_drop_zone addBackTextField:[
+                                                [DropZoneTextField alloc]
+                                                initWithFrame:CGRectMake(0, 0, second_drop_zone.frame.size.width, second_drop_zone.frame.size.height)
+                                                andType:TEXT_TYPE_STRING]];
+            [[temp inner_drop_zones] addObject:second_drop_zone];
+            
+            // Tercer Texto
+            UILabel *third_text = [[VariableLabel alloc] initWithName:@"AT" fontSize:25 andPosition:CGPointMake(150, 0)];
+            [third_text setTag:5];
+            [temp.main_view addSubview:third_text];
+            
+            // Tercer Dropzone
+            DropZoneView *third_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(190, 0, 40, 59)];
+            [third_drop_zone setTag:6];
+            [third_drop_zone addBackTextField:[
+                                                [DropZoneTextField alloc]
+                                                initWithFrame:CGRectMake(0, 0, third_drop_zone.frame.size.width, third_drop_zone.frame.size.height)
+                                                andType:TEXT_TYPE_STRING]];
+            [[temp inner_drop_zones] addObject:third_drop_zone];
+
+        }
+            break;
+        case BLOCK_DATA_SET:
+        {
+            temp.main_view = [
+                              [BlockView alloc]
+                              initWithFrame:CGRectMake(0, 0, 230, 59)
+                              andColor:[UIColor colorWithRed:0.76078431372549 green:0.313725490196078 blue:0.149019607843137 alpha:1.0]];
+            
+            // Primer Texto
+            UILabel *first_text = [[VariableLabel alloc] initWithName:@"SET" fontSize:23 andPosition:CGPointMake(-7, 0)];
+            [first_text setTag:1];
+            [temp.main_view addSubview:first_text];
+            
+            // Primer Dropzone
+            DropZoneView *first_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(45, 0, 40, 59)];
+            [first_drop_zone setTag:2];
+            [first_drop_zone addBackTextField:[
+                                               [DropZoneTextField alloc]
+                                               initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
+                                               andType:TEXT_TYPE_STRING]];
+            [[temp inner_drop_zones] addObject:first_drop_zone];
+            
+            // Segundo Texto
+            UILabel *second_text = [[VariableLabel alloc] initWithName:@"TO" fontSize:25 andPosition:CGPointMake(77, 0)];
+            [second_text setTag:3];
+            [temp.main_view addSubview:second_text];
+            
+            // Segundo Dropzone
+            DropZoneView *second_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(118, 0, 40, 59)];
+            [second_drop_zone setTag:4];
+            [second_drop_zone addBackTextField:[
+                                                [DropZoneTextField alloc]
+                                                initWithFrame:CGRectMake(0, 0, second_drop_zone.frame.size.width, second_drop_zone.frame.size.height)
+                                                andType:TEXT_TYPE_STRING]];
+            [[temp inner_drop_zones] addObject:second_drop_zone];
+            
+            // Tercer Texto
+            UILabel *third_text = [[VariableLabel alloc] initWithName:@"AT" fontSize:25 andPosition:CGPointMake(150, 0)];
+            [third_text setTag:5];
+            [temp.main_view addSubview:third_text];
+            
+            // Tercer Dropzone
+            DropZoneView *third_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(190, 0, 40, 59)];
+            [third_drop_zone setTag:6];
+            [third_drop_zone addBackTextField:[
+                                               [DropZoneTextField alloc]
+                                               initWithFrame:CGRectMake(0, 0, third_drop_zone.frame.size.width, third_drop_zone.frame.size.height)
+                                               andType:TEXT_TYPE_STRING]];
+            [[temp inner_drop_zones] addObject:third_drop_zone];
+            
+        }
+            break;
         case BLOCK_VARIABLE:
         {
             Variable *this_var = (Variable *)data;

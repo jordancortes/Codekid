@@ -28,6 +28,7 @@
                              [UIImage imageNamed:@"sidebar_block_movement"],
                              [UIImage imageNamed:@"sidebar_block_control"],
                              [UIImage imageNamed:@"sidebar_block_operators"],
+                             [UIImage imageNamed:@"sidebar_block_data"],
                              [UIImage imageNamed:@"sidebar_block_variables"],
                              [UIImage imageNamed:@"sidebar_block_lists"],
                              [UIImage imageNamed:@"sidebar_block_characters"],
@@ -67,6 +68,12 @@
                       [UIImage imageNamed:@"block_operators_lessThan"],
                       nil],
                      [[NSArray alloc] initWithObjects:
+                      [UIImage imageNamed:@"block_data_length"],
+                      [UIImage imageNamed:@"block_data_item"],
+                      [UIImage imageNamed:@"block_data_addAt"],
+                      [UIImage imageNamed:@"block_data_set"],
+                      nil],
+                     [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_events_start"],
                       nil],
                      [[NSArray alloc] initWithObjects:
@@ -86,6 +93,7 @@
                                 [UIImage imageNamed:@"picker_block_movement"],
                                 [UIImage imageNamed:@"picker_block_control"],
                                 [UIImage imageNamed:@"picker_block_operators"],
+                                [UIImage imageNamed:@"picker_block_data"],
                                 [UIImage imageNamed:@"picker_block_variables"],
                                 [UIImage imageNamed:@"picker_block_lists"],
                                 nil];
