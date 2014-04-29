@@ -18,6 +18,7 @@
         _is_empty = YES;
         [self.layer setBorderWidth:2.0];
         [self.layer setBorderColor:[UIColor blackColor].CGColor];
+        [self setBackgroundColor:[UIColor whiteColor]];
     }
     return self;
 }
