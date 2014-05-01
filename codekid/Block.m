@@ -258,46 +258,23 @@
                         (top_center.x > [this_block main_view].frame.origin.x + STICK_BORDER)
                         )
                     {
-                        CGFloat indent_space = 0.0;
-                    
-                        // si debe de indentar al bloque anidado
-                        if ([this_block should_indent])
-                        {
-                            indent_space = INDENT_SIZE;
-                        }
+                        // saca quien era el hijo del nuevo padre para este bloque
+                        Block *previous_child = [this_block child];
                         
-                        // lo acomoda abajo
-                        CGRect this_view_frame = [recognizer.view frame];
-                        this_view_frame.origin.x = [[this_block main_view] frame].origin.x + indent_space;
-                        this_view_frame.origin.y = [[this_block main_view] frame].origin.y + [[this_block main_view] frame].size.height;
-                        [recognizer.view setFrame:this_view_frame];
-                        
-                        //primero debe cambiar las relaciones
-                        
-                        // acomoda los hijos
-                        Block *last_child = [self child];
-                        
-                        while (last_child != nil)
-                        {
-                            CGRect child_frame = [[last_child main_view] frame];
-                        
-                            CGFloat indent_space = 0.0;
-                            
-                            if ([[last_child parent] should_indent])
-                            {
-                                indent_space = INDENT_SIZE;
-                            }
-                            
-                            child_frame.origin.x = this_view_frame.origin.x + indent_space;
-                            child_frame.origin.y = this_view_frame.origin.y + this_view_frame.size.height;
-                            [[last_child main_view] setFrame:child_frame];
-                            
-                            this_view_frame = child_frame;
-                            last_child = [last_child child];
-                        }
-                        
-                        // hace la relación padre-hijo
+                        // define a este bloque como el nuevo hijo
                         [self setParent:this_block];
+                        
+                        // acomoda este bloque con sus hijos y regresa al último hijo
+                        Block *last_child = [self arrangeSinceBlock:self];
+                        
+                        // asigna el hijo anterior como hijo del último hijo de este bloque
+                        [last_child setChild:previous_child];
+                        [previous_child setParent:last_child];
+                        
+                        // reacomoda los nuevos hijos
+                        [self arrangeSinceBlock:last_child];
+                        
+                        // ahora le dice al padre de este bloque quien es su hijo
                         [this_block setChild:self];
                         
                         // reinicia el borde
@@ -307,6 +284,34 @@
             }
         }
     }
+}
+
+- (Block *)arrangeSinceBlock:(Block *)block
+{
+    Block *last_child;
+    CGRect this_view_frame = [[[block parent] main_view] frame];
+
+    while (block != nil)
+    {
+        CGRect block_frame = [[block main_view] frame];
+        
+        CGFloat indent_space = 0.0;
+        
+        if ([[block parent] should_indent])
+        {
+            indent_space = INDENT_SIZE;
+        }
+        
+        block_frame.origin.x = this_view_frame.origin.x + indent_space;
+        block_frame.origin.y = this_view_frame.origin.y + this_view_frame.size.height;
+        [[block main_view] setFrame:block_frame];
+        
+        this_view_frame = block_frame;
+        last_child = block;
+        block = [block child];
+    }
+    
+    return last_child;
 }
 
 @end
