@@ -159,17 +159,20 @@
             {
                 if (![self isEqual:this_block] && ![this_block isChildOfView:[self main_view]])
                 {
-                    for (DropZoneView *this_view in [this_block inner_drop_zones])
+                    if (![self sticks])
                     {
-                        CGRect this_frame = [this_view convertRect:this_view.bounds toView:_super_parent_view];
-                        
-                        if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
+                        for (DropZoneView *this_view in [this_block inner_drop_zones])
                         {
-                            [this_view highlightBorder];
-                        }
-                        else
-                        {
-                            [this_view resetBorder];
+                            CGRect this_frame = [this_view convertRect:this_view.bounds toView:_super_parent_view];
+                            
+                            if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
+                            {
+                                [this_view highlightBorder];
+                            }
+                            else
+                            {
+                                [this_view resetBorder];
+                            }
                         }
                     }
                     
@@ -205,40 +208,43 @@
         {
             if (![self isEqual:this_block] && ![this_block isChildOfView:[self main_view]])
             {
-                for (DropZoneView *this_view in [this_block inner_drop_zones])
+                if (![self sticks])
                 {
-                    CGRect this_frame = [this_view convertRect:this_view.bounds toView:_super_parent_view];
-                    
-                    if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
+                    for (DropZoneView *this_view in [this_block inner_drop_zones])
                     {
-                        // borra el texto que habia dentro del DropZoneView
-                        [[this_view textfield] setText:@""];
-                        [[this_view textfield] setLast_length:0];
-                        CGRect textfield_frame = [[this_view textfield] frame];
-                        textfield_frame.size.width = 40.0;
-                        [[this_view textfield] setFrame:textfield_frame];
+                        CGRect this_frame = [this_view convertRect:this_view.bounds toView:_super_parent_view];
                         
-                        //cambia su posicion a 0,0
-                        CGRect view_frame = [recognizer.view frame];
-                        view_frame.origin.x = 0;
-                        view_frame.origin.y = 0;
-                        recognizer.view.frame = view_frame;
-                        
-                        //mete el view
-                        [recognizer.view removeFromSuperview];
-                        [this_view addSubview:recognizer.view];
-                        
-                        //le dice que ya lo tiene
-                        [this_view setIs_empty:NO];
-                        
-                        // dice que este ya está dentro de otro
-                        [self setInside_another:YES];
-                        
-                        // borra el borde que habia dejado
-                        [this_view resetBorder];
-                        
-                        //hace más grande el bloque y sus padres
-                        [this_view increaseWidth:recognizer.view.frame.size.width reachingTo:_super_parent_view];
+                        if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
+                        {
+                            // borra el texto que habia dentro del DropZoneView
+                            [[this_view textfield] setText:@""];
+                            [[this_view textfield] setLast_length:0];
+                            CGRect textfield_frame = [[this_view textfield] frame];
+                            textfield_frame.size.width = 40.0;
+                            [[this_view textfield] setFrame:textfield_frame];
+                            
+                            //cambia su posicion a 0,0
+                            CGRect view_frame = [recognizer.view frame];
+                            view_frame.origin.x = 0;
+                            view_frame.origin.y = 0;
+                            recognizer.view.frame = view_frame;
+                            
+                            //mete el view
+                            [recognizer.view removeFromSuperview];
+                            [this_view addSubview:recognizer.view];
+                            
+                            //le dice que ya lo tiene
+                            [this_view setIs_empty:NO];
+                            
+                            // dice que este ya está dentro de otro
+                            [self setInside_another:YES];
+                            
+                            // borra el borde que habia dejado
+                            [this_view resetBorder];
+                            
+                            //hace más grande el bloque y sus padres
+                            [this_view increaseWidth:recognizer.view.frame.size.width reachingTo:_super_parent_view];
+                        }
                     }
                 }
                 
