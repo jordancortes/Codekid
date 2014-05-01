@@ -51,6 +51,22 @@
 
 @property NSNotificationCenter *notificationCenter;
 
+/**
+ Inicializa la fábrica.
+ 
+ @return La fábrica creada.
+ */
+- (id)init;
+
+/**
+ Crea un bloque con todos sus elementos internos.
+ 
+ @param type
+    Identificador del bloque a crear.
+ @param data
+    Información adicional que se ocupe para crear el bloque.
+ @return El objeto creado por la fábrica.
+ */
 - (Block *)createBlockOfType:(NSInteger)type withData:(id)data;
 
 @end
