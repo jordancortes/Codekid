@@ -48,6 +48,25 @@
     return ((location.x > frame.origin.x && location.x < frame.origin.x + frame.size.width) && (location.y > frame.origin.y && location.y < frame.origin.y + frame.size.height));
 }
 
+- (void)bringAllBlocksToFront
+{
+    [_super_parent_view bringSubviewToFront:[self main_view]];
+    
+    Block *parent_block = [self parent];
+    while (parent_block != nil)
+    {
+        [_super_parent_view bringSubviewToFront:[parent_block main_view]];
+        parent_block = [parent_block parent];
+    }
+    
+    Block *child_block = [self child];
+    while (child_block != nil)
+    {
+        [_super_parent_view bringSubviewToFront:[child_block main_view]];
+        child_block = [child_block child];
+    }
+}
+
 #pragma mark Handle Gesture Event
 
 - (void)handleMainViewPan:(BlockHandePanGestureRecognizer *)recognizer
@@ -57,6 +76,12 @@
     // Al iniciar el drag se encarga de sacar todo bloque de donde este
     if (recognizer.state == UIGestureRecognizerStateBegan)
     {
+        // cuando empieza el touch
+        if ([recognizer numberOfTouches] == 1)
+        {
+            [self bringAllBlocksToFront];
+        }
+    
         if (![[recognizer.view superview] isEqual:_super_parent_view]) // si su superview no es drop_zone
         {
             if ([recognizer numberOfTouches] == 2) // si el gesto es de 2 dedos
