@@ -57,21 +57,39 @@
     // Al iniciar el drag se encarga de sacar todo bloque de donde este
     if (recognizer.state == UIGestureRecognizerStateBegan)
     {
-        if (![[recognizer.view superview] isEqual:_super_parent_view] && [recognizer numberOfTouches] == 2) // si su superview no es drop_zone
+        if (![[recognizer.view superview] isEqual:_super_parent_view]) // si su superview no es drop_zone
         {
-            [(DropZoneView *)[recognizer.view superview] setIs_empty:YES];
-            CGPoint view_center = [recognizer.view center];
-            view_center.x = super_location.x;
-            view_center.y = super_location.y;
-            recognizer.view.center = view_center;
+            if ([recognizer numberOfTouches] == 2) // si el gesto es de 2 dedos
+            {
+                [(DropZoneView *)[recognizer.view superview] setIs_empty:YES];
+                CGPoint view_center = [recognizer.view center];
+                view_center.x = super_location.x;
+                view_center.y = super_location.y;
+                recognizer.view.center = view_center;
+                
+                [(DropZoneView *)[recognizer.view superview] decreaseWidth:NORMAL_INNER_DROPZONE_WIDTH reachingTo:_super_parent_view];
+                
+                [recognizer.view removeFromSuperview]; // lo saca
+                [_super_parent_view addSubview:recognizer.view]; // lo regresa al drop_zone
+                
+                // avisa que ya no esta dentro de algun bloque
+                [self setInside_another:NO];
+            }
+        }
+        else // si su superview es main_drop_zone
+        {
+            if ([recognizer numberOfTouches] == 2) // si el gesto es de dos dedos, separa relaciones
+            {
+                // le dice al padre que ya no es su hijo
+                [[self parent] setChild:nil];
+                
+                // le dice a su hijo que ya no es su padre
+                [[self child] setParent:nil];
             
-            [(DropZoneView *)[recognizer.view superview] decreaseWidth:NORMAL_INNER_DROPZONE_WIDTH reachingTo:_super_parent_view];
-            
-            [recognizer.view removeFromSuperview]; // lo saca
-            [_super_parent_view addSubview:recognizer.view]; // lo regresa al drop_zone
-            
-            // avisa que ya no esta dentro de algun bloque
-            [self setInside_another:NO];
+                // separa al view de su padre e hijo
+                [self setParent:nil];
+                [self setChild:nil];
+            }
         }
     }
     else if (recognizer.state == UIGestureRecognizerStateChanged)
@@ -79,9 +97,35 @@
         if (![self inside_another])
         {
             CGPoint location = [recognizer locationInView:[recognizer.view superview]];
-            
-            // lo mueve
             CGPoint view_center = [recognizer.view center];
+            
+            // mueve a los bloques padre
+            Block *parent_block = [self parent];
+            while (nil != parent_block)
+            {
+                CGPoint parent_center = [[parent_block main_view] center];
+                
+                parent_center.x += (location.x - view_center.x);
+                parent_center.y += (location.y - view_center.y);
+                [[parent_block main_view] setCenter:parent_center];
+                
+                parent_block = [parent_block parent];
+            }
+            
+            //mueve a los bloques hijo
+            Block *child_block = [self child];
+            while (nil != child_block)
+            {
+                CGPoint child_center = [[child_block main_view] center];
+                
+                child_center.x += (location.x - view_center.x);
+                child_center.y += (location.y - view_center.y);
+                [[child_block main_view] setCenter:child_center];
+            
+                child_block = [child_block child];
+            }
+            
+            // mueve a este bloque
             view_center.x = location.x;
             view_center.y = location.y;
             recognizer.view.center = view_center;
@@ -170,6 +214,46 @@
                         
                         //hace más grande el bloque y sus padres
                         [this_view increaseWidth:recognizer.view.frame.size.width reachingTo:_super_parent_view];
+                    }
+                }
+                
+                CGPoint view_center = [recognizer.view center];
+                
+                if ([this_block sticks])
+                {
+                    CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
+                    
+                    if ( // lo detecta por abajo
+                        (top_center.y < [this_block main_view].frame.origin.y + [this_block main_view].frame.size.height)
+                        &&
+                        (top_center.y > [this_block main_view].frame.origin.y + [this_block main_view].frame.size.height - STICK_BORDER)
+                        &&
+                        (top_center.x < [this_block main_view].frame.origin.x + [this_block main_view].frame.size.width)
+                        &&
+                        (top_center.x > [this_block main_view].frame.origin.x + STICK_BORDER)
+                        )
+                    {
+                        CGFloat indent_space = 0.0;
+                    
+                        // si debe de indentar al bloque anidado
+                        if ([this_block should_indent])
+                        {
+                            indent_space = INDENT_SIZE;
+                        }
+                        
+                        // lo acomoda abajo
+                        CGRect this_view_frame = [recognizer.view frame];
+                        this_view_frame.origin.x = [[this_block main_view] frame].origin.x + indent_space;
+                        this_view_frame.origin.y = [[this_block main_view] frame].origin.y + [[this_block main_view] frame].size.height;
+                        [recognizer.view setFrame:this_view_frame];
+                        // TODO: cuando metes un bloque entre 2 bloques
+                        
+                        // hace la relación padre-hijo
+                        [self setParent:this_block];
+                        [this_block setChild:self];
+                        
+                        // reinicia el borde
+                        [[this_block main_view] resetBorder];
                     }
                 }
             }

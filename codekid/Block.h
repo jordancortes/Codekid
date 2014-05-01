@@ -13,6 +13,7 @@
 
 #define NORMAL_INNER_DROPZONE_WIDTH 40
 #define STICK_BORDER 10
+#define INDENT_SIZE 30
 
 @interface Block : NSObject
 
