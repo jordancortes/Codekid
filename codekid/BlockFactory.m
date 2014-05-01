@@ -42,6 +42,7 @@
             [temp.main_view addSubview:first_text];
             
             [temp setSticks:YES];
+            [temp setShould_indent:YES];
         }
             break;
         case BLOCK_EVENTS_WHEN:

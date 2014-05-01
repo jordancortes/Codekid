@@ -271,7 +271,30 @@
                         this_view_frame.origin.x = [[this_block main_view] frame].origin.x + indent_space;
                         this_view_frame.origin.y = [[this_block main_view] frame].origin.y + [[this_block main_view] frame].size.height;
                         [recognizer.view setFrame:this_view_frame];
-                        // TODO: cuando metes un bloque entre 2 bloques
+                        
+                        //primero debe cambiar las relaciones
+                        
+                        // acomoda los hijos
+                        Block *last_child = [self child];
+                        
+                        while (last_child != nil)
+                        {
+                            CGRect child_frame = [[last_child main_view] frame];
+                        
+                            CGFloat indent_space = 0.0;
+                            
+                            if ([[last_child parent] should_indent])
+                            {
+                                indent_space = INDENT_SIZE;
+                            }
+                            
+                            child_frame.origin.x = this_view_frame.origin.x + indent_space;
+                            child_frame.origin.y = this_view_frame.origin.y + this_view_frame.size.height;
+                            [[last_child main_view] setFrame:child_frame];
+                            
+                            this_view_frame = child_frame;
+                            last_child = [last_child child];
+                        }
                         
                         // hace la relación padre-hijo
                         [self setParent:this_block];
