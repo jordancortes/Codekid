@@ -177,7 +177,7 @@
                     }
                     
                     // CHECA BORDE INFERIOR
-                    if ([this_block sticks] && [self parent] == nil)
+                    if ([self sticks] && [this_block sticks] && [self parent] == nil)
                     {
                         CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
                         
@@ -250,7 +250,7 @@
                 
                 CGPoint view_center = [recognizer.view center];
                 
-                if ([this_block sticks] && [self parent] == nil)
+                if ([self sticks] && [this_block sticks] && [self parent] == nil)
                 {
                     CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
                     
