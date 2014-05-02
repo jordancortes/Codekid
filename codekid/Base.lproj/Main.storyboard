@@ -7,7 +7,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -360,12 +360,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YVm-V3-ajd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1282" y="45"/>
+            <point key="canvasLocation" x="1068" y="45"/>
         </scene>
         <!--Run View Controller-->
         <scene sceneID="3Hy-kq-O36">
             <objects>
-                <viewController id="Vxa-KA-DKM" customClass="RunViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RunViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Vxa-KA-DKM" customClass="RunViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="98S-Qu-s9y">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -418,7 +418,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DsK-4d-lMJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2498" y="45"/>
+            <point key="canvasLocation" x="2208" y="45"/>
         </scene>
     </scenes>
     <resources>
