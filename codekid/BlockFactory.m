@@ -161,7 +161,7 @@
             [temp setSticks:YES];
         }
             break;
-        case BLOCK_APPEARANCE_SET:
+        case BLOCK_APPEARANCE_APPLY:
         {
             temp.main_view = [
                               [BlockView alloc]
@@ -169,7 +169,7 @@
                               andColor:[UIColor colorWithRed:0.450980392156863 green:0.207843137254902 blue:0.835294117647059 alpha:1.0]];
             
             // Texto
-            UILabel *first_text = [[VariableLabel alloc] initWithName:@"SET" fontSize:35 andPosition:CGPointMake(20, 0)];
+            UILabel *first_text = [[VariableLabel alloc] initWithName:@"APPLY" fontSize:35 andPosition:CGPointMake(5, 0)];
             [first_text setTag:1];
             [temp.main_view addSubview:first_text];
             

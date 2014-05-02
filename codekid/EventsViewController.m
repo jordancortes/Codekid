@@ -55,7 +55,7 @@
                       [UIImage imageNamed:@"block_appearance_hide"],
                       [UIImage imageNamed:@"block_appearance_load"],
                       [UIImage imageNamed:@"block_appearance_scale"],
-                      [UIImage imageNamed:@"block_appearance_set"],
+                      [UIImage imageNamed:@"block_appearance_apply"],
                       [UIImage imageNamed:@"block_appearance_say"],
                       nil],
                      [[NSArray alloc] initWithObjects:
@@ -595,9 +595,9 @@
                     code = [NSString stringWithFormat:@"%@load %@;\n", code, [initial_block getValueForDropZone:0]];
                 }
                     break;
-                case BLOCK_APPEARANCE_SET:
+                case BLOCK_APPEARANCE_APPLY:
                 {
-                    code = [NSString stringWithFormat:@"%@set %@;\n", code, [initial_block getValueForDropZone:0]];
+                    code = [NSString stringWithFormat:@"%@apply %@;\n", code, [initial_block getValueForDropZone:0]];
                 }
                     break;
                 case BLOCK_APPEARANCE_SCALE:

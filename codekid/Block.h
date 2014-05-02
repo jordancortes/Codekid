@@ -25,7 +25,7 @@
 #define BLOCK_APPEARANCE_HIDE           12
 #define BLOCK_APPEARANCE_LOAD           13
 #define BLOCK_APPEARANCE_SCALE          14
-#define BLOCK_APPEARANCE_SET            15
+#define BLOCK_APPEARANCE_APPLY          15
 #define BLOCK_APPEARANCE_SAY            16
 #define BLOCK_MOVEMENT_TURN             20
 #define BLOCK_MOVEMENT_MOVE             21
