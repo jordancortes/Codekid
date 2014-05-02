@@ -19,6 +19,12 @@
 {
     [super viewDidLoad];
     
+    // Header
+    [_O_header_back_projects setTitle:@"" forState:UIControlStateNormal];
+    [_O_header_back_projects setBackgroundImage:[UIImage imageNamed:@"header_back_projects"] forState:UIControlStateNormal];
+    [_O_header_run setTitle:@"" forState:UIControlStateNormal];
+    [_O_header_run setBackgroundImage:[UIImage imageNamed:@"header_run"] forState:UIControlStateNormal];
+    
     // Sidebar
     _sidebar_state = SIDEBAR_BLOCKS;
     _block_selected = BLOCK_EVENTS;
@@ -337,7 +343,7 @@
 
 - (IBAction)A_delete_variableList:(id)sender
 {
-
+    /* TOFILL: */
 }
 
 #pragma mark Picker Buttons
@@ -444,5 +450,14 @@
                                               otherButtonTitles:nil];
         [alert show];
     }
+}
+- (IBAction)A_header_back_projects:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil]; // regresa a la pantalla anterior
+}
+
+- (IBAction)A_header_run:(id)sender
+{
+    /* TOFILL: */
 }
 @end

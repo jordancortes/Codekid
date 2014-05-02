@@ -39,6 +39,15 @@
 @property NSInteger block_selected;
 @property BlockFactory *factory;
 
+// Header
+@property (weak, nonatomic) IBOutlet UIButton *O_header_back_projects;
+@property (weak, nonatomic) IBOutlet UIButton *O_header_run;
+@property (weak, nonatomic) IBOutlet UILabel *O_header_title;
+@property (weak, nonatomic) IBOutlet UITextView *O_header_errors;
+- (IBAction)A_header_back_projects:(id)sender;
+- (IBAction)A_header_run:(id)sender;
+
+
 // Sidebar
 @property NSInteger sidebar_state;
 @property NSArray *sidebar_select_block_images;

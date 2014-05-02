@@ -71,7 +71,7 @@
         [self presentViewController:events animated:YES completion:nil];
 
         // muestra el nombre del proyecto seleccionado.
-        //[[events O_NameProject] setText:[[[projects objectAtIndex:index] project_title] text]];
+        [[events O_header_title] setText:[[[projects objectAtIndex:index] project_title] text]];
     }
 
 }
