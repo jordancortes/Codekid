@@ -10,4 +10,17 @@
 
 @implementation BlockHandleLongPressGestureRecognizer
 
+- (id) initWithTarget:(id)target action:(SEL)action time:(CFTimeInterval)time andBlocks:(NSMutableArray *)this_blocks
+{
+    self = [super initWithTarget:target action:action];
+    
+    if (self)
+    {
+        [self setBlocks:this_blocks];
+        [self setMinimumPressDuration:time];
+    }
+    
+    return self;
+}
+
 @end

@@ -10,4 +10,8 @@
 
 @interface BlockHandleLongPressGestureRecognizer : UILongPressGestureRecognizer
 
+@property NSMutableArray *blocks;
+
+- (id) initWithTarget:(id)target action:(SEL)action time:(CFTimeInterval)time andBlocks:(NSMutableArray *)this_blocks;
+
 @end

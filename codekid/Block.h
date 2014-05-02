@@ -10,12 +10,14 @@
 #import "DropZoneView.h"
 #import "BlockView.h"
 #import "BlockHandlePanGestureRecognizer.h"
+#import "BlockHandleLongPressGestureRecognizer.h"
+#import "BlockDeleteAlertView.h"
 
 #define NORMAL_INNER_DROPZONE_WIDTH 40
 #define STICK_BORDER 10
 #define INDENT_SIZE 30
 
-@interface Block : NSObject
+@interface Block : NSObject <UIAlertViewDelegate>
 
 @property BlockView *main_view;
 @property NSMutableArray *inner_drop_zones;
@@ -62,6 +64,8 @@
  y sus hijos.
  */
 - (void)bringAllBlocksToFront;
+
+- (void)handleMainViewLongPress:(BlockHandleLongPressGestureRecognizer *)recognizer;
 
 /**
  Se encarga de llevar a cabo los pasos necesarios dependiendo de las propiedades
