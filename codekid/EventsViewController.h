@@ -88,7 +88,7 @@
 - (IBAction)A_picker_button_cancel:(id)sender;
 
 // DropZone
-@property (weak, nonatomic) IBOutlet UIView *O_dropzone_view;
+@property (weak, nonatomic) IBOutlet UIScrollView *O_dropzone_view;
 @property NSMutableArray *blocks;
 
 @end
