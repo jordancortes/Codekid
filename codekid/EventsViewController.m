@@ -60,7 +60,6 @@
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_control_if"],
                       [UIImage imageNamed:@"block_control_repeatUntil"],
-                      [UIImage imageNamed:@"block_control_set"],
                       [UIImage imageNamed:@"block_control_wait"],
                       [UIImage imageNamed:@"block_control_waitUntil"],
                       nil],
@@ -78,6 +77,7 @@
                       [UIImage imageNamed:@"block_data_item"],
                       [UIImage imageNamed:@"block_data_addAt"],
                       [UIImage imageNamed:@"block_data_set"],
+                      [UIImage imageNamed:@"block_data_setAt"],
                       nil],
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_events_start"],
