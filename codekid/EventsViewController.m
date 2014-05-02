@@ -403,40 +403,70 @@
     
     if (match)
     {
-        if (0 != variable_dimension)
+        // verifica que el nombre no existe ya
+        BOOL already_exists = NO;
+        
+        for (Variable *this_variable in _variables)
         {
-            if (1 == variable_dimension)
+            if ([[this_variable name] isEqualToString:variable_name])
             {
-                [_variables addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:1]];
+                already_exists = YES;
+            }
+        }
+        for (Variable *this_variable in _lists)
+        {
+            if ([[this_variable name] isEqualToString:variable_name])
+            {
+                already_exists = YES;
+            }
+        }
+        
+        if (!already_exists)
+        {
+            if (0 != variable_dimension)
+            {
+                if (1 == variable_dimension)
+                {
+                    [_variables addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:1]];
+                }
+                else
+                {
+                    [_lists addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:variable_dimension]];
+                }
+                
+                // limpia los campos
+                [_O_createvar_name setText:@""];
+                [_O_createvar_dimension setText:@"1"];
+                [_O_createvar_type selectRow:0 inComponent:0 animated:YES];
+                
+                // Oculta el editor de variables
+                CGRect sidebar_table_frame = [_O_sidebar_table_blocks frame];
+                sidebar_table_frame.origin.y = CREATE_VAR_BUTTONS_SHOW;
+                
+                [UITableView animateWithDuration:ANIMATION_SPEED
+                                      animations:^{
+                                          _O_sidebar_table_blocks.frame = sidebar_table_frame;
+                                      }];
+                
+                // muestra las nuevas variables en la tabla NEXT:
+                [_O_sidebar_table_blocks reloadData];
             }
             else
             {
-                [_lists addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:variable_dimension]];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Illegal dimension"
+                                                                message:@"The dimension size must be 1 or higher."
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
             }
-            
-            // limpia los campos
-            [_O_createvar_name setText:@""];
-            [_O_createvar_dimension setText:@"1"];
-            [_O_createvar_type selectRow:0 inComponent:0 animated:YES];
-            
-            // Oculta el editor de variables
-            CGRect sidebar_table_frame = [_O_sidebar_table_blocks frame];
-            sidebar_table_frame.origin.y = CREATE_VAR_BUTTONS_SHOW;
-            
-            [UITableView animateWithDuration:ANIMATION_SPEED
-                                  animations:^{
-                                      _O_sidebar_table_blocks.frame = sidebar_table_frame;
-                                  }];
-            
-            // muestra las nuevas variables en la tabla NEXT:
-            [_O_sidebar_table_blocks reloadData];
         }
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Illegal dimension"
-                                                            message:@"The dimension size must be 1 or higher."
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Illegal variable name"
+                                                            message:[NSString stringWithFormat:@"The name %@ already exists.", variable_name]
                                                            delegate:self
-                                                  cancelButtonTitle:@"Ok"
+                                                  cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
         }
@@ -446,7 +476,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Illegal variable name"
                                                         message:@"The variable name should begin with a letter followed by any character or number."
                                                        delegate:self
-                                              cancelButtonTitle:@"Ok"
+                                              cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
     }
