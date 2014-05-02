@@ -21,6 +21,7 @@
         _child = nil;
         _sticks = NO;
         _should_indent = NO;
+        _should_be_unindented = NO;
         _inside_another = NO;
     }
     
@@ -336,7 +337,18 @@
         
         CGFloat indent_space = 0.0;
         
-        if ([[block parent] should_indent])
+        if ([block should_be_unindented])
+        {
+            if ([block block_type] == BLOCK_CONTROL_ELSE && !([[block parent] block_type] == BLOCK_CONTROL_IF))
+            {
+                indent_space = -INDENT_SIZE;
+            }
+            if ([block block_type] == BLOCK_CONTROL_ENDIF && !([[block parent] block_type] == BLOCK_CONTROL_ELSE))
+            {
+                indent_space = -INDENT_SIZE;
+            }
+        }
+        else if ([[block parent] should_indent])
         {
             indent_space = INDENT_SIZE;
         }

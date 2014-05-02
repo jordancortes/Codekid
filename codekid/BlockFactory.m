@@ -304,7 +304,43 @@
             [temp setSticks:YES];
             [temp setShould_indent:YES];
             
-            /* TODO: crear resto de estructura*/
+            /*====================== BLOCK_ELSE ======================*/
+            
+            Block *else_block = [[Block alloc]
+                                 initWithBlockType:BLOCK_CONTROL_ELSE];
+            [else_block setMain_view:[
+                                      [BlockView alloc]
+                                        initWithFrame:CGRectMake(0, 59, 124, 59)
+                                        andColor:[UIColor colorWithRed:0.847058823529412 green:0.603921568627451 blue:0 alpha:1.0]]];
+            // Texto
+            UILabel *else_first_text = [[VariableLabel alloc] initWithName:@"ELSE" fontSize:35 andPosition:CGPointMake(12, 0)];
+            [else_first_text setTag:1];
+            [[else_block main_view] addSubview:else_first_text];
+            
+            [else_block setSticks:YES];
+            [else_block setShould_indent:YES];
+            [else_block setShould_be_unindented:YES];
+            [else_block setParent:temp];
+            [temp setChild:else_block];
+            
+            /*====================== END_IF ======================*/
+            
+            Block *endif_block = [[Block alloc]
+                                 initWithBlockType:BLOCK_CONTROL_ENDIF];
+            [endif_block setMain_view:[
+                                      [BlockView alloc]
+                                      initWithFrame:CGRectMake(0, 118, 148, 59)
+                                      andColor:[UIColor colorWithRed:0.847058823529412 green:0.603921568627451 blue:0 alpha:1.0]]];
+            // Texto
+            UILabel *endif_first_text = [[VariableLabel alloc] initWithName:@"END IF" fontSize:35 andPosition:CGPointMake(7, 0)];
+            [endif_first_text setTag:1];
+            [[endif_block main_view] addSubview:endif_first_text];
+            
+            [endif_block setSticks:YES];
+            [endif_block setShould_be_unindented:YES];
+            [endif_block setParent:else_block];
+            [else_block setChild:endif_block];
+            
         }
             break;
         case BLOCK_CONTROL_REPEAT_UNTIL:

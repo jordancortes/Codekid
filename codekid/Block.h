@@ -17,6 +17,11 @@
 #define STICK_BORDER 10
 #define INDENT_SIZE 30
 
+#define BLOCK_CONTROL_IF                30
+#define BLOCK_CONTROL_REPEAT_UNTIL      31
+#define BLOCK_CONTROL_ELSE              34
+#define BLOCK_CONTROL_ENDIF             35
+
 @interface Block : NSObject <UIAlertViewDelegate>
 
 @property BlockView *main_view;
@@ -26,7 +31,8 @@
 @property Block *parent; // bloque anterior anidado
 @property Block *child; // bloque siguiente anidado
 @property BOOL sticks; // se puede anidar, si se anida entonces no se mete en otros
-@property BOOL should_indent; // al anidarse, se debe indentar
+@property BOOL should_indent; // al anidarse alguien, se debe de indentar
+@property BOOL should_be_unindented; // al anidarse este bloque, si se debe des-indentar
 @property BOOL inside_another;
 
 /**
