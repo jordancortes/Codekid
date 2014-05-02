@@ -273,39 +273,29 @@
     if (_block_selected * 10 + indexPath.row == BLOCK_CONTROL_IF)
     {
         // Para el bloque IF
-        [[this_block main_view] addGestureRecognizer:[[BlockHandlePanGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewPan:) andBlocks:_blocks]];
-        [[this_block main_view] addGestureRecognizer:[[BlockHandleLongPressGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewLongPress:) time:0.5 andBlocks:_blocks]];
-        [this_block setSuper_parent_view:_O_dropzone_view];
-        [_O_dropzone_view addSubview:[this_block main_view]];
-        [_blocks addObject:this_block];
+        [self addActionsToBlock:this_block];
         
         // Para el bloque ELSE
-        Block *else_if = [this_block child];
-        [[else_if main_view] addGestureRecognizer:[[BlockHandlePanGestureRecognizer alloc] initWithTarget:else_if action:@selector(handleMainViewPan:) andBlocks:_blocks]];
-        [[else_if main_view] addGestureRecognizer:[[BlockHandleLongPressGestureRecognizer alloc] initWithTarget:else_if action:@selector(handleMainViewLongPress:) time:0.5 andBlocks:_blocks]];
-        [else_if setSuper_parent_view:_O_dropzone_view];
-        [_O_dropzone_view addSubview:[else_if main_view]];
-        [_blocks addObject:else_if];
+        [self addActionsToBlock:[this_block child]];
         
         // Para el bloque END_IF
-        Block *end_if = [[this_block child] child];
-        [[end_if main_view] addGestureRecognizer:[[BlockHandlePanGestureRecognizer alloc] initWithTarget:end_if action:@selector(handleMainViewPan:) andBlocks:_blocks]];
-        [[end_if main_view] addGestureRecognizer:[[BlockHandleLongPressGestureRecognizer alloc] initWithTarget:end_if action:@selector(handleMainViewLongPress:) time:0.5 andBlocks:_blocks]];
-        [end_if setSuper_parent_view:_O_dropzone_view];
-        [_O_dropzone_view addSubview:[end_if main_view]];
-        [_blocks addObject:end_if];
+        [self addActionsToBlock:[[this_block child] child]];
     }
     else
     {
-        [[this_block main_view] addGestureRecognizer:[[BlockHandlePanGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewPan:) andBlocks:_blocks]];
-        [[this_block main_view] addGestureRecognizer:[[BlockHandleLongPressGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewLongPress:) time:0.5 andBlocks:_blocks]];
-        
-        [this_block setSuper_parent_view:_O_dropzone_view];
-        [_O_dropzone_view addSubview:[this_block main_view]];
-        [_blocks addObject:this_block];
+        [self addActionsToBlock:this_block];
     }
     
     [_O_sidebar_table_blocks deselectRowAtIndexPath:indexPath animated:YES]; // desmarca la opción seleccionada
+}
+
+- (void)addActionsToBlock:(Block *)this_block
+{
+    [[this_block main_view] addGestureRecognizer:[[BlockHandlePanGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewPan:) andBlocks:_blocks]];
+    [[this_block main_view] addGestureRecognizer:[[BlockHandleLongPressGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewLongPress:) time:0.5 andBlocks:_blocks]];
+    [this_block setSuper_parent_view:_O_dropzone_view];
+    [_O_dropzone_view addSubview:[this_block main_view]];
+    [_blocks addObject:this_block];
 }
 
 #pragma mark Sidebar
