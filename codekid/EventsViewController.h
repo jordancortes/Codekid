@@ -12,7 +12,7 @@
 #import "DropZoneView.h"
 #import "Variable.h"
 #import "Common.h"
-#import "BlockHandePanGestureRecognizer.h"
+#import "BlockHandlePanGestureRecognizer.h"
 
 @interface EventsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource>
 

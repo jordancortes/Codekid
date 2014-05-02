@@ -69,7 +69,7 @@
 
 #pragma mark Handle Gesture Event
 
-- (void)handleMainViewPan:(BlockHandePanGestureRecognizer *)recognizer
+- (void)handleMainViewPan:(BlockHandlePanGestureRecognizer *)recognizer
 {
     CGPoint super_location = [recognizer locationInView:_super_parent_view];
     

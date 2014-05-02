@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "DropZoneView.h"
 #import "BlockView.h"
-#import "BlockHandePanGestureRecognizer.h"
+#import "BlockHandlePanGestureRecognizer.h"
 
 #define NORMAL_INNER_DROPZONE_WIDTH 40
 #define STICK_BORDER 10
@@ -70,7 +70,7 @@
  @param recognizer
     Elemento que contiene la información del gesto, como la posición.
  */
-- (void)handleMainViewPan:(BlockHandePanGestureRecognizer *)recognizer;
+- (void)handleMainViewPan:(BlockHandlePanGestureRecognizer *)recognizer;
 
 /**
  Ordena visualmente una serie de bloques dependiendo de la posición

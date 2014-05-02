@@ -270,7 +270,7 @@
         this_block = [_factory createBlockOfType:(_block_selected * 10) + indexPath.row withData:nil];
     }
     
-    [[this_block main_view] addGestureRecognizer:[[BlockHandePanGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewPan:) andBlocks:_blocks]];
+    [[this_block main_view] addGestureRecognizer:[[BlockHandlePanGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewPan:) andBlocks:_blocks]];
     [this_block setSuper_parent_view:_O_dropzone_view];
     [_O_dropzone_view addSubview:[this_block main_view]];
     [_blocks addObject:this_block];
