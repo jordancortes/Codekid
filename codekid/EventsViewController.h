@@ -12,7 +12,7 @@
 #import "DropZoneView.h"
 #import "Variable.h"
 #import "Common.h"
-#import "BlockHandePanGestureRecognizer.h"
+#import "BlockHandlePanGestureRecognizer.h"
 
 @interface EventsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource>
 
@@ -38,6 +38,15 @@
 
 @property NSInteger block_selected;
 @property BlockFactory *factory;
+
+// Header
+@property (weak, nonatomic) IBOutlet UIButton *O_header_back_projects;
+@property (weak, nonatomic) IBOutlet UIButton *O_header_run;
+@property (weak, nonatomic) IBOutlet UILabel *O_header_title;
+@property (weak, nonatomic) IBOutlet UITextView *O_header_errors;
+- (IBAction)A_header_back_projects:(id)sender;
+- (IBAction)A_header_run:(id)sender;
+
 
 // Sidebar
 @property NSInteger sidebar_state;
@@ -79,7 +88,7 @@
 - (IBAction)A_picker_button_cancel:(id)sender;
 
 // DropZone
-@property (weak, nonatomic) IBOutlet UIView *O_dropzone_view;
+@property (weak, nonatomic) IBOutlet UIScrollView *O_dropzone_view;
 @property NSMutableArray *blocks;
 
 @end

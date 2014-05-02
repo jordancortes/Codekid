@@ -70,9 +70,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="pKa-X1-pP6">
+                                <rect key="frame" x="240" y="140" width="784" height="628"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </scrollView>
                             <view autoresizesSubviews="NO" contentMode="scaleToFill" id="s7B-ks-Jl1">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="140"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="aKR-GF-AhG">
+                                        <rect key="frame" x="20" y="45" width="240" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Projects">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="A_header_back_projects:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="Jkh-v6-oXm"/>
+                                        </connections>
+                                    </button>
+                                    <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="LO6-jI-nCW">
+                                        <rect key="frame" x="934" y="45" width="70" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Run">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="A_header_run:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="2AL-um-NZZ"/>
+                                        </connections>
+                                    </button>
+                                    <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header_status_background" id="J9z-uo-29U">
+                                        <rect key="frame" x="352" y="35" width="320" height="90"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <textView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" text="No errors" textAlignment="center" selectable="NO" id="nJQ-Qm-vgX">
+                                        <rect key="frame" x="352" y="80" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FQv-1y-NQK">
+                                        <rect key="frame" x="352" y="35" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view autoresizesSubviews="NO" contentMode="scaleToFill" id="pYD-Fg-wiz">
@@ -245,11 +288,6 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view autoresizesSubviews="NO" contentMode="scaleToFill" id="Qbc-Is-oG9">
-                                <rect key="frame" x="240" y="140" width="784" height="628"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
                             <view autoresizesSubviews="NO" contentMode="scaleToFill" id="78a-uG-gYN">
                                 <rect key="frame" x="240" y="145" width="512" height="326"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -287,7 +325,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -300,7 +337,11 @@
                         <outlet property="O_createvar_dimension" destination="0ir-7F-8EM" id="spb-2e-qhZ"/>
                         <outlet property="O_createvar_name" destination="I70-hs-7Rt" id="o2e-Uu-xrq"/>
                         <outlet property="O_createvar_type" destination="b7K-uz-WtN" id="qE2-O7-v8e"/>
-                        <outlet property="O_dropzone_view" destination="Qbc-Is-oG9" id="tzc-dX-Sew"/>
+                        <outlet property="O_dropzone_view" destination="pKa-X1-pP6" id="nFu-kH-Sb4"/>
+                        <outlet property="O_header_back_projects" destination="aKR-GF-AhG" id="nnQ-nr-S8T"/>
+                        <outlet property="O_header_errors" destination="nJQ-Qm-vgX" id="sYy-uD-3oo"/>
+                        <outlet property="O_header_run" destination="LO6-jI-nCW" id="Iyw-2V-uai"/>
+                        <outlet property="O_header_title" destination="FQv-1y-NQK" id="DwB-10-Ybb"/>
                         <outlet property="O_picker_block" destination="jJv-TB-i9B" id="3iL-uL-6v5"/>
                         <outlet property="O_picker_block_button_cancel" destination="Af9-8e-GaS" id="qIl-z6-ZV4"/>
                         <outlet property="O_picker_block_button_change" destination="tDD-ES-D0h" id="BZk-Z4-8fb"/>
@@ -382,6 +423,7 @@
     <resources>
         <image name="codekid.png" width="1035" height="180"/>
         <image name="edit.png" width="353" height="152"/>
+        <image name="header_status_background" width="320" height="90"/>
         <image name="picker_block_background" width="512" height="326"/>
         <image name="plus-76x76.png" width="76" height="76"/>
         <image name="sidebar_block_arrow" width="70" height="70"/>

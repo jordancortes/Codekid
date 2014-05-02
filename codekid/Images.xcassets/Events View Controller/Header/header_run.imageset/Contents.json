@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "header_run.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "block_data_set@2x.png"
+      "filename" : "header_run@2x.png"
     }
   ],
   "info" : {

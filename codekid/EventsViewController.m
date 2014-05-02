@@ -19,6 +19,12 @@
 {
     [super viewDidLoad];
     
+    // Header
+    [_O_header_back_projects setTitle:@"" forState:UIControlStateNormal];
+    [_O_header_back_projects setBackgroundImage:[UIImage imageNamed:@"header_back_projects"] forState:UIControlStateNormal];
+    [_O_header_run setTitle:@"" forState:UIControlStateNormal];
+    [_O_header_run setBackgroundImage:[UIImage imageNamed:@"header_run"] forState:UIControlStateNormal];
+    
     // Sidebar
     _sidebar_state = SIDEBAR_BLOCKS;
     _block_selected = BLOCK_EVENTS;
@@ -54,7 +60,6 @@
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_control_if"],
                       [UIImage imageNamed:@"block_control_repeatUntil"],
-                      [UIImage imageNamed:@"block_control_set"],
                       [UIImage imageNamed:@"block_control_wait"],
                       [UIImage imageNamed:@"block_control_waitUntil"],
                       nil],
@@ -72,6 +77,7 @@
                       [UIImage imageNamed:@"block_data_item"],
                       [UIImage imageNamed:@"block_data_addAt"],
                       [UIImage imageNamed:@"block_data_set"],
+                      [UIImage imageNamed:@"block_data_setAt"],
                       nil],
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_events_start"],
@@ -264,7 +270,9 @@
         this_block = [_factory createBlockOfType:(_block_selected * 10) + indexPath.row withData:nil];
     }
     
-    [[this_block main_view] addGestureRecognizer:[[BlockHandePanGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewPan:) andBlocks:_blocks]];
+    [[this_block main_view] addGestureRecognizer:[[BlockHandlePanGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewPan:) andBlocks:_blocks]];
+    [[this_block main_view] addGestureRecognizer:[[BlockHandleLongPressGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewLongPress:) time:0.5 andBlocks:_blocks]];
+    
     [this_block setSuper_parent_view:_O_dropzone_view];
     [_O_dropzone_view addSubview:[this_block main_view]];
     [_blocks addObject:this_block];
@@ -337,7 +345,7 @@
 
 - (IBAction)A_delete_variableList:(id)sender
 {
-
+    /* TOFILL: */
 }
 
 #pragma mark Picker Buttons
@@ -397,40 +405,70 @@
     
     if (match)
     {
-        if (0 != variable_dimension)
+        // verifica que el nombre no existe ya
+        BOOL already_exists = NO;
+        
+        for (Variable *this_variable in _variables)
         {
-            if (1 == variable_dimension)
+            if ([[this_variable name] isEqualToString:variable_name])
             {
-                [_variables addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:1]];
+                already_exists = YES;
+            }
+        }
+        for (Variable *this_variable in _lists)
+        {
+            if ([[this_variable name] isEqualToString:variable_name])
+            {
+                already_exists = YES;
+            }
+        }
+        
+        if (!already_exists)
+        {
+            if (0 != variable_dimension)
+            {
+                if (1 == variable_dimension)
+                {
+                    [_variables addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:1]];
+                }
+                else
+                {
+                    [_lists addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:variable_dimension]];
+                }
+                
+                // limpia los campos
+                [_O_createvar_name setText:@""];
+                [_O_createvar_dimension setText:@"1"];
+                [_O_createvar_type selectRow:0 inComponent:0 animated:YES];
+                
+                // Oculta el editor de variables
+                CGRect sidebar_table_frame = [_O_sidebar_table_blocks frame];
+                sidebar_table_frame.origin.y = CREATE_VAR_BUTTONS_SHOW;
+                
+                [UITableView animateWithDuration:ANIMATION_SPEED
+                                      animations:^{
+                                          _O_sidebar_table_blocks.frame = sidebar_table_frame;
+                                      }];
+                
+                // muestra las nuevas variables en la tabla NEXT:
+                [_O_sidebar_table_blocks reloadData];
             }
             else
             {
-                [_lists addObject:[[Variable alloc] initWithName:variable_name Type:variable_type Address:-1 andDimension:variable_dimension]];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Illegal dimension"
+                                                                message:@"The dimension size must be 1 or higher."
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
             }
-            
-            // limpia los campos
-            [_O_createvar_name setText:@""];
-            [_O_createvar_dimension setText:@"1"];
-            [_O_createvar_type selectRow:0 inComponent:0 animated:YES];
-            
-            // Oculta el editor de variables
-            CGRect sidebar_table_frame = [_O_sidebar_table_blocks frame];
-            sidebar_table_frame.origin.y = CREATE_VAR_BUTTONS_SHOW;
-            
-            [UITableView animateWithDuration:ANIMATION_SPEED
-                                  animations:^{
-                                      _O_sidebar_table_blocks.frame = sidebar_table_frame;
-                                  }];
-            
-            // muestra las nuevas variables en la tabla NEXT:
-            [_O_sidebar_table_blocks reloadData];
         }
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Illegal dimension"
-                                                            message:@"The dimension size must be 1 or higher."
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Illegal variable name"
+                                                            message:[NSString stringWithFormat:@"The name %@ already exists.", variable_name]
                                                            delegate:self
-                                                  cancelButtonTitle:@"Ok"
+                                                  cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
         }
@@ -440,9 +478,18 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Illegal variable name"
                                                         message:@"The variable name should begin with a letter followed by any character or number."
                                                        delegate:self
-                                              cancelButtonTitle:@"Ok"
+                                              cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
     }
+}
+- (IBAction)A_header_back_projects:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil]; // regresa a la pantalla anterior
+}
+
+- (IBAction)A_header_run:(id)sender
+{
+    /* TOFILL: */
 }
 @end

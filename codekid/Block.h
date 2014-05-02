@@ -9,13 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "DropZoneView.h"
 #import "BlockView.h"
-#import "BlockHandePanGestureRecognizer.h"
+#import "BlockHandlePanGestureRecognizer.h"
+#import "BlockHandleLongPressGestureRecognizer.h"
+#import "BlockDeleteAlertView.h"
 
 #define NORMAL_INNER_DROPZONE_WIDTH 40
 #define STICK_BORDER 10
 #define INDENT_SIZE 30
 
-@interface Block : NSObject
+@interface Block : NSObject <UIAlertViewDelegate>
 
 @property BlockView *main_view;
 @property NSMutableArray *inner_drop_zones;
@@ -63,6 +65,8 @@
  */
 - (void)bringAllBlocksToFront;
 
+- (void)handleMainViewLongPress:(BlockHandleLongPressGestureRecognizer *)recognizer;
+
 /**
  Se encarga de llevar a cabo los pasos necesarios dependiendo de las propiedades
  del gesto como la posición o el bloque que lleva a cabo el gesto.
@@ -70,7 +74,7 @@
  @param recognizer
     Elemento que contiene la información del gesto, como la posición.
  */
-- (void)handleMainViewPan:(BlockHandePanGestureRecognizer *)recognizer;
+- (void)handleMainViewPan:(BlockHandlePanGestureRecognizer *)recognizer;
 
 /**
  Ordena visualmente una serie de bloques dependiendo de la posición

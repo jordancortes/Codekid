@@ -27,6 +27,11 @@
     [self.layer setBorderColor:[UIColor greenColor].CGColor];
 }
 
+- (void)highlightLongPressBorder
+{
+    [self.layer setBorderColor:[UIColor cyanColor].CGColor];
+}
+
 - (void)resetBorder
 {
     [self.layer setBorderColor:[UIColor blackColor].CGColor];

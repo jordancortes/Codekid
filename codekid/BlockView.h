@@ -13,6 +13,7 @@
 - (id)initWithFrame:(CGRect)frame andColor:(UIColor *)color;
 
 - (void)highlightBorder;
+- (void)highlightLongPressBorder;
 - (void)resetBorder;
 
 @end

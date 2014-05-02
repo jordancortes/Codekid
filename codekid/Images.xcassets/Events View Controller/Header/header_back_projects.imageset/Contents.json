@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "header_back_projects.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "block_control_set@2x.png"
+      "filename" : "header_back_projects@2x.png"
     }
   ],
   "info" : {

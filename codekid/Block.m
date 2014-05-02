@@ -69,7 +69,40 @@
 
 #pragma mark Handle Gesture Event
 
-- (void)handleMainViewPan:(BlockHandePanGestureRecognizer *)recognizer
+- (void)alertView:(BlockDeleteAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (1 == buttonIndex)
+    {
+        [[self parent] setChild:nil]; // le dice a su padre que ya no tiene hijo
+        [[self child] setParent:nil]; // le dice a su hijo que ya no tiene padre
+        
+        [[self main_view] removeFromSuperview]; // lo elimina del view
+        
+        [[alertView blocks] removeObject:self]; // lo elimina del arreglo
+    }
+}
+
+- (void)handleMainViewLongPress:(BlockHandleLongPressGestureRecognizer *)recognizer
+{
+    if (recognizer.state == UIGestureRecognizerStateBegan)
+    {
+        [[self main_view] highlightLongPressBorder];
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded)
+    {
+        BlockDeleteAlertView *alert = [[BlockDeleteAlertView alloc] initWithTitle:@"Delete Variable"
+                                                        message:@"Are you sure to delete this variable?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"No"
+                                              otherButtonTitles:@"Yes", nil];
+        [alert setBlocks:recognizer.blocks];
+        [alert show];
+        
+        [[self main_view] resetBorder];
+    }
+}
+
+- (void)handleMainViewPan:(BlockHandlePanGestureRecognizer *)recognizer
 {
     CGPoint super_location = [recognizer locationInView:_super_parent_view];
     
@@ -177,7 +210,7 @@
                     }
                     
                     // CHECA BORDE INFERIOR
-                    if ([this_block sticks] && [self parent] == nil)
+                    if ([self sticks] && [this_block sticks] && [self parent] == nil)
                     {
                         CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
                         
@@ -250,7 +283,7 @@
                 
                 CGPoint view_center = [recognizer.view center];
                 
-                if ([this_block sticks] && [self parent] == nil)
+                if ([self sticks] && [this_block sticks] && [self parent] == nil)
                 {
                     CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
                     

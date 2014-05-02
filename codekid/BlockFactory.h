@@ -27,9 +27,8 @@
 #define BLOCK_MOVEMENT_MOVE             21
 #define BLOCK_CONTROL_IF                30
 #define BLOCK_CONTROL_REPEAT_UNTIL      31
-#define BLOCK_CONTROL_SET               32
-#define BLOCK_CONTROL_WAIT              33
-#define BLOCK_CONTROL_WAIT_UNTIL        34
+#define BLOCK_CONTROL_WAIT              32
+#define BLOCK_CONTROL_WAIT_UNTIL        33
 #define BLOCK_OPERATOR_PLUS             40
 #define BLOCK_OPERATOR_MINUS            41
 #define BLOCK_OPERATOR_MULTIPLICATION   42
@@ -41,6 +40,7 @@
 #define BLOCK_DATA_ITEM                 51
 #define BLOCK_DATA_ADDAT                52
 #define BLOCK_DATA_SET                  53
+#define BLOCK_DATA_SETAT                54
 #define BLOCK_VARIABLE                  60
 
 #define TEXT_TYPE_INTEGER    0

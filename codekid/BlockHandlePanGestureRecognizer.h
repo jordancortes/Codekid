@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BlockHandePanGestureRecognizer : UIPanGestureRecognizer
+@interface BlockHandlePanGestureRecognizer : UIPanGestureRecognizer
 
 @property NSMutableArray *blocks;
 

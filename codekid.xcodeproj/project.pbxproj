@@ -27,9 +27,11 @@
 		1737C46B18CE41F600CFF4D0 /* parser.ym in Sources */ = {isa = PBXBuildFile; fileRef = 1737C46A18CE41F600CFF4D0 /* parser.ym */; };
 		17722D7118D8042900E4A3CB /* Quadruple.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7018D8042900E4A3CB /* Quadruple.m */; };
 		17722D7518D807BC00E4A3CB /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 17722D7418D807BC00E4A3CB /* Stack.m */; };
-		17A9B6B71910588500DB5054 /* BlockHandePanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A9B6B61910588500DB5054 /* BlockHandePanGestureRecognizer.m */; };
+		17A8F94119133CF300292E41 /* BlockDeleteAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A8F94019133CF300292E41 /* BlockDeleteAlertView.m */; };
+		17A9B6B71910588500DB5054 /* BlockHandlePanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A9B6B61910588500DB5054 /* BlockHandlePanGestureRecognizer.m */; };
 		17AD02BC190EC92300C12643 /* VariableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AD02BB190EC92300C12643 /* VariableLabel.m */; };
 		17AD02BF190ECC3F00C12643 /* Action_Man_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17AD02BE190ECC3F00C12643 /* Action_Man_Bold.ttf */; };
+		17CC3C6219132EE800157C4B /* BlockHandleLongPressGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 17CC3C6119132EE800157C4B /* BlockHandleLongPressGestureRecognizer.m */; };
 		17DE3A29190A10F700C57B0E /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A22190A10F700C57B0E /* Block.m */; };
 		17DE3A2A190A10F700C57B0E /* BlockFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A24190A10F700C57B0E /* BlockFactory.m */; };
 		17DE3A2B190A10F700C57B0E /* DropZoneTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DE3A26190A10F700C57B0E /* DropZoneTextField.m */; };
@@ -93,11 +95,15 @@
 		17722D7018D8042900E4A3CB /* Quadruple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quadruple.m; sourceTree = "<group>"; };
 		17722D7318D807BC00E4A3CB /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		17722D7418D807BC00E4A3CB /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
-		17A9B6B51910588500DB5054 /* BlockHandePanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockHandePanGestureRecognizer.h; sourceTree = "<group>"; };
-		17A9B6B61910588500DB5054 /* BlockHandePanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockHandePanGestureRecognizer.m; sourceTree = "<group>"; };
+		17A8F93F19133CF300292E41 /* BlockDeleteAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockDeleteAlertView.h; sourceTree = "<group>"; };
+		17A8F94019133CF300292E41 /* BlockDeleteAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockDeleteAlertView.m; sourceTree = "<group>"; };
+		17A9B6B51910588500DB5054 /* BlockHandlePanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockHandlePanGestureRecognizer.h; sourceTree = "<group>"; };
+		17A9B6B61910588500DB5054 /* BlockHandlePanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockHandlePanGestureRecognizer.m; sourceTree = "<group>"; };
 		17AD02BA190EC92300C12643 /* VariableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableLabel.h; sourceTree = "<group>"; };
 		17AD02BB190EC92300C12643 /* VariableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableLabel.m; sourceTree = "<group>"; };
 		17AD02BE190ECC3F00C12643 /* Action_Man_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Bold.ttf; sourceTree = "<group>"; };
+		17CC3C6019132EE800157C4B /* BlockHandleLongPressGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockHandleLongPressGestureRecognizer.h; sourceTree = "<group>"; };
+		17CC3C6119132EE800157C4B /* BlockHandleLongPressGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockHandleLongPressGestureRecognizer.m; sourceTree = "<group>"; };
 		17DE3A21190A10F700C57B0E /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
 		17DE3A22190A10F700C57B0E /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
 		17DE3A23190A10F700C57B0E /* BlockFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockFactory.h; sourceTree = "<group>"; };
@@ -296,8 +302,12 @@
 				17DE3A28190A10F700C57B0E /* DropZoneView.m */,
 				17AD02BA190EC92300C12643 /* VariableLabel.h */,
 				17AD02BB190EC92300C12643 /* VariableLabel.m */,
-				17A9B6B51910588500DB5054 /* BlockHandePanGestureRecognizer.h */,
-				17A9B6B61910588500DB5054 /* BlockHandePanGestureRecognizer.m */,
+				17A9B6B51910588500DB5054 /* BlockHandlePanGestureRecognizer.h */,
+				17A9B6B61910588500DB5054 /* BlockHandlePanGestureRecognizer.m */,
+				17CC3C6019132EE800157C4B /* BlockHandleLongPressGestureRecognizer.h */,
+				17CC3C6119132EE800157C4B /* BlockHandleLongPressGestureRecognizer.m */,
+				17A8F93F19133CF300292E41 /* BlockDeleteAlertView.h */,
+				17A8F94019133CF300292E41 /* BlockDeleteAlertView.m */,
 			);
 			name = Blocks;
 			sourceTree = "<group>";
@@ -439,10 +449,12 @@
 				1737C46918CE41ED00CFF4D0 /* tokenizer.lm in Sources */,
 				17DE3A2B190A10F700C57B0E /* DropZoneTextField.m in Sources */,
 				17E9DB1918F903DB0024EE7A /* Procedure.m in Sources */,
+				17CC3C6219132EE800157C4B /* BlockHandleLongPressGestureRecognizer.m in Sources */,
 				17E9DB1A18F903DB0024EE7A /* Temporal.m in Sources */,
-				17A9B6B71910588500DB5054 /* BlockHandePanGestureRecognizer.m in Sources */,
+				17A9B6B71910588500DB5054 /* BlockHandlePanGestureRecognizer.m in Sources */,
 				DF3D350018DFC07500F8D6BD /* Project.m in Sources */,
 				1737C44118CE415D00CFF4D0 /* AppDelegate.m in Sources */,
+				17A8F94119133CF300292E41 /* BlockDeleteAlertView.m in Sources */,
 				17DE3A2A190A10F700C57B0E /* BlockFactory.m in Sources */,
 				17E9DB1B18F903DB0024EE7A /* Variable.m in Sources */,
 				17DE3A2F190A110100C57B0E /* SidebarBlockViewCell.m in Sources */,

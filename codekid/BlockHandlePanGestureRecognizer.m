@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Cecilia Rodríguez Ramírez & Jordan Y. Cortés Guzmán. All rights reserved.
 //
 
-#import "BlockHandePanGestureRecognizer.h"
+#import "BlockHandlePanGestureRecognizer.h"
 
-@implementation BlockHandePanGestureRecognizer
+@implementation BlockHandlePanGestureRecognizer
 
 - (id) initWithTarget:(id)target action:(SEL)action andBlocks:(NSMutableArray *)this_blocks
 {
