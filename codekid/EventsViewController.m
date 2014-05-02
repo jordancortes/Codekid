@@ -291,8 +291,17 @@
 
 - (void)addActionsToBlock:(Block *)this_block
 {
-    [[this_block main_view] addGestureRecognizer:[[BlockHandlePanGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewPan:) andBlocks:_blocks]];
-    [[this_block main_view] addGestureRecognizer:[[BlockHandleLongPressGestureRecognizer alloc] initWithTarget:this_block action:@selector(handleMainViewLongPress:) time:0.5 andBlocks:_blocks]];
+    [[this_block main_view]
+     addGestureRecognizer:[[BlockHandlePanGestureRecognizer alloc]
+                           initWithTarget:this_block
+                           action:@selector(handleMainViewPan:)
+                           andBlocks:_blocks]];
+    [[this_block main_view]
+     addGestureRecognizer:[[BlockHandleLongPressGestureRecognizer alloc]
+                           initWithTarget:this_block
+                           action:@selector(handleMainViewLongPress:)
+                           time:0.5
+                           andBlocks:_blocks]];
     [this_block setSuper_parent_view:_O_dropzone_view];
     [_O_dropzone_view addSubview:[this_block main_view]];
     [_blocks addObject:this_block];
