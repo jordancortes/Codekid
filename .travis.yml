@@ -1,0 +1,3 @@
+language: objective-c
+xcode_project: codekid.xcodeproj
+xcode_scheme: codekid
