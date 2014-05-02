@@ -128,11 +128,15 @@
                 
                 [(DropZoneView *)[recognizer.view superview] decreaseWidth:NORMAL_INNER_DROPZONE_WIDTH reachingTo:_super_parent_view];
                 
+                // le dice a su superView que ya no lo tiene
+                [(DropZoneView *)[recognizer.view superview] setBlock_inside:nil];
+                
                 [recognizer.view removeFromSuperview]; // lo saca
                 [_super_parent_view addSubview:recognizer.view]; // lo regresa al drop_zone
                 
                 // avisa que ya no esta dentro de algun bloque
                 [self setInside_another:NO];
+                
             }
         }
         else // si su superview es main_drop_zone
@@ -273,6 +277,8 @@
                             // dice que este ya está dentro de otro
                             [self setInside_another:YES];
                             
+                            [this_view setBlock_inside:self];
+                            
                             // borra el borde que habia dejado
                             [this_view resetBorder];
                             
@@ -367,6 +373,64 @@
     }
     
     return last_child;
+}
+
+- (NSString *)getValueForDropZone:(NSInteger)num_dropzone
+{
+    NSString *data = @"";
+    DropZoneView *this_dropzone = [[self inner_drop_zones] objectAtIndex:num_dropzone];
+    
+    if ([this_dropzone is_empty])
+    {
+        data = [(DropZoneTextField *)[[this_dropzone subviews] objectAtIndex:0] text];
+    }
+    else // tiene un subview metido
+    {
+        Block *block_inside = [this_dropzone block_inside];
+        
+        if ([block_inside block_type] == BLOCK_OPERATOR_PLUS)
+        {
+            data = [NSString stringWithFormat:@"%@ + %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+        }
+        else if ([block_inside block_type] == BLOCK_OPERATOR_MINUS)
+        {
+            data = [NSString stringWithFormat:@"%@ - %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+        }
+        else if ([block_inside block_type] == BLOCK_OPERATOR_MULTIPLICATION)
+        {
+            data = [NSString stringWithFormat:@"%@ * %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+        }
+        else if ([block_inside block_type] == BLOCK_OPERATOR_DIVISION)
+        {
+            data = [NSString stringWithFormat:@"%@ / %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+        }
+        else if ([block_inside block_type] == BLOCK_OPERATOR_EQUALS)
+        {
+            data = [NSString stringWithFormat:@"%@ = %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+        }
+        else if ([block_inside block_type] == BLOCK_OPERATOR_GREATER_THAN)
+        {
+            data = [NSString stringWithFormat:@"%@ < %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+        }
+        else if ([block_inside block_type] == BLOCK_OPERATOR_LESS_THAN)
+        {
+            data = [NSString stringWithFormat:@"%@ > %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+        }
+        else if ([block_inside block_type] == BLOCK_DATA_LENGTH)
+        {
+            data = [NSString stringWithFormat:@"length %@", [block_inside getValueForDropZone:0]];
+        }
+        else if ([block_inside block_type] == BLOCK_DATA_ITEM)
+        {
+            data = [NSString stringWithFormat:@"item %@ of %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+        }
+        else if ([block_inside block_type] == BLOCK_VARIABLE)
+        {
+            data = [NSString stringWithFormat:@"%@", [(VariableLabel *)[[[block_inside main_view] subviews] objectAtIndex:0] text]];
+        }
+    }
+    
+    return data;
 }
 
 @end

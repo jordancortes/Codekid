@@ -13,6 +13,7 @@
 
 @property BOOL is_empty;
 @property DropZoneTextField *textfield;
+@property id block_inside;
 
 - (void)increaseWidth:(CGFloat)width reachingTo:(UIView *)this_super_view;
 - (void)decreaseWidth:(CGFloat)width reachingTo:(UIView *)this_super_view;

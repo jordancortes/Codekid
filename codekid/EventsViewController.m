@@ -25,6 +25,11 @@
     [_O_header_run setTitle:@"" forState:UIControlStateNormal];
     [_O_header_run setBackgroundImage:[UIImage imageNamed:@"header_run"] forState:UIControlStateNormal];
     
+    [_O_header_errors setText:@"No changes"];
+    [_O_header_errors setFont:[UIFont boldSystemFontOfSize:14.0]];
+    [_O_header_errors setTextColor:[UIColor darkGrayColor]];
+    [_O_header_errors setTextAlignment:NSTextAlignmentCenter];
+    
     // Sidebar
     _sidebar_state = SIDEBAR_BLOCKS;
     _block_selected = BLOCK_EVENTS;
@@ -525,6 +530,93 @@
 
 - (IBAction)A_header_run:(id)sender
 {
-    /* TOFILL: */
+    NSInteger whenStart_blocks = 0;
+    NSString *code = @"";
+    Block *initial_block;
+    
+    for (Block *this_block in _blocks)
+    {
+        if ([this_block block_type] == BLOCK_EVENTS_START)
+        {
+            whenStart_blocks++;
+            initial_block = this_block;
+            
+        }
+    }
+    
+    if (whenStart_blocks == 0)
+    {
+        [_O_header_errors setText:@"Missing block \"WHEN_START\""];
+        [_O_header_errors setTextColor:[UIColor redColor]];
+    }
+    else if (whenStart_blocks > 1)
+    {
+        [_O_header_errors setText:@"Found more than one block \"WHEN_START\""];
+        [_O_header_errors setTextColor:[UIColor redColor]];
+    }
+    else
+    {
+        [_O_header_errors setText:@"No compilation errors"];
+        [_O_header_errors setTextColor:[UIColor darkGrayColor]];
+        
+        // primero saca las variables
+        for (Variable *this_variable in _variables)
+        {
+            code = [NSString stringWithFormat:@"%@create %@ as %@;\n", code, [this_variable name], [Common typeForCode:[this_variable type]]];
+        }
+        
+        // luego saca las listas
+        for (Variable *this_variable in _lists)
+        {
+            code = [NSString stringWithFormat:@"%@create %@ as %@[%d];\n", code, [this_variable name], [Common typeForCode:[this_variable type]], [this_variable dimension]];
+        }
+        
+        while (initial_block != nil)
+        {
+            switch ([initial_block block_type])
+            {
+                case BLOCK_APPEARANCE_SHOW:
+                {
+                    code = [NSString stringWithFormat:@"%@show;\n", code];
+                }
+                    break;
+                case BLOCK_APPEARANCE_CLEAR:
+                {
+                    code = [NSString stringWithFormat:@"%@clear;\n", code];
+                }
+                    break;
+                case BLOCK_APPEARANCE_HIDE:
+                {
+                    code = [NSString stringWithFormat:@"%@hide;\n", code];
+                }
+                    break;
+                case BLOCK_APPEARANCE_LOAD:
+                {
+                    code = [NSString stringWithFormat:@"%@load %@;\n", code, [initial_block getValueForDropZone:0]];
+                }
+                    break;
+                case BLOCK_APPEARANCE_SET:
+                {
+                    code = [NSString stringWithFormat:@"%@set %@;\n", code, [initial_block getValueForDropZone:0]];
+                }
+                    break;
+                case BLOCK_APPEARANCE_SCALE:
+                {
+                    code = [NSString stringWithFormat:@"%@scale %@;\n", code, [initial_block getValueForDropZone:0]];
+                }
+                    break;
+                default:
+                    break;
+            }
+            
+            initial_block = [initial_block child];
+        }
+        
+        // Encapsula el codigo en las sentencias principales
+        code = [NSString stringWithFormat:@"when start\n{\n%@}", code];
+        
+        NSLog(@"%@\n", code);
+    }
+    
 }
 @end

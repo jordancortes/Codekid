@@ -16,6 +16,7 @@
     if (self)
     {
         _is_empty = YES;
+        _block_inside = nil;
         [self.layer setBorderWidth:2.0];
         [self.layer setBorderColor:[UIColor blackColor].CGColor];
         [self setBackgroundColor:[UIColor whiteColor]];
