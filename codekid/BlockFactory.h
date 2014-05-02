@@ -31,6 +31,7 @@
 #define BLOCK_CONTROL_WAIT_UNTIL        33
 #define BLOCK_CONTROL_ELSE              34
 #define BLOCK_CONTROL_ENDIF             35
+#define BLOCK_CONTROL_ENDREPEAT         36
 #define BLOCK_OPERATOR_PLUS             40
 #define BLOCK_OPERATOR_MINUS            41
 #define BLOCK_OPERATOR_MULTIPLICATION   42

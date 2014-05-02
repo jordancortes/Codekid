@@ -366,6 +366,24 @@
             
             [temp setSticks:YES];
             [temp setShould_indent:YES];
+            
+            /*====================== BLOCK_END_REPEAT ======================*/
+            
+            Block *end_repeat_block = [[Block alloc]
+                                 initWithBlockType:BLOCK_CONTROL_ENDREPEAT];
+            [end_repeat_block setMain_view:[
+                                      [BlockView alloc]
+                                      initWithFrame:CGRectMake(0, 59, 159, 59)
+                                      andColor:[UIColor colorWithRed:0.847058823529412 green:0.603921568627451 blue:0 alpha:1.0]]];
+            // Texto
+            UILabel *end_repeat_text = [[VariableLabel alloc] initWithName:@"END REPEAT" fontSize:26 andPosition:CGPointMake(-2, 0)];
+            [end_repeat_text setTag:1];
+            [[end_repeat_block main_view] addSubview:end_repeat_text];
+            
+            [end_repeat_block setSticks:YES];
+            [end_repeat_block setShould_be_unindented:YES];
+            [end_repeat_block setParent:temp];
+            [temp setChild:end_repeat_block];
         }
             break;
         case BLOCK_CONTROL_WAIT:

@@ -343,7 +343,11 @@
             {
                 indent_space = -INDENT_SIZE;
             }
-            if ([block block_type] == BLOCK_CONTROL_ENDIF && !([[block parent] block_type] == BLOCK_CONTROL_ELSE))
+            else if ([block block_type] == BLOCK_CONTROL_ENDIF && !([[block parent] block_type] == BLOCK_CONTROL_ELSE))
+            {
+                indent_space = -INDENT_SIZE;
+            }
+            else if ([block block_type] == BLOCK_CONTROL_ENDREPEAT && !([[block parent] block_type] == BLOCK_CONTROL_REPEAT_UNTIL))
             {
                 indent_space = -INDENT_SIZE;
             }

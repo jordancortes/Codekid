@@ -281,6 +281,14 @@
         // Para el bloque END_IF
         [self addActionsToBlock:[[this_block child] child]];
     }
+    else if (_block_selected * 10 + indexPath.row == BLOCK_CONTROL_REPEAT_UNTIL)
+    {
+        // Para el bloque REPEAT
+        [self addActionsToBlock:this_block];
+        
+        // Para el bloque END_REPEAT
+        [self addActionsToBlock:[this_block child]];
+    }
     else
     {
         [self addActionsToBlock:this_block];

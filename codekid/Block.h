@@ -21,6 +21,7 @@
 #define BLOCK_CONTROL_REPEAT_UNTIL      31
 #define BLOCK_CONTROL_ELSE              34
 #define BLOCK_CONTROL_ENDIF             35
+#define BLOCK_CONTROL_ENDREPEAT         36
 
 @interface Block : NSObject <UIAlertViewDelegate>
 
