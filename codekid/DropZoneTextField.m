@@ -24,9 +24,16 @@
         [self setTextAlignment:NSTextAlignmentCenter];
         [self setKeyboardType:UIKeyboardTypeNumberPad];
         
-        // agrega observadores
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextChange:) name:UITextFieldTextDidChangeNotification object:self];
-        [self setDelegate:self];
+        if (_input_type == TEXT_TYPE_DISABLED)
+        {
+            [self setEnabled:NO];
+        }
+        else
+        {
+            // agrega observadores
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextChange:) name:UITextFieldTextDidChangeNotification object:self];
+            [self setDelegate:self];
+        }
     }
     return self;
 }
