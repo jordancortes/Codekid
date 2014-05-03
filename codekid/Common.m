@@ -293,6 +293,7 @@ static int _del_paren;
 {
     [self saveQuadruples];
     [self saveProcedures];
+    [self saveVariables];
     [mem save];
 }
 
@@ -390,6 +391,20 @@ static int _del_paren;
 //==============================================================================
 //==================================================================== VARIABLES
 //==============================================================================
+
++ (void)saveVariables
+{
+    NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"variables.txt"];
+    NSString *text = [[NSString alloc] init];
+    
+    for (NSString *key in table_variables)
+    {
+        Variable *this_variable = [table_variables objectForKey:key];
+        text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%d\n", [this_variable mem_address], [this_variable dimension]]];
+    }
+    
+    [text writeToFile:path atomically:YES encoding:NSUnicodeStringEncoding error:nil];
+}
 
 + (NSInteger)addressForVariable:(NSString *)variable
 {
