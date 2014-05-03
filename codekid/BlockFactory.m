@@ -651,6 +651,33 @@
             [[temp inner_drop_zones] addObject:second_drop_zone];
         }
             break;
+        case BLOCK_OPERATOR_PARENTHESIS:
+        {
+            temp.main_view = [
+                              [BlockView alloc]
+                              initWithFrame:CGRectMake(0, 0, 140, 59)
+                              andColor:[UIColor colorWithRed:0.0392156862745098 green:0.556862745098039 blue:0 alpha:1.0]];
+            
+            // Signo (
+            UILabel *open_parenthesis_sign = [[VariableLabel alloc] initWithName:@"(" fontSize:55 andPosition:CGPointMake(3, -4)];
+            [open_parenthesis_sign setTag:1];
+            [temp.main_view addSubview:open_parenthesis_sign];
+            
+            // Primer Dropzone
+            DropZoneView *first_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(50, 0, 40, 59)];
+            [first_drop_zone setTag:2];
+            [first_drop_zone addBackTextField:[
+                                               [DropZoneTextField alloc]
+                                               initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
+                                               andType:TEXT_TYPE_FLOAT]];
+            [[temp inner_drop_zones] addObject:first_drop_zone];
+            
+            // Signo )
+            UILabel *close_parenthesis_sign = [[VariableLabel alloc] initWithName:@")" fontSize:55 andPosition:CGPointMake(93, -4)];
+            [close_parenthesis_sign setTag:3];
+            [temp.main_view addSubview:close_parenthesis_sign];
+        }
+            break;
         case BLOCK_DATA_LENGTH:
         {
             temp.main_view = [
