@@ -25,6 +25,8 @@
 
 - (void)viewDidLoad{
     
+    [Common init];
+    
     // acciones segun el teclado esté oculto o visible
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     //[center addObserver:self selector:@selector(didShow) name:UIKeyboardDidShowNotification object:nil];

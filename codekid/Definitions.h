@@ -9,6 +9,9 @@
 #ifndef codekid_Definitions_h
 #define codekid_Definitions_h
 
+#define YYACCEPT                        0
+#define YYREJECT                        1
+
 #define BLOCK_EVENTS_START              0
 #define BLOCK_EVENTS_WHEN               1
 #define BLOCK_APPEARANCE_SHOW           10

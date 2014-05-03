@@ -16,6 +16,11 @@
 @property NSInteger block_selected;
 @property BlockFactory *factory;
 
+/**
+ Prototipos de funciones externas
+ */
+int ext_scanner( const char* );
+
 // Header
 @property (weak, nonatomic) IBOutlet UIButton *O_header_back_projects;
 @property (weak, nonatomic) IBOutlet UIButton *O_header_run;

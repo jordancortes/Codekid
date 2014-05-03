@@ -593,9 +593,24 @@
         code = [NSString stringWithFormat:@"when start\n{\n%@}", code];
         
         // guarda el código en un archivo
-        NSError *error;
         NSString *path = [[Common applicationDocumentsDirectory].path stringByAppendingPathComponent:@"code.txt"];
-        [code writeToFile:path atomically:YES encoding:NSUnicodeStringEncoding error:&error];
+        [code writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        
+        // activa el compilador
+        [Common reset];
+        
+        NSInteger result = [self scanner:@"code.txt"];
+        
+        // Imprime el resultado
+        if (YYACCEPT == result)
+        {
+            [Common save];
+            _O_header_errors.text = @"No compilation errors";
+        }
+        else if (YYREJECT == result)
+        {
+            _O_header_errors.text = [NSString stringWithFormat:@"ERROR %@", [Common yyError]];
+        }
     }
     
 }
@@ -748,6 +763,17 @@
     }
     
     return code;
+}
+
+- (NSInteger) scanner:(NSString *)nombre
+{
+    // se obtiene la ruta del archivo en Documents
+    NSString *path = [[Common applicationDocumentsDirectory].path stringByAppendingPathComponent:nombre];
+    
+    // se obtiene la ruta para ser usada por fopen
+    const char *archivo = [path cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    return (NSInteger)ext_scanner(archivo);
 }
 
 @end
