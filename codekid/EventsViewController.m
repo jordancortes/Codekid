@@ -592,7 +592,10 @@
         // Encapsula el codigo en las sentencias principales
         code = [NSString stringWithFormat:@"when start\n{\n%@}", code];
         
-        NSLog(@"%@\n", code);
+        // guarda el código en un archivo
+        NSError *error;
+        NSString *path = [[Common applicationDocumentsDirectory].path stringByAppendingPathComponent:@"code.txt"];
+        [code writeToFile:path atomically:YES encoding:NSUnicodeStringEncoding error:&error];
     }
     
 }
