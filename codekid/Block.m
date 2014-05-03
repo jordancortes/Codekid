@@ -217,23 +217,50 @@
                     // CHECA BORDE INFERIOR
                     if ([self sticks] && [this_block sticks] && [self parent] == nil)
                     {
-                        CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
-                        
-                        if ( // lo detecta por abajo
-                            (top_center.y < [this_block main_view].frame.origin.y + [this_block main_view].frame.size.height)
-                            &&
-                            (top_center.y > [this_block main_view].frame.origin.y + [this_block main_view].frame.size.height - STICK_BORDER)
-                            &&
-                            (top_center.x < [this_block main_view].frame.origin.x + [this_block main_view].frame.size.width)
-                            &&
-                            (top_center.x > [this_block main_view].frame.origin.x + STICK_BORDER)
-                            )
+                        BOOL can_stick = YES;
+                    
+                        // los bloques de eventos pueden ser anidados pero ellos
+                        // no se deben de anidar a otros
+                        if (
+                            [self block_type] == BLOCK_EVENTS_START ||
+                            [self block_type] == BLOCK_EVENTS_WHEN
+                           )
                         {
-                            [[this_block main_view] highlightBorder]; // NEXT:
+                            can_stick = NO;
                         }
-                        else
+                        
+                        // el bloque else no debe anidarse al repeat u otro else
+                        if (
+                            [self block_type] == BLOCK_CONTROL_ELSE &&
+                            (
+                             [this_block block_type] == BLOCK_CONTROL_REPEAT_UNTIL ||
+                             [this_block block_type] == BLOCK_CONTROL_ELSE
+                            )
+                           )
                         {
-                            [[this_block main_view] resetBorder];
+                            can_stick = NO;
+                        }
+                    
+                        if (can_stick)
+                        {
+                            CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
+                            
+                            if ( // lo detecta por abajo
+                                (top_center.y < [this_block main_view].frame.origin.y + [this_block main_view].frame.size.height)
+                                &&
+                                (top_center.y > [this_block main_view].frame.origin.y + [this_block main_view].frame.size.height - STICK_BORDER)
+                                &&
+                                (top_center.x < [this_block main_view].frame.origin.x + [this_block main_view].frame.size.width)
+                                &&
+                                (top_center.x > [this_block main_view].frame.origin.x + STICK_BORDER)
+                                )
+                            {
+                                [[this_block main_view] highlightBorder]; // NEXT:
+                            }
+                            else
+                            {
+                                [[this_block main_view] resetBorder];
+                            }
                         }
                     }
                 }
@@ -349,7 +376,7 @@
             {
                 indent_space = -INDENT_SIZE;
             }
-            else if ([block block_type] == BLOCK_CONTROL_ENDIF && !([[block parent] block_type] == BLOCK_CONTROL_ELSE))
+            else if ([block block_type] == BLOCK_CONTROL_ENDIF && !([[block parent] block_type] == BLOCK_CONTROL_ELSE || [[block parent] block_type] == BLOCK_CONTROL_IF))
             {
                 indent_space = -INDENT_SIZE;
             }
