@@ -11,6 +11,33 @@
 #import "Procedure.h"
 #import "Memory.h"
 
+#define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
+#define LESS_THAN       0
+#define EQUALS          1
+#define GREATER_THAN    2
+#define PLUS            3
+#define MINUS           4
+#define MULTIPLICATION  5
+#define DIVISION        6
+#define GOTO            10
+#define GOTOF           11
+#define GOTOV           12
+#define SUB             13
+#define _SET            20
+#define LENGTH          21
+#define ITEM            22
+#define WAIT            23
+#define WAIT_UNTIL      24
+#define TURN            26
+#define MOVE            27
+#define SAY             30
+#define SHOW            31
+#define HIDE            32
+#define CLEAR           33
+#define LOAD            34
+#define APPLY           35
+#define SCALE           36
+
 @interface RunViewController : UIViewController
 
 @property NSMutableDictionary *variables;
@@ -20,6 +47,10 @@
 - (IBAction)A_stop:(UIButton *)sender;
 
 
+// outlet imagen
+@property (weak, nonatomic) IBOutlet UIImageView *O_animacion;
+
+// outlet texto
 @property (weak, nonatomic) IBOutlet UITextView *O_text;
 
 
