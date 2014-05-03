@@ -37,9 +37,8 @@
 #define BLOCK_OPERATOR_PARENTHESIS      47
 #define BLOCK_DATA_LENGTH               50
 #define BLOCK_DATA_ITEM                 51
-#define BLOCK_DATA_ADDAT                52
-#define BLOCK_DATA_SET                  53
-#define BLOCK_DATA_SETAT                54
+#define BLOCK_DATA_SET                  52
+#define BLOCK_DATA_SETAT                53
 #define BLOCK_VARIABLE                  60
 
 #define INNER_TEXT_INCREMENT            18

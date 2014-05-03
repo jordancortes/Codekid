@@ -80,7 +80,6 @@
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_data_length"],
                       [UIImage imageNamed:@"block_data_item"],
-                      [UIImage imageNamed:@"block_data_addAt"],
                       [UIImage imageNamed:@"block_data_set"],
                       [UIImage imageNamed:@"block_data_setAt"],
                       nil],
