@@ -318,7 +318,7 @@ static int _del_paren;
         text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%d\t%d\t%d\t%d\n", x + 1, [q operator], [q term1], [q term2], [q result]]];
     }
     
-    /*BOOL success = */[text writeToFile:path atomically:YES encoding:NSUnicodeStringEncoding error:&error];
+    /*BOOL success = */[text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&error];
 }
 
 + (NSInteger)nextPointer
@@ -355,7 +355,7 @@ static int _del_paren;
         text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%d\n", [p type], [p pointer]]];
     }
     
-    /*BOOL success = */[text writeToFile:path atomically:YES encoding:NSUnicodeStringEncoding error:&error];
+    /*BOOL success = */[text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&error];
 }
 
 //==============================================================================
@@ -403,7 +403,7 @@ static int _del_paren;
         text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%d\n", [this_variable mem_address], [this_variable dimension]]];
     }
     
-    [text writeToFile:path atomically:YES encoding:NSUnicodeStringEncoding error:nil];
+    [text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
 + (NSInteger)addressForVariable:(NSString *)variable
