@@ -31,6 +31,8 @@
     // inicializa arreglo de tabla de procedimientos
     procedures = [[NSMutableArray alloc] init];
     
+    _variables = [[NSMutableDictionary alloc] init];
+    
     // importar imagen para boton stop
     [_O_stop setTitle:@"" forState:UIControlStateNormal];
     [_O_stop setBackgroundImage:[UIImage imageNamed:@"running_stop"] forState:UIControlStateNormal];
@@ -38,6 +40,7 @@
     [self ArrayQuadruple];
     [self ArrayMemory];
     [self ArrayProcedure];
+    [self readVariables];
 }
 
 - (void)ArrayQuadruple{
@@ -90,6 +93,31 @@
     }
 }
 
+- (void)readVariables
+{
+    NSString *path = [[self applicationDocumentsDirectory].path
+                      stringByAppendingPathComponent:@"variables.txt"];
+    NSArray *content_by_lines;
+    NSArray *list_variables;
+    
+    if (path)
+    {
+        content = [NSString stringWithContentsOfFile:path
+                                            encoding:NSUTF8StringEncoding
+                                               error:nil];
+        
+        content_by_lines = [content componentsSeparatedByString:@"\n"];
+        
+        for (NSInteger x = 0; x < [content_by_lines count] - 1; x++)
+        {
+            list_variables = [[content_by_lines objectAtIndex:x]
+                              componentsSeparatedByString:@"\t"];
+            [_variables setObject:[list_variables objectAtIndex:1]
+                           forKey:[list_variables objectAtIndex:0]];
+        }
+    }
+}
+
 - (IBAction)A_stop:(UIButton *)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -97,7 +125,9 @@
 
 - (NSURL *)applicationDocumentsDirectory
 {
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    return [[[NSFileManager defaultManager]
+             URLsForDirectory:NSDocumentDirectory
+                    inDomains:NSUserDomainMask] lastObject];
 }
 
 
