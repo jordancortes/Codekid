@@ -62,7 +62,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_DISABLED]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             [temp setSticks:YES];
@@ -131,7 +131,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_INTEGER]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             [temp setSticks:YES];
@@ -155,7 +155,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_FLOAT]];
+                                               andType:TEXT_TYPE_INTEGER]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             [temp setSticks:YES];
@@ -179,7 +179,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_INTEGER]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             [temp setSticks:YES];
@@ -298,7 +298,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_DISABLED]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             [temp setSticks:YES];
@@ -361,7 +361,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_DISABLED]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             [temp setSticks:YES];
@@ -428,7 +428,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_DISABLED]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             [temp setSticks:YES];
@@ -669,7 +669,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_FLOAT]];
+                                               andType:TEXT_TYPE_STRING]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             // Signo )
@@ -696,7 +696,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_DISABLED]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
         }
             break;
@@ -732,7 +732,7 @@
             [second_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, second_drop_zone.frame.size.width, second_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_DISABLED]];
             [[temp inner_drop_zones] addObject:second_drop_zone];
         }
             break;
@@ -806,7 +806,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_DISABLED]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             // Segundo Texto
@@ -844,7 +844,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_DISABLED]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             // Segundo Texto
@@ -872,7 +872,7 @@
             [third_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, third_drop_zone.frame.size.width, third_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_INTEGER]];
             [[temp inner_drop_zones] addObject:third_drop_zone];
             
             [temp setSticks:YES];
