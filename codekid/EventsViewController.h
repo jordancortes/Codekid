@@ -10,6 +10,7 @@
 #import "BlockFactory.h"
 #import "Common.h"
 #import "SidebarBlockViewCell.h"
+#import "RunViewController.h"
 
 @interface EventsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource>
 

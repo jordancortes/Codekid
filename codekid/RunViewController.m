@@ -90,7 +90,9 @@
     }
 }
 
-- (IBAction)A_stop:(UIButton *)sender {
+- (IBAction)A_stop:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSURL *)applicationDocumentsDirectory
