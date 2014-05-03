@@ -670,7 +670,11 @@
 
 int yyerror(char *yytext)
 {
-    [Common setYyError:[NSString stringWithUTF8String:yytext]];
+    if (strncmp(yytext, "", sizeof(int)) != 0)
+    {
+        [Common setYyError:[NSString stringWithUTF8String:yytext]];
+    }
+    
     return 1;
 }
 
