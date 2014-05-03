@@ -59,11 +59,8 @@ static int _del_paren;
      22  ->  ITEM
      23  ->  WAIT
      24  ->  WAIT_UNTIL
-     25  ->  CONTAINS
      26  ->  TURN
      27  ->  MOVE
-     28  ->  ADD
-     29  ->  DELETE
      30  ->  SAY
      31  ->  SHOW
      32  ->  HIDE
@@ -75,11 +72,11 @@ static int _del_paren;
     operatorCode = [[NSDictionary alloc]
                     initWithObjects:[NSArray arrayWithObjects:@"0", @"1", @"2", @"3", @"4", @"5", @"6", @"10",
                                      @"11", @"12", @"13", @"20", @"21", @"22", @"23", @"24",
-                                     @"25", @"26", @"27", @"28", @"29", @"30", @"31",
+                                     @"26", @"27", @"30", @"31",
                                      @"32", @"33", @"34", @"35", @"36", nil]
                     forKeys:[NSArray arrayWithObjects:@"<", @"=", @">", @"+", @"-", @"*", @"/", @"GOTO",
-                             @"GOTOF", @"GOTOT", @"SUB", @"SET", @"LENGTH", @"ITEM", @"WAIT", @"WAIT_UNTIL", @"CONTAINS",
-                             @"TURN", @"MOVE", @"ADD", @"DELETE", @"SAY", @"SHOW", @"HIDE", @"CLEAR",
+                             @"GOTOF", @"GOTOT", @"SUB", @"SET", @"LENGTH", @"ITEM", @"WAIT", @"WAIT_UNTIL",
+                             @"TURN", @"MOVE", @"SAY", @"SHOW", @"HIDE", @"CLEAR",
                              @"LOAD", @"APPLY", @"SCALE", nil]];
     
     operandCode = [[NSDictionary alloc]
