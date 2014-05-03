@@ -670,7 +670,7 @@
 
 int yyerror(char *yytext)
 {
-    printf("%s\n", yytext);
+    [Common setYyError:[NSString stringWithUTF8String:yytext]];
     return 1;
 }
 
