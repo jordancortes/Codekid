@@ -12,10 +12,6 @@
 
 %%
 
-[ \t]+ {
-    /* salta espacios */
-}
-
 \n {
     /* salta brincos por yylineno */
     [Common setYyErrorNo:yylineno];
@@ -628,7 +624,7 @@
     return CTE_BOOL;
 }
 
-'[a-zA-Z0-9]*[ ","|"."|":"|";"|"<"|">"|"{"|"}"|"‘"|"="|"/"|"*"|"+"|"-"|"_"|"("|")"|"&"|"^"|"%"|"$"|"#"|"@"|"?"|"!"|"[" ]*' {
+"'"[a-zA-Z0-9 ,.:;<>{}=*/+-_()&^%$@?![\]#]*"'" {
     [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
     [Common pushToStack:[Common operandsType] Object:@"string"];
 
@@ -660,6 +656,10 @@
     }
 
     return ID;
+}
+
+[ \t]+ {
+    /* salta espacios */
 }
 
 . {
