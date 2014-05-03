@@ -46,10 +46,12 @@
 
 #define INNER_TEXT_INCREMENT            18
 
-#define ALPHA            @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+#define ALPHA_UP                        @"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#define ALPHA_LOW                       @"abcdefghijklmnopqrstuvwxyz"
+#define SPECIAL_CHAR                    @" ,.:;<>{}=/*+-_()&^%$#@?![]"
 #define NUMERIC_DOT                     @"."
 #define NUMERIC                         @"1234567890"
-#define ALPHA_NUMERIC                   ALPHA NUMERIC
+#define ALPHA_NUMERIC                   ALPHA_UP ALPHA_LOW SPECIAL_CHAR NUMERIC
 
 #define TEXT_TYPE_INTEGER               0
 #define TEXT_TYPE_FLOAT                 1
