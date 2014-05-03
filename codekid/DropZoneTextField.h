@@ -7,17 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-#define INNER_TEXT_INCREMENT 18
-
-#define ALPHA           @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-#define NUMERIC_DOT     @"."
-#define NUMERIC         @"1234567890"
-#define ALPHA_NUMERIC   ALPHA NUMERIC
-
-#define TEXT_TYPE_INTEGER    0
-#define TEXT_TYPE_FLOAT      1
-#define TEXT_TYPE_STRING     2
+#import "Definitions.h"
 
 @interface DropZoneTextField : UITextField <UITextFieldDelegate>
 

@@ -104,6 +104,7 @@
 		17AD02BE190ECC3F00C12643 /* Action_Man_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Bold.ttf; sourceTree = "<group>"; };
 		17CC3C6019132EE800157C4B /* BlockHandleLongPressGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockHandleLongPressGestureRecognizer.h; sourceTree = "<group>"; };
 		17CC3C6119132EE800157C4B /* BlockHandleLongPressGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockHandleLongPressGestureRecognizer.m; sourceTree = "<group>"; };
+		17D3893019147AF800C97B47 /* Definitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
 		17DE3A21190A10F700C57B0E /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
 		17DE3A22190A10F700C57B0E /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
 		17DE3A23190A10F700C57B0E /* BlockFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockFactory.h; sourceTree = "<group>"; };
@@ -203,6 +204,7 @@
 				17DE3A20190A10D900C57B0E /* Blocks */,
 				1737C43F18CE415D00CFF4D0 /* AppDelegate.h */,
 				1737C44018CE415D00CFF4D0 /* AppDelegate.m */,
+				17D3893019147AF800C97B47 /* Definitions.h */,
 				1737C44218CE415D00CFF4D0 /* Main.storyboard */,
 				DF11578C191314F000D83073 /* RunViewController.h */,
 				DF11578D191314F000D83073 /* RunViewController.m */,

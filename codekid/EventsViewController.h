@@ -7,34 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SidebarBlockViewCell.h"
 #import "BlockFactory.h"
-#import "DropZoneView.h"
-#import "Variable.h"
 #import "Common.h"
-#import "BlockHandlePanGestureRecognizer.h"
+#import "SidebarBlockViewCell.h"
 
 @interface EventsViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource>
-
-#define SIDEBAR_BLOCKS 0
-#define SIDEBAR_CHARACTERS 1
-
-#define BLOCK_EVENTS 0
-#define BLOCK_APPEARANCE 1
-#define BLOCK_MOVEMENT 2
-#define BLOCK_CONTROL 3
-#define BLOCK_OPERATORS 4
-#define BLOCK_DATA 5
-#define BLOCK_VARIABLES 6
-#define BLOCK_LISTS 7
-#define BLOCK_CHARACTERS 8
-
-#define ANIMATION_SPEED 0.4
-
-#define CREATE_VAR_SHOW 558
-#define CREATE_VAR_HIDE 130
-#define CREATE_VAR_BUTTONS_SHOW 130
-#define CREATE_VAR_BUTTONS_HIDE 70
 
 @property NSInteger block_selected;
 @property BlockFactory *factory;

@@ -1,18 +1,13 @@
 //
-//  BlockFactory.h
+//  Definitions.h
 //  codekid
 //
-//  Created by Jordan Cortes Guzman on 4/19/14.
+//  Created by Jordan Cortes Guzman on 5/2/14.
 //  Copyright (c) 2014 Cecilia Rodríguez Ramírez & Jordan Y. Cortés Guzmán. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "Block.h"
-#import "DropZoneView.h"
-#import "DropZoneTextField.h"
-#import "BlockView.h"
-#import "Variable.h"
-#import "VariableLabel.h"
+#ifndef codekid_Definitions_h
+#define codekid_Definitions_h
 
 #define BLOCK_EVENTS_START              0
 #define BLOCK_EVENTS_WHEN               1
@@ -47,30 +42,39 @@
 #define BLOCK_DATA_SETAT                54
 #define BLOCK_VARIABLE                  60
 
-#define TEXT_TYPE_INTEGER    0
-#define TEXT_TYPE_FLOAT      1
-#define TEXT_TYPE_STRING     2
+#define INNER_TEXT_INCREMENT            18
 
-@interface BlockFactory : NSObject
+#define ALPHA            @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+#define NUMERIC_DOT                     @"."
+#define NUMERIC                         @"1234567890"
+#define ALPHA_NUMERIC                   ALPHA NUMERIC
 
-@property NSNotificationCenter *notificationCenter;
+#define TEXT_TYPE_INTEGER               0
+#define TEXT_TYPE_FLOAT                 1
+#define TEXT_TYPE_STRING                2
 
-/**
- Inicializa la fábrica.
- 
- @return La fábrica creada.
- */
-- (id)init;
+#define NORMAL_INNER_DROPZONE_WIDTH     40
+#define STICK_BORDER                    10
+#define INDENT_SIZE                     30
 
-/**
- Crea un bloque con todos sus elementos internos.
- 
- @param type
-    Identificador del bloque a crear.
- @param data
-    Información adicional que se ocupe para crear el bloque.
- @return El objeto creado por la fábrica.
- */
-- (Block *)createBlockOfType:(NSInteger)type withData:(id)data;
+#define SIDEBAR_BLOCKS                  0
+#define SIDEBAR_CHARACTERS              1
 
-@end
+#define BLOCK_EVENTS                    0
+#define BLOCK_APPEARANCE                1
+#define BLOCK_MOVEMENT                  2
+#define BLOCK_CONTROL                   3
+#define BLOCK_OPERATORS                 4
+#define BLOCK_DATA                      5
+#define BLOCK_VARIABLES                 6
+#define BLOCK_LISTS                     7
+#define BLOCK_CHARACTERS                8
+
+#define ANIMATION_SPEED                 0.4
+
+#define CREATE_VAR_SHOW                 558
+#define CREATE_VAR_HIDE                 130
+#define CREATE_VAR_BUTTONS_SHOW         130
+#define CREATE_VAR_BUTTONS_HIDE         70
+
+#endif
