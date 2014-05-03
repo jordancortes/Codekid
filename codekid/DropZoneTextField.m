@@ -60,7 +60,7 @@
     
         unacceptedInput = [[NSCharacterSet characterSetWithCharactersInString:[NUMERIC stringByAppendingString:NUMERIC_DOT]] invertedSet];
     }
-    else if (_input_type == TEXT_TYPE_STRING)
+    else if (_input_type == TEXT_TYPE_STRING || _input_type == TEXT_TYPE_FORCED_STRING)
     {
         unacceptedInput = [[NSCharacterSet characterSetWithCharactersInString:ALPHA_NUMERIC] invertedSet];
     }

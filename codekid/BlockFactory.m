@@ -203,7 +203,7 @@
             [first_drop_zone addBackTextField:[
                                                [DropZoneTextField alloc]
                                                initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
-                                               andType:TEXT_TYPE_STRING]];
+                                               andType:TEXT_TYPE_FORCED_STRING]];
             [[temp inner_drop_zones] addObject:first_drop_zone];
             
             // Segundo Texto

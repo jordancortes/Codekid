@@ -55,6 +55,7 @@
 #define TEXT_TYPE_FLOAT                 1
 #define TEXT_TYPE_STRING                2
 #define TEXT_TYPE_DISABLED              3
+#define TEXT_TYPE_FORCED_STRING         4
 
 #define NORMAL_INNER_DROPZONE_WIDTH     40
 #define STICK_BORDER                    10
