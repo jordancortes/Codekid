@@ -18,6 +18,10 @@
 #define STICK_BORDER 10
 #define INDENT_SIZE 30
 
+#define TEXT_TYPE_INTEGER    0
+#define TEXT_TYPE_FLOAT      1
+#define TEXT_TYPE_STRING     2
+
 #define BLOCK_EVENTS_START              0
 #define BLOCK_EVENTS_WHEN               1
 #define BLOCK_APPEARANCE_SHOW           10

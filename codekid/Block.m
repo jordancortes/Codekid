@@ -404,12 +404,45 @@
 
 - (NSString *)getValueForDropZone:(NSInteger)num_dropzone
 {
-    NSString *data = @"";
     DropZoneView *this_dropzone = [[self inner_drop_zones] objectAtIndex:num_dropzone];
     
     if ([this_dropzone is_empty])
     {
-        data = [(DropZoneTextField *)[[this_dropzone subviews] objectAtIndex:0] text];
+        DropZoneTextField *this_textfield = [[this_dropzone subviews] objectAtIndex:0];
+        
+        // si es numero
+        if (
+            [this_textfield input_type] == TEXT_TYPE_FLOAT ||
+            [this_textfield input_type] == TEXT_TYPE_INTEGER
+           )
+        {
+            return [this_textfield text];
+        }
+        // si es bool
+        else if (
+                 [[[this_textfield text] lowercaseString] isEqualToString:@"true"] ||
+                 [[[this_textfield text] lowercaseString] isEqualToString:@"false"]
+                )
+        {
+            return [[this_textfield text] lowercaseString];
+        }
+        // es de tipo STRING pero no se sabe si tiene valor integer o float
+        else
+        {
+            NSString *data = [this_textfield text];
+            // quita los puntos
+            data = [data stringByReplacingOccurrencesOfString:@"." withString:@""];
+            
+            // verifica que el resto sea numeros
+            NSCharacterSet* notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+            if ([data rangeOfCharacterFromSet:notDigits].location == NSNotFound)
+            {
+                return [this_textfield text]; // es un numero, int o float
+            }
+            
+            // si no lo fue entonces es un string
+            return [NSString stringWithFormat:@"'%@'", [this_textfield text]];
+        }
     }
     else // tiene un subview metido
     {
@@ -417,51 +450,51 @@
         
         if ([block_inside block_type] == BLOCK_OPERATOR_PLUS)
         {
-            data = [NSString stringWithFormat:@"%@ + %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+            return [NSString stringWithFormat:@"%@ + %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
         }
         else if ([block_inside block_type] == BLOCK_OPERATOR_MINUS)
         {
-            data = [NSString stringWithFormat:@"%@ - %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+            return [NSString stringWithFormat:@"%@ - %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
         }
         else if ([block_inside block_type] == BLOCK_OPERATOR_MULTIPLICATION)
         {
-            data = [NSString stringWithFormat:@"%@ * %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+            return [NSString stringWithFormat:@"%@ * %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
         }
         else if ([block_inside block_type] == BLOCK_OPERATOR_DIVISION)
         {
-            data = [NSString stringWithFormat:@"%@ / %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+            return [NSString stringWithFormat:@"%@ / %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
         }
         else if ([block_inside block_type] == BLOCK_OPERATOR_EQUALS)
         {
-            data = [NSString stringWithFormat:@"%@ = %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+            return [NSString stringWithFormat:@"%@ = %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
         }
         else if ([block_inside block_type] == BLOCK_OPERATOR_GREATER_THAN)
         {
-            data = [NSString stringWithFormat:@"%@ < %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+            return [NSString stringWithFormat:@"%@ < %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
         }
         else if ([block_inside block_type] == BLOCK_OPERATOR_LESS_THAN)
         {
-            data = [NSString stringWithFormat:@"%@ > %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+            return [NSString stringWithFormat:@"%@ > %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
         }
         else if ([block_inside block_type] == BLOCK_OPERATOR_PARENTHESIS)
         {
-            data = [NSString stringWithFormat:@"( %@ )", [block_inside getValueForDropZone:0]];
+            return [NSString stringWithFormat:@"( %@ )", [block_inside getValueForDropZone:0]];
         }
         else if ([block_inside block_type] == BLOCK_DATA_LENGTH)
         {
-            data = [NSString stringWithFormat:@"length %@", [block_inside getValueForDropZone:0]];
+            return [NSString stringWithFormat:@"length %@", [block_inside getValueForDropZone:0]];
         }
         else if ([block_inside block_type] == BLOCK_DATA_ITEM)
         {
-            data = [NSString stringWithFormat:@"item %@ of %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+            return [NSString stringWithFormat:@"item %@ of %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
         }
         else if ([block_inside block_type] == BLOCK_VARIABLE)
         {
-            data = [NSString stringWithFormat:@"%@", [(VariableLabel *)[[[block_inside main_view] subviews] objectAtIndex:0] text]];
+            return [NSString stringWithFormat:@"%@", [(VariableLabel *)[[[block_inside main_view] subviews] objectAtIndex:0] text]];
         }
     }
     
-    return data;
+    return @"";
 }
 
 @end
