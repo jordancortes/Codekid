@@ -532,6 +532,7 @@
     NSInteger whenStart_blocks = 0;
     NSString *code = @"";
     Block *initial_block;
+    NSMutableArray *when_blocks = [[NSMutableArray alloc] init];
     
     for (Block *this_block in _blocks)
     {
@@ -540,6 +541,10 @@
             whenStart_blocks++;
             initial_block = this_block;
             
+        }
+        else if ([this_block block_type] == BLOCK_EVENTS_WHEN)
+        {
+            [when_blocks addObject:this_block];
         }
     }
     
@@ -574,141 +579,15 @@
                     [this_variable dimension]];
         }
         
-        while (initial_block != nil)
+        // ahora saca el codigo para los eventos
+        for (Block *this_block in when_blocks)
         {
-            switch ([initial_block block_type])
-            {
-                case BLOCK_APPEARANCE_SHOW:
-                {
-                    code = [NSString stringWithFormat:@"%@show;\n",
-                            code];
-                }
-                    break;
-                case BLOCK_APPEARANCE_CLEAR:
-                {
-                    code = [NSString stringWithFormat:@"%@clear;\n",
-                            code];
-                }
-                    break;
-                case BLOCK_APPEARANCE_HIDE:
-                {
-                    code = [NSString stringWithFormat:@"%@hide;\n",
-                            code];
-                }
-                    break;
-                case BLOCK_APPEARANCE_LOAD:
-                {
-                    code = [NSString stringWithFormat:@"%@load %@;\n",
-                            code,
-                            [initial_block getValueForDropZone:0]];
-                }
-                    break;
-                case BLOCK_APPEARANCE_APPLY:
-                {
-                    code = [NSString stringWithFormat:@"%@apply %@;\n",
-                            code,
-                            [initial_block getValueForDropZone:0]];
-                }
-                    break;
-                case BLOCK_APPEARANCE_SCALE:
-                {
-                    code = [NSString stringWithFormat:@"%@scale %@;\n",
-                            code,
-                            [initial_block getValueForDropZone:0]];
-                }
-                    break;
-                case BLOCK_APPEARANCE_SAY:
-                {
-                    code = [NSString stringWithFormat:@"%@say %@ for %@;\n",
-                            code,
-                            [initial_block getValueForDropZone:0],
-                            [initial_block getValueForDropZone:1]];
-                }
-                    break;
-                case BLOCK_MOVEMENT_TURN:
-                {
-                    code = [NSString stringWithFormat:@"%@turn %@;\n",
-                            code,
-                            [initial_block getValueForDropZone:0]];
-                }
-                    break;
-                case BLOCK_MOVEMENT_MOVE:
-                {
-                    code = [NSString stringWithFormat:@"%@move %@ %@;\n",
-                            code,
-                            [initial_block getValueForDropZone:0],
-                            [initial_block getValueForDropZone:1]];
-                }
-                    break;
-                case BLOCK_CONTROL_WAIT:
-                {
-                    code = [NSString stringWithFormat:@"%@wait %@;\n",
-                            code,
-                            [initial_block getValueForDropZone:0]];
-                }
-                    break;
-                case BLOCK_CONTROL_IF:
-                {
-                    code = [NSString stringWithFormat:@"%@if [ %@ ]\n{\n",
-                            code,
-                            [initial_block getValueForDropZone:0]];
-                }
-                    break;
-                case BLOCK_CONTROL_ELSE:
-                {
-                    code = [NSString stringWithFormat:@"%@}\nelse\n{\n",
-                            code];
-                }
-                    break;
-                case BLOCK_CONTROL_ENDIF:
-                {
-                    code = [NSString stringWithFormat:@"%@};\n",
-                            code];
-                }
-                    break;
-                case BLOCK_CONTROL_WAIT_UNTIL:
-                {
-                    code = [NSString stringWithFormat:@"%@wait until [ %@ ];\n",
-                            code,
-                            [initial_block getValueForDropZone:0]];
-                }
-                    break;
-                case BLOCK_CONTROL_REPEAT_UNTIL:
-                {
-                    code = [NSString stringWithFormat:@"%@repeat until [ %@ ]\n{\n",
-                            code,
-                            [initial_block getValueForDropZone:0]];
-                }
-                    break;
-                case BLOCK_CONTROL_ENDREPEAT:
-                {
-                    code = [NSString stringWithFormat:@"%@};\n",
-                            code];
-                }
-                    break;
-                case BLOCK_DATA_SET:
-                {
-                    code = [NSString stringWithFormat:@"%@set %@ to %@;\n",
-                            code,
-                            [initial_block getValueForDropZone:0],
-                            [initial_block getValueForDropZone:1]];
-                }
-                    break;
-                case BLOCK_DATA_SETAT:
-                {
-                    code = [NSString stringWithFormat:@"%@set %@ to %@ at %@;\n",
-                            code,
-                            [initial_block getValueForDropZone:0],
-                            [initial_block getValueForDropZone:1],
-                            [initial_block getValueForDropZone:2]];
-                }
-                    break;
-                default:
-                    break;
-            }
-            
-            initial_block = [initial_block child];
+            code = [NSString stringWithFormat:@"%@%@};\n", code, [self getCodeForEvent:this_block]];
         }
+        
+        // por ultimo saca el codigo principal
+        code = [code stringByAppendingString:[self getCodeForEvent:initial_block]];
+        
         
         // Encapsula el codigo en las sentencias principales
         code = [NSString stringWithFormat:@"when start\n{\n%@}", code];
@@ -717,4 +596,155 @@
     }
     
 }
+
+- (NSString *)getCodeForEvent:(Block *)initial_block
+{
+    NSString *code = @"";
+    
+    while (initial_block != nil)
+    {
+        switch ([initial_block block_type])
+        {
+            case BLOCK_EVENTS_WHEN:
+            {
+                code = [NSString stringWithFormat:@"%@when [ %@ ]\n{\n",
+                        code,
+                        [initial_block getValueForDropZone:0]];
+            }
+                break;
+            case BLOCK_APPEARANCE_SHOW:
+            {
+                code = [NSString stringWithFormat:@"%@show;\n",
+                        code];
+            }
+                break;
+            case BLOCK_APPEARANCE_CLEAR:
+            {
+                code = [NSString stringWithFormat:@"%@clear;\n",
+                        code];
+            }
+                break;
+            case BLOCK_APPEARANCE_HIDE:
+            {
+                code = [NSString stringWithFormat:@"%@hide;\n",
+                        code];
+            }
+                break;
+            case BLOCK_APPEARANCE_LOAD:
+            {
+                code = [NSString stringWithFormat:@"%@load %@;\n",
+                        code,
+                        [initial_block getValueForDropZone:0]];
+            }
+                break;
+            case BLOCK_APPEARANCE_APPLY:
+            {
+                code = [NSString stringWithFormat:@"%@apply %@;\n",
+                        code,
+                        [initial_block getValueForDropZone:0]];
+            }
+                break;
+            case BLOCK_APPEARANCE_SCALE:
+            {
+                code = [NSString stringWithFormat:@"%@scale %@;\n",
+                        code,
+                        [initial_block getValueForDropZone:0]];
+            }
+                break;
+            case BLOCK_APPEARANCE_SAY:
+            {
+                code = [NSString stringWithFormat:@"%@say %@ for %@;\n",
+                        code,
+                        [initial_block getValueForDropZone:0],
+                        [initial_block getValueForDropZone:1]];
+            }
+                break;
+            case BLOCK_MOVEMENT_TURN:
+            {
+                code = [NSString stringWithFormat:@"%@turn %@;\n",
+                        code,
+                        [initial_block getValueForDropZone:0]];
+            }
+                break;
+            case BLOCK_MOVEMENT_MOVE:
+            {
+                code = [NSString stringWithFormat:@"%@move %@ %@;\n",
+                        code,
+                        [initial_block getValueForDropZone:0],
+                        [initial_block getValueForDropZone:1]];
+            }
+                break;
+            case BLOCK_CONTROL_WAIT:
+            {
+                code = [NSString stringWithFormat:@"%@wait %@;\n",
+                        code,
+                        [initial_block getValueForDropZone:0]];
+            }
+                break;
+            case BLOCK_CONTROL_IF:
+            {
+                code = [NSString stringWithFormat:@"%@if [ %@ ]\n{\n",
+                        code,
+                        [initial_block getValueForDropZone:0]];
+            }
+                break;
+            case BLOCK_CONTROL_ELSE:
+            {
+                code = [NSString stringWithFormat:@"%@}\nelse\n{\n",
+                        code];
+            }
+                break;
+            case BLOCK_CONTROL_ENDIF:
+            {
+                code = [NSString stringWithFormat:@"%@};\n",
+                        code];
+            }
+                break;
+            case BLOCK_CONTROL_WAIT_UNTIL:
+            {
+                code = [NSString stringWithFormat:@"%@wait until [ %@ ];\n",
+                        code,
+                        [initial_block getValueForDropZone:0]];
+            }
+                break;
+            case BLOCK_CONTROL_REPEAT_UNTIL:
+            {
+                code = [NSString stringWithFormat:@"%@repeat until [ %@ ]\n{\n",
+                        code,
+                        [initial_block getValueForDropZone:0]];
+            }
+                break;
+            case BLOCK_CONTROL_ENDREPEAT:
+            {
+                code = [NSString stringWithFormat:@"%@};\n",
+                        code];
+            }
+                break;
+            case BLOCK_DATA_SET:
+            {
+                code = [NSString stringWithFormat:@"%@set %@ to %@;\n",
+                        code,
+                        [initial_block getValueForDropZone:0],
+                        [initial_block getValueForDropZone:1]];
+            }
+                break;
+            case BLOCK_DATA_SETAT:
+            {
+                code = [NSString stringWithFormat:@"%@set %@ to %@ at %@;\n",
+                        code,
+                        [initial_block getValueForDropZone:0],
+                        [initial_block getValueForDropZone:1],
+                        [initial_block getValueForDropZone:2]];
+            }
+                break;
+            default:
+                break;
+        }
+        
+        initial_block = [initial_block child];
+    }
+    
+    return code;
+}
+
 @end
