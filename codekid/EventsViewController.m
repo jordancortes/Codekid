@@ -19,6 +19,7 @@
     [super viewDidLoad];
     
     // Header
+    _O_header_title.font = [UIFont fontWithName:@"ActionMan-Bold" size:40];
     [_O_header_back_projects setTitle:@"" forState:UIControlStateNormal];
     [_O_header_back_projects setBackgroundImage:[UIImage imageNamed:@"header_back_projects"] forState:UIControlStateNormal];
     [_O_header_run setTitle:@"" forState:UIControlStateNormal];
