@@ -112,7 +112,7 @@ inicioAux2:
         ;
 
 evento:
-        _WHEN act93 BRACKET_OPEN expresion act9 BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE END_EXP
+        _WHEN act93 BRACKET_OPEN expresion act94 BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE END_EXP
         ;
 
 act93:
@@ -121,6 +121,7 @@ act93:
                 if ([Common flag] == FLAG_EVENT)
                 {
                     [Common addProcedureOfType:VOID withPointer:[Common nextPointer]];
+                    [Common pushToStack:[Common p_jumps] Object:[NSNumber numberWithInt:[Common nextPointer]]];
                     [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"SUB"]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:-1]];
                 }
             }
@@ -403,17 +404,56 @@ opEsperaAux:
             }
         ;
 
+act94:
+    /* epsilon */
+        {
+            NSNumber *pointer = [Common popFromStack:[Common p_jumps]];
+            
+            id value = [Common popFromStack:[Common operands]];
+            NSString *value_type = [Common topFromStack:[Common operandsType]];
+            
+            // CHECK VALUE = BOOLEAN
+            if (BOOLEAN != [Common lookupOperandCodeForKey:value_type])
+            {
+                [Common setYyError:[NSString stringWithFormat:@"The value in the operation '%@' is invalid. Is %@ and must be BOOLEAN.", @"when", [value_type uppercaseString]]];
+                return yyerror("");
+            }
+            
+            NSInteger value_address;
+            
+            // VALUE
+            if ([value isKindOfClass:[Temporal class]])
+            {
+                value_address = [value mem_address];
+            }
+            else if ([Common lookupVariable:(NSString *)value])
+            {
+                // CHECK TERM1 IS SCALAR
+                if ([Common isVariableList:value])
+                {
+                    [Common setYyError:[NSString stringWithFormat:@"The variable '%@' is a list.", value]];
+                    return yyerror("");
+                }
+                
+                value_address = [Common addressForVariable:(NSString *)value];
+            }
+            else
+            {
+                value_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:value_type] andValue:(NSString *)value];
+            }
+            
+            [Common popFromStack:[Common operandsType]]; // operandType
+            
+            [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"GOTOF"]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:pointer];
+        }
+    ;
+
 act9:
         /* epsilon */
             {
                 NSString *op = [Common popFromStack:[Common operators]];
                 id value = [Common popFromStack:[Common operands]];
                 NSString *value_type = [Common topFromStack:[Common operandsType]];
-                
-                if (op == nil)
-                {
-                    op = @"when";
-                }
                 
                 // CHECK VALUE = BOOLEAN
                 if (BOOLEAN != [Common lookupOperandCodeForKey:value_type])
