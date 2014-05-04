@@ -11,6 +11,7 @@
 #import "Procedure.h"
 #import "Memory.h"
 #import "Definitions.h"
+#import "EventsViewController.h"
 
 #define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
 #define LESS_THAN       0
