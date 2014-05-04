@@ -528,8 +528,26 @@
             NSInteger term2_value = [[memory objectForKey:term1] intValue];
             NSInteger actual_pointer = ++pointer; // por scope
             
-            self.O_text.font = [UIFont fontWithName:@"ActionMan-Bold" size:24];
-            self.O_text.text = term1_value;
+            // define el texto
+            [_O_text setText:term1_value];
+            
+            // define el tamaño del font
+            CGFloat font_size = 0.14545454545454545 * [_O_animacion frame].size.width + 8;
+            [_O_text setFont:[UIFont fontWithName:@"ActionMan-Bold" size:font_size]];
+            [_O_text setTextAlignment:NSTextAlignmentLeft];
+            
+            CGRect text_frame = [_O_text frame]; // obtiene los atributos del textView
+            
+            // define la dimensión del TextView
+            CGSize text_size = [[_O_text text] sizeWithAttributes:@{NSFontAttributeName:[_O_text font]}];
+            text_frame.size.width = text_size.width + 10;
+            text_frame.size.height = text_size.height;
+            
+            // se posición encima de la imagen
+            text_frame.origin.x = [_O_animacion frame].origin.x + [_O_animacion frame].size.width;
+            text_frame.origin.y = [_O_animacion frame].origin.y - text_frame.size.height;
+            
+            [_O_text setFrame:text_frame]; // asigna los atributos cambiados
             
             self.O_text.hidden = NO;
             self.O_text.alpha = 1.0f;
@@ -590,17 +608,13 @@
             NSInteger term1_value = [[memory objectForKey:term1] intValue];
             NSInteger actual_pointer = ++pointer;
             
-            CGFloat x = (CGFloat)(24*(term1_value/100));
-            
             [UITableView animateWithDuration:ANIMATION_SPEED
                                   animations:^
                                   {
                                       self.O_animacion.transform = CGAffineTransformMakeScale(term1_value/100.0, term1_value/100.0);
-                                      self.O_text.font = [UIFont fontWithName:@"ActionMan-Bold" size:x];
                                   }
                                   completion:^(BOOL finished)
                                   {
-                                      self.O_text.hidden = YES;
                                       [self actionForQuadruple:actual_pointer];
                                   }];
         }
