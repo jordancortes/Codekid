@@ -20,6 +20,10 @@
 
 @implementation RunViewController
 
+- (void)viewDidAppear:(BOOL)animated{
+    [self Acciones];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -41,7 +45,7 @@
     [self ArrayQuadruple];
     [self ArrayMemory];
     [self ArrayProcedure];
-    //[self readVariables];
+    [self readVariables];
 }
 
 - (void)ArrayQuadruple{
@@ -72,7 +76,18 @@
     NSMutableArray *temp = [[content componentsSeparatedByString:@"\n"] mutableCopy];
     for (NSInteger x=0; x<temp.count-1; x++) {
         NSArray *strings = [[temp objectAtIndex:x] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        [memory setValue:[strings objectAtIndex:1] forKey:[strings objectAtIndex:0]];
+        
+        if ([self typeForMemoryDirection:[strings objectAtIndex:0]] == STRING) {
+            NSString *this_string = [strings objectAtIndex:1];
+            NSInteger string_index = 2;
+            while (string_index < [strings count]){
+                this_string = [[this_string stringByAppendingString:@" "] stringByAppendingString:[strings objectAtIndex:string_index]];
+                string_index++;
+            }
+            [memory setValue:this_string forKey:[strings objectAtIndex:0]];
+        } else {
+            [memory setValue:[strings objectAtIndex:1] forKey:[strings objectAtIndex:0]];
+        }
     }
 }
 
@@ -89,7 +104,7 @@
         [procedures addObject:[[Procedure alloc] initWithType:[[strings objectAtIndex:0] intValue]
                                                    andPointer:[[strings objectAtIndex:1] intValue]]];
       
-        NSLog(@"%d %d",[(Procedure *)[procedures objectAtIndex:x] type],[[procedures objectAtIndex:x] pointer]);
+        //NSLog(@"%d %d",[(Procedure *)[procedures objectAtIndex:x] type],[[procedures objectAtIndex:x] pointer]);
     }
 }
 
@@ -172,7 +187,7 @@
     return -1;
 }
 
-- (void)x {
+- (void)Acciones {
     pointer = 0;
     Quadruple *actual_quadruple = [quadruple objectAtIndex:pointer];
     
@@ -377,7 +392,10 @@
                 NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
                 CGFloat term1_value = [[memory objectForKey:term1] floatValue];
                 
-                self.O_animacion.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(term1_value));
+                [UITableView animateWithDuration:0.4
+                                      animations:^{
+                                          self.O_animacion.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(term1_value));
+                                      }];
                 pointer++;
             } break;
             case MOVE:{ //27
@@ -387,12 +405,17 @@
                 CGFloat term1_value = [[memory objectForKey:term1] floatValue];
                 CGFloat term2_value = [[memory objectForKey:term2] floatValue];
                 
-                CGRect sidebar_table_frame = [self.O_animacion frame];
-                sidebar_table_frame.origin.x += term1_value;
-                sidebar_table_frame.origin.y += term2_value;
+                CGRect frame1 = [self.O_animacion frame];
+                frame1.origin.x += term1_value;
+                frame1.origin.y += term2_value;
+                CGRect frame2 = [self.O_text frame];
+                frame2.origin.x += term1_value;
+                frame2.origin.y += term2_value;
                 [UITableView animateWithDuration:0.4
                                       animations:^{
-                                          self.O_animacion.frame = sidebar_table_frame;
+                                          self.O_animacion.frame = frame1;
+                                          self.O_text.frame = frame2;
+
                                       }];
                 pointer++;
             } break;
@@ -400,11 +423,12 @@
                 NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
                 NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
                 
-                NSString *term1_value = [memory objectForKey:term1];
-                NSInteger term2_value = [[memory objectForKey:term2] intValue];
+                NSString *term1_value = [memory objectForKey:term2];
+                NSInteger term2_value = [[memory objectForKey:term1] intValue];
                 
+                self.O_text.font = [UIFont fontWithName:@"ActionMan-Bold" size:24];
                 self.O_text.text = term1_value;
-                self.O_text.TextAlignment=NSTextAlignmentCenter;
+                
                 self.O_text.hidden = NO;
                 self.O_text.alpha = 1.0f;
                 [UIView animateWithDuration:0.2 delay:term2_value options:0 animations:^{
@@ -412,22 +436,25 @@
                 } completion:^(BOOL finished) {
                     self.O_text.hidden = YES;
                 }];
-                
+
                 pointer++;
             } break;
             case SHOW:{ //31
                 self.O_animacion.hidden = NO;
+                self.O_text.hidden = NO;
                 
                 pointer++;
             } break;
             case HIDE:{ //32
                 self.O_animacion.hidden = YES;
+                self.O_text.hidden = YES;
                 
                 pointer++;
             } break;
             case CLEAR:{ //33
                 //TODO:
                 self.O_animacion.hidden = YES;
+                self.O_text.hidden = YES;
                 
                 pointer++;
             } break;
@@ -445,42 +472,26 @@
                 NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
                 NSInteger term1_value = [[memory objectForKey:term1] intValue];
                 
-                self.O_animacion.transform = CGAffineTransformMakeScale(term1_value/100.0, term1_value/100.0);
+                CGFloat x = (CGFloat)(24*(term1_value/100));
+                
+                [UITableView animateWithDuration:0.4
+                                      animations:^{
+                                        self.O_animacion.transform = CGAffineTransformMakeScale(term1_value/100.0, term1_value/100.0);
+                                      }];
+                self.O_text.font = [UIFont fontWithName:@"ActionMan-Bold" size:x];
+                
                 pointer++;
             } break;
         }
-        actual_quadruple = [quadruple objectAtIndex:pointer];
+        if(pointer < quadruple.count){
+            actual_quadruple = [quadruple objectAtIndex:pointer];
+        }
+        else
+        {
+            actual_quadruple = nil;
+        }
     }
-    
-    
-    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @end
