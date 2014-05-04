@@ -102,6 +102,8 @@ inicioAux2:
             {
                 [Common setFlag:FLAG_MAIN];
                 
+                [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"ENDSUB"]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:-1]];
+                
                 [Common addProcedureOfType:MAIN withPointer:[Common nextPointer]];
                 
                 NSNumber *last_pointer = [Common popFromStack:[Common p_jumps]];
@@ -444,7 +446,7 @@ act94:
             
             [Common popFromStack:[Common operandsType]]; // operandType
             
-            [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"GOTOF"]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:pointer];
+            [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"GOTOF"]] Term1:[NSNumber numberWithInt:value_address] Term2:[NSNumber numberWithInt:-1] andResult:pointer];
         }
     ;
 
