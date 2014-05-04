@@ -626,9 +626,9 @@
             _O_header_errors.text = @"No compilation errors";
             
             // cambia de storyboard
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                 bundle:nil];
             RunViewController *run = [storyboard instantiateViewControllerWithIdentifier:@"RunViewController"];
-            [run setModalPresentationStyle:UIModalPresentationFullScreen];
             [self presentViewController:run animated:YES completion:nil];
         }
         else if (YYREJECT == result) // si hubo un error

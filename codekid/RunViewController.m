@@ -14,14 +14,14 @@
     NSMutableArray *procedures;
     NSStringEncoding encoding;
     NSString *content;
-    NSInteger pointer;
+    //NSInteger pointer;
 }
 @end
 
 @implementation RunViewController
 
 - (void)viewDidAppear:(BOOL)animated{
-    [self Acciones];
+    [self actionForQuadruple:0];
 }
 
 - (void)viewDidLoad
@@ -187,311 +187,407 @@
     return -1;
 }
 
-- (void)Acciones {
-    pointer = 0;
-    Quadruple *actual_quadruple = [quadruple objectAtIndex:pointer];
+- (void)actionForQuadruple:(NSInteger)pointer
+{
+    Quadruple *actual_quadruple;
+    NSInteger actual_operator;
     
-    while(actual_quadruple != nil){
-        switch([actual_quadruple operator]){
-            case LESS_THAN:{ //0
-                // hace comparación, mete resultado a memoria y aumenta pointer
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
-                
-                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                
-                if(term1_value < term2_value){
-                    [memory setValue:@"true"
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                } else{
-                    [memory setValue:@"false"
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                pointer++;
-            } break;
-            case EQUALS:{ //1
-                // hace comparación, mete resultado a memoria y aumenta pointer
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
-                
-                if ([self typeForMemoryDirection:term1] == STRING && [self typeForMemoryDirection:term2] == STRING) {
-                    NSString *term1_value = [memory objectForKey:term1];
-                    NSString *term2_value = [memory objectForKey:term2];
-                    
-                    if ([term1_value isEqualToString:term2_value]){
-                        [memory setValue:@"true"
-                                  forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                    } else{
-                        [memory setValue:@"false"
-                                  forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                    }
-                } else {
-                    CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                    CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                    
-                    if(term1_value == term2_value){
-                        [memory setValue:@"true"
-                                  forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                    } else{
-                        [memory setValue:@"false"
-                                  forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                    }
-                }
-                pointer++;
-            } break;
-            case GREATER_THAN:{ //2
-                // hace comparación, mete resultado a memoria y aumenta pointer
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
-                
-                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                
-                if(term1_value > term2_value){
-                    [memory setValue:@"true"
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                } else{
-                    [memory setValue:@"false"
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                pointer++;
-            } break;
-            case PLUS:{ //3
-                // hace suma, mete resultado a memoria y aumenta pointer
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
-                
-                if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
-                {
-                    NSInteger term1_value = [[memory objectForKey:term1] intValue];
-                    NSInteger term2_value = [[memory objectForKey:term2] intValue];
-                    
-                    [memory setValue:[NSString stringWithFormat:@"%d", term1_value + term2_value]
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                else
-                {
-                    CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                    CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                    
-                    [memory setValue:[NSString stringWithFormat:@"%f", term1_value + term2_value]
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                pointer++;
-            } break;
-            case MINUS:{ //4
-                // hace resta, mete resultado a memoria y aumenta pointer
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
-                
-                if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
-                {
-                    NSInteger term1_value = [[memory objectForKey:term1] intValue];
-                    NSInteger term2_value = [[memory objectForKey:term2] intValue];
-                    
-                    [memory setValue:[NSString stringWithFormat:@"%d", term1_value - term2_value]
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                else
-                {
-                    CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                    CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                    
-                    [memory setValue:[NSString stringWithFormat:@"%f", term1_value - term2_value]
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                pointer++;
-            } break;
-            case MULTIPLICATION:{ //5
-                // hace multiplicación, mete resultado a memoria y aumenta pointer
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
-                
-                if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
-                {
-                    NSInteger term1_value = [[memory objectForKey:term1] intValue];
-                    NSInteger term2_value = [[memory objectForKey:term2] intValue];
-                    
-                    [memory setValue:[NSString stringWithFormat:@"%d", term1_value * term2_value]
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                else
-                {
-                    CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                    CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                    
-                    [memory setValue:[NSString stringWithFormat:@"%f", term1_value * term2_value]
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                pointer++;
-            } break;
-            case DIVISION:{ //6
-                // hace división, mete resultado a memoria y aumenta pointer
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
-                
-                if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
-                {
-                    NSInteger term1_value = [[memory objectForKey:term1] intValue];
-                    NSInteger term2_value = [[memory objectForKey:term2] intValue];
-                    
-                    [memory setValue:[NSString stringWithFormat:@"%d", term1_value / term2_value]
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                else
-                {
-                    CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                    CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                    
-                    [memory setValue:[NSString stringWithFormat:@"%f", term1_value / term2_value]
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                pointer++;
-            } break;
-            case GOTO:{ //10
-                pointer = [actual_quadruple result]-1;
-            } break;
-            case GOTOF:{ //11
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term1_value = [memory objectForKey:term1];
-                if([term1_value isEqualToString:@"true"]){
-                    pointer++;
-                }else{
-                    pointer = [actual_quadruple result]-1;
-                }
-            } break;
-            case GOTOV:{ //12
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term1_value = [memory objectForKey:term1];
-                if([term1_value isEqualToString:@"false"]){
-                    pointer++;
-                }else{
-                    pointer = [actual_quadruple result]-1;
-                }
-            } break;
-            case SUB:{ //13
-                
-            } break;
-            case _SET:{ //20
-                
-            } break;
-            case LENGTH:{ //21
-                /***/
-            } break;
-            case ITEM:{ //22
-                
-            } break;
-            case WAIT:{ //23
-                
-            } break;
-            case WAIT_UNTIL:{ //24
-                
-            } break;
-            case TURN:{ //26
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
-                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                
-                [UITableView animateWithDuration:0.4
-                                      animations:^{
-                                          self.O_animacion.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(term1_value));
-                                      }];
-                pointer++;
-            } break;
-            case MOVE:{ //27
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
-                
-                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                
-                CGRect frame1 = [self.O_animacion frame];
-                frame1.origin.x += term1_value;
-                frame1.origin.y += term2_value;
-                CGRect frame2 = [self.O_text frame];
-                frame2.origin.x += term1_value;
-                frame2.origin.y += term2_value;
-                [UITableView animateWithDuration:0.4
-                                      animations:^{
-                                          self.O_animacion.frame = frame1;
-                                          self.O_text.frame = frame2;
-
-                                      }];
-                pointer++;
-            } break;
-            case SAY:{ //30
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-                NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
-                
-                NSString *term1_value = [memory objectForKey:term2];
-                NSInteger term2_value = [[memory objectForKey:term1] intValue];
-                
-                self.O_text.font = [UIFont fontWithName:@"ActionMan-Bold" size:24];
-                self.O_text.text = term1_value;
-                
-                self.O_text.hidden = NO;
-                self.O_text.alpha = 1.0f;
-                [UIView animateWithDuration:0.2 delay:term2_value options:0 animations:^{
-                    self.O_text.alpha = 0.0f;
-                } completion:^(BOOL finished) {
-                    self.O_text.hidden = YES;
-                }];
-
-                pointer++;
-            } break;
-            case SHOW:{ //31
-                self.O_animacion.hidden = NO;
-                self.O_text.hidden = NO;
-                
-                pointer++;
-            } break;
-            case HIDE:{ //32
-                self.O_animacion.hidden = YES;
-                self.O_text.hidden = YES;
-                
-                pointer++;
-            } break;
-            case CLEAR:{ //33
-                //TODO:
-                self.O_animacion.hidden = YES;
-                self.O_text.hidden = YES;
-                
-                pointer++;
-            } break;
-            case LOAD:{ //34
-                //TODO:
-                
-                pointer++;
-            } break;
-            case APPLY:{ //35
-                //TODO:
-
-                pointer++;
-            } break;
-            case SCALE:{ //36
-                NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
-                NSInteger term1_value = [[memory objectForKey:term1] intValue];
-                
-                CGFloat x = (CGFloat)(24*(term1_value/100));
-                
-                [UITableView animateWithDuration:0.4
-                                      animations:^{
-                                        self.O_animacion.transform = CGAffineTransformMakeScale(term1_value/100.0, term1_value/100.0);
-                                      }];
-                self.O_text.font = [UIFont fontWithName:@"ActionMan-Bold" size:x];
-                
-                pointer++;
-            } break;
-        }
-        if(pointer < quadruple.count){
-            actual_quadruple = [quadruple objectAtIndex:pointer];
-        }
-        else
+    if (pointer < [quadruple count])
+    {
+        actual_quadruple = [quadruple objectAtIndex:pointer];
+        actual_operator = [actual_quadruple operator];
+    }
+    else
+    {
+        actual_operator = BLOCK_END;
+    }
+    
+    switch (actual_operator)
+    {
+        case LESS_THAN:
         {
-            actual_quadruple = nil;
+            // hace comparación, mete resultado a memoria y aumenta pointer
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
+            
+            CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+            CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+            
+            if(term1_value < term2_value)
+            {
+                [memory setValue:@"true"
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            else
+            {
+                [memory setValue:@"false"
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            [self actionForQuadruple:++pointer];
         }
+            break;
+        case EQUALS:
+        {
+            // hace comparación, mete resultado a memoria y aumenta pointer
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
+            
+            if ([self typeForMemoryDirection:term1] == STRING && [self typeForMemoryDirection:term2] == STRING)
+            {
+                NSString *term1_value = [memory objectForKey:term1];
+                NSString *term2_value = [memory objectForKey:term2];
+                
+                if ([term1_value isEqualToString:term2_value])
+                {
+                    [memory setValue:@"true"
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                else
+                {
+                    [memory setValue:@"false"
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+            }
+            else
+            {
+                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                
+                if(term1_value == term2_value)
+                {
+                    [memory setValue:@"true"
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                else
+                {
+                    [memory setValue:@"false"
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+            }
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case GREATER_THAN:
+        {
+            // hace comparación, mete resultado a memoria y aumenta pointer
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
+            
+            CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+            CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+            
+            if(term1_value > term2_value)
+            {
+                [memory setValue:@"true"
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            else
+            {
+                [memory setValue:@"false"
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case PLUS:
+        {
+            // hace suma, mete resultado a memoria y aumenta pointer
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
+            
+            if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+            {
+                NSInteger term1_value = [[memory objectForKey:term1] intValue];
+                NSInteger term2_value = [[memory objectForKey:term2] intValue];
+                
+                [memory setValue:[NSString stringWithFormat:@"%d", term1_value + term2_value]
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            else
+            {
+                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                
+                [memory setValue:[NSString stringWithFormat:@"%f", term1_value + term2_value]
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case MINUS:
+        {
+            // hace resta, mete resultado a memoria y aumenta pointer
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
+            
+            if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+            {
+                NSInteger term1_value = [[memory objectForKey:term1] intValue];
+                NSInteger term2_value = [[memory objectForKey:term2] intValue];
+                
+                [memory setValue:[NSString stringWithFormat:@"%d", term1_value - term2_value]
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            else
+            {
+                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                
+                [memory setValue:[NSString stringWithFormat:@"%f", term1_value - term2_value]
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case MULTIPLICATION:
+        {
+            // hace multiplicación, mete resultado a memoria y aumenta pointer
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
+            
+            if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+            {
+                NSInteger term1_value = [[memory objectForKey:term1] intValue];
+                NSInteger term2_value = [[memory objectForKey:term2] intValue];
+                
+                [memory setValue:[NSString stringWithFormat:@"%d", term1_value * term2_value]
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            else
+            {
+                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                
+                [memory setValue:[NSString stringWithFormat:@"%f", term1_value * term2_value]
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case DIVISION:
+        {
+            // hace división, mete resultado a memoria y aumenta pointer
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
+            
+            if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+            {
+                NSInteger term1_value = [[memory objectForKey:term1] intValue];
+                NSInteger term2_value = [[memory objectForKey:term2] intValue];
+                
+                [memory setValue:[NSString stringWithFormat:@"%d", term1_value / term2_value]
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            else
+            {
+                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                
+                [memory setValue:[NSString stringWithFormat:@"%f", term1_value / term2_value]
+                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+            }
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case GOTO:
+        {
+            [self actionForQuadruple:[actual_quadruple result] - 1];
+        }
+            break;
+        case GOTOF:
+        {
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term1_value = [memory objectForKey:term1];
+            if([term1_value isEqualToString:@"true"])
+            {
+                [self actionForQuadruple:++pointer];
+            }
+            else
+            {
+                [self actionForQuadruple:[actual_quadruple result] - 1];
+            }
+        }
+            break;
+        case GOTOV:
+        {
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term1_value = [memory objectForKey:term1];
+            if([term1_value isEqualToString:@"false"])
+            {
+                [self actionForQuadruple:++pointer];
+            }
+            else
+            {
+                [self actionForQuadruple:[actual_quadruple result] - 1];
+            }
+        }
+            break;
+        case SUB:
+        {
+            
+        }
+            break;
+        case _SET:
+        {
+            
+        }
+            break;
+        case LENGTH:
+        {
+            
+        }
+            break;
+        case ITEM:
+        {
+            
+        }
+            break;
+        case WAIT:
+        {
+            
+        }
+            break;
+        case WAIT_UNTIL:
+        {
+            
+        }
+            break;
+        case TURN:
+        {
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
+            CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+            NSInteger actual_pointer = ++pointer; // por scope
+            
+            [UITableView animateWithDuration:ANIMATION_SPEED
+                                  animations:^
+                                  {
+                                      self.O_animacion.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(term1_value));
+                                  }
+                                  completion:^(BOOL finished)
+                                  {
+                                      [self actionForQuadruple:actual_pointer];
+                                  }];
+        }
+            break;
+        case MOVE:
+        {
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
+            
+            CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+            CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+            NSInteger actual_pointer = ++pointer; // por scope
+            
+            CGRect frame1 = [self.O_animacion frame];
+            frame1.origin.x += term1_value;
+            frame1.origin.y += term2_value;
+            CGRect frame2 = [self.O_text frame];
+            frame2.origin.x += term1_value;
+            frame2.origin.y += term2_value;
+            [UITableView animateWithDuration:ANIMATION_SPEED
+                                  animations:^
+                                  {
+                                      self.O_animacion.frame = frame1;
+                                      self.O_text.frame = frame2;
+                                  }
+                                  completion:^(BOOL finished)
+                                  {
+                                      [self actionForQuadruple:actual_pointer];
+                                  }];
+        }
+            break;
+        case SAY:
+        {
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
+            
+            NSString *term1_value = [memory objectForKey:term2];
+            NSInteger term2_value = [[memory objectForKey:term1] intValue];
+            NSInteger actual_pointer = ++pointer; // por scope
+            
+            self.O_text.font = [UIFont fontWithName:@"ActionMan-Bold" size:24];
+            self.O_text.text = term1_value;
+            
+            self.O_text.hidden = NO;
+            self.O_text.alpha = 1.0f;
+            [UIView animateWithDuration:ANIMATION_SPEED/2
+                                  delay:term2_value
+                                options:0
+                             animations:^
+                             {
+                                 self.O_text.alpha = 0.0f;
+                             }
+                             completion:^(BOOL finished)
+                             {
+                                 self.O_text.hidden = YES;
+                                 [self actionForQuadruple:actual_pointer];
+                             }];
+        }
+            break;
+        case SHOW:
+        {
+            self.O_animacion.hidden = NO;
+            self.O_text.hidden = NO;
+            
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case HIDE:
+        {
+            self.O_animacion.hidden = YES;
+            self.O_text.hidden = YES;
+            
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case CLEAR:
+        {
+            // TODO:
+            self.O_animacion.hidden = YES;
+            self.O_text.hidden = YES;
+            
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case LOAD:
+        {
+            // TODO:
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case APPLY:
+        {
+            // TODO:
+            [self actionForQuadruple:++pointer];
+        }
+            break;
+        case SCALE:
+        {
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
+            NSInteger term1_value = [[memory objectForKey:term1] intValue];
+            NSInteger actual_pointer = ++pointer;
+            
+            CGFloat x = (CGFloat)(24*(term1_value/100));
+            
+            [UITableView animateWithDuration:ANIMATION_SPEED
+                                  animations:^
+                                  {
+                                      self.O_animacion.transform = CGAffineTransformMakeScale(term1_value/100.0, term1_value/100.0);
+                                      self.O_text.font = [UIFont fontWithName:@"ActionMan-Bold" size:x];
+                                  }
+                                  completion:^(BOOL finished)
+                                  {
+                                      self.O_text.hidden = YES;
+                                      [self actionForQuadruple:actual_pointer];
+                                  }];
+        }
+            break;
+        case BLOCK_END:
+        {
+            /* terminan bloques */
+        }
+            break;
     }
 }
-
 
 @end

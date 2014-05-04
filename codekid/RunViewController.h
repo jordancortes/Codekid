@@ -10,6 +10,7 @@
 #import "Quadruple.h"
 #import "Procedure.h"
 #import "Memory.h"
+#import "Definitions.h"
 
 #define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
 #define LESS_THAN       0
@@ -37,6 +38,7 @@
 #define LOAD            34
 #define APPLY           35
 #define SCALE           36
+#define BLOCK_END       40
 
 @interface RunViewController : UIViewController
 
