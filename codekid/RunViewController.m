@@ -424,32 +424,55 @@
             break;
         case SUB:
         {
-            
+            /* es usado para funciones */
         }
             break;
         case _SET:
         {
+            /* NEXT: */
+            NSString *variable = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
+            NSString *value = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             
+            [memory setObject:[memory objectForKey:value] forKey:variable];
+            
+            [self actionForQuadruple:++pointer];
         }
             break;
         case LENGTH:
         {
+            NSString *variable = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *temp_address = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
+            NSString *dimension = [_variables objectForKey:variable];
             
+            [memory setObject:dimension forKey:temp_address];
+            
+            [self actionForQuadruple:++pointer];
         }
             break;
         case ITEM:
         {
-            
+            /* hace la validación desde compilador */
         }
             break;
         case WAIT:
         {
+            NSTimeInterval wait_time = [[memory objectForKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]] intValue];
+            NSInteger actual_pointer = ++pointer; // por scope
             
+            [UITableView animateWithDuration:wait_time
+                                  animations:^
+             {
+                 [_O_animacion setBackgroundColor:[UIColor clearColor]]; // esta acción no importa, pero es necesario algo para que la animación no se invalide
+             }
+             completion:^(BOOL finished)
+             {
+                 [self actionForQuadruple:actual_pointer];
+             }];
         }
             break;
         case WAIT_UNTIL:
         {
-            
+            /*No existe tal cuadruplo, fue sustituido por un ciclo con GOTOF*/
         }
             break;
         case TURN:
