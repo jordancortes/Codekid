@@ -87,7 +87,7 @@
 {
     if (recognizer.state == UIGestureRecognizerStateBegan)
     {
-        [[self main_view] highlightLongPressBorder];
+        [[self main_view] highlightLongPressBorder]; 
     }
     else if (recognizer.state == UIGestureRecognizerStateEnded)
     {
@@ -193,23 +193,33 @@
             view_center.y = location.y;
             recognizer.view.center = view_center;
             
+            // El bloque que señalara
+            DropZoneView *selected_dropzone_view;
+            Block *selected_block;
+            
             for (Block *this_block in [recognizer blocks])
             {
-                if (![self isEqual:this_block] && ![this_block isChildOfView:[self main_view]])
+                if (![self isEqual:this_block] && ![this_block isChildOfView:[self main_view]]) // si el bloque no es el mismo y no soy yo
                 {
-                    if (![self sticks])
+                    if (![self sticks]) // si no se anida
                     {
-                        for (DropZoneView *this_view in [this_block inner_drop_zones])
+                        for (DropZoneView *this_view in [this_block inner_drop_zones]) // por cada dropzone del bloque
                         {
                             CGRect this_frame = [this_view convertRect:this_view.bounds toView:_super_parent_view];
                             
-                            if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
+                            if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty]) // si está sobre el dropzone y esta vacio
                             {
-                                [this_view highlightBorder];
+                                if (selected_dropzone_view != nil)
+                                {
+                                    [selected_dropzone_view resetBorder]; // reinicia el borde del dropzone anterior
+                                }
+                            
+                                selected_dropzone_view = this_view; // asigna el último dropzone
+                                [this_view highlightBorder]; // pinta el borde
                             }
                             else
                             {
-                                [this_view resetBorder];
+                                [this_view resetBorder]; // limpia el borde del último dropzone
                             }
                         }
                     }
@@ -241,7 +251,7 @@
                             can_stick = NO;
                         }
                     
-                        if (can_stick)
+                        if (can_stick) // si permite anirdarse
                         {
                             CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
                             
@@ -255,11 +265,17 @@
                                 (top_center.x > [this_block main_view].frame.origin.x + STICK_BORDER)
                                 )
                             {
-                                [[this_block main_view] highlightBorder]; // NEXT:
+                                if (selected_block != nil)
+                                {
+                                    [[selected_block main_view] resetBorder]; // limpia el borde
+                                }
+                                
+                                selected_block = this_block; // selecciona el último bloque
+                                [[this_block main_view] highlightBorder]; // pinta el borde
                             }
                             else
                             {
-                                [[this_block main_view] resetBorder];
+                                [[this_block main_view] resetBorder]; // limpia el borde
                             }
                         }
                     }
@@ -269,55 +285,29 @@
     }
     else if (recognizer.state == UIGestureRecognizerStateEnded)
     {
+        DropZoneView *selected_dropzone_view;
+        Block *selected_block;
+        
         for (Block *this_block in [recognizer blocks])
         {
-            if (![self isEqual:this_block] && ![this_block isChildOfView:[self main_view]])
+            if (![self isEqual:this_block] && ![this_block isChildOfView:[self main_view]])  // si el bloque no es el mismo y no soy yo
             {
-                if (![self sticks])
+                if (![self sticks]) // si no se anida
                 {
-                    for (DropZoneView *this_view in [this_block inner_drop_zones])
+                    for (DropZoneView *this_view in [this_block inner_drop_zones]) // por cada dropzone del bloque
                     {
                         CGRect this_frame = [this_view convertRect:this_view.bounds toView:_super_parent_view];
                         
-                        if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty])
+                        if ([self location:super_location isInsideOfFrame:this_frame] && [this_view is_empty]) // si está sobre el dropzone y esta vacio
                         {
-                            // borra el texto que habia dentro del DropZoneView
-                            [[this_view textfield] setText:@""];
-                            [[this_view textfield] setLast_length:0];
-                            CGRect textfield_frame = [[this_view textfield] frame];
-                            textfield_frame.size.width = 40.0;
-                            [[this_view textfield] setFrame:textfield_frame];
-                            
-                            //cambia su posicion a 0,0
-                            CGRect view_frame = [recognizer.view frame];
-                            view_frame.origin.x = 0;
-                            view_frame.origin.y = 0;
-                            recognizer.view.frame = view_frame;
-                            
-                            //mete el view
-                            [recognizer.view removeFromSuperview];
-                            [this_view addSubview:recognizer.view];
-                            
-                            //le dice que ya lo tiene
-                            [this_view setIs_empty:NO];
-                            
-                            // dice que este ya está dentro de otro
-                            [self setInside_another:YES];
-                            
-                            [this_view setBlock_inside:self];
-                            
-                            // borra el borde que habia dejado
-                            [this_view resetBorder];
-                            
-                            //hace más grande el bloque y sus padres
-                            [this_view increaseWidth:recognizer.view.frame.size.width reachingTo:_super_parent_view];
+                            selected_dropzone_view = this_view;
                         }
                     }
                 }
                 
                 CGPoint view_center = [recognizer.view center];
                 
-                if ([self sticks] && [this_block sticks] && [self parent] == nil)
+                if ([self sticks] && [this_block sticks] && [self parent] == nil) // si ambos se pueden anidar y este no tiene padre
                 {
                     CGPoint top_center = CGPointMake(view_center.x, view_center.y - recognizer.view.frame.size.height / 2);
                     
@@ -331,30 +321,69 @@
                         (top_center.x > [this_block main_view].frame.origin.x + STICK_BORDER)
                         )
                     {
-                        // saca quien era el hijo del nuevo padre para este bloque
-                        Block *previous_child = [this_block child];
-                        
-                        // define a este bloque como el nuevo hijo
-                        [self setParent:this_block];
-                        
-                        // acomoda este bloque con sus hijos y regresa al último hijo
-                        Block *last_child = [self arrangeSinceBlock:self];
-                        
-                        // asigna el hijo anterior como hijo del último hijo de este bloque
-                        [last_child setChild:previous_child];
-                        [previous_child setParent:last_child];
-                        
-                        // reacomoda los nuevos hijos
-                        [self arrangeSinceBlock:last_child];
-                        
-                        // ahora le dice al padre de este bloque quien es su hijo
-                        [this_block setChild:self];
-                        
-                        // reinicia el borde
-                        [[this_block main_view] resetBorder];
+                        selected_block = this_block;
                     }
                 }
             }
+        }
+        
+        if (selected_dropzone_view != nil)
+        {
+            // borra el texto que habia dentro del DropZoneView
+            [[selected_dropzone_view textfield] setText:@""];
+            [[selected_dropzone_view textfield] setLast_length:0];
+            CGRect textfield_frame = [[selected_dropzone_view textfield] frame];
+            textfield_frame.size.width = 40.0;
+            [[selected_dropzone_view textfield] setFrame:textfield_frame];
+            
+            //cambia su posicion a 0,0
+            CGRect view_frame = [recognizer.view frame];
+            view_frame.origin.x = 0;
+            view_frame.origin.y = 0;
+            recognizer.view.frame = view_frame;
+            
+            //mete el view
+            [recognizer.view removeFromSuperview];
+            [selected_dropzone_view addSubview:recognizer.view];
+            
+            //le dice que ya lo tiene
+            [selected_dropzone_view setIs_empty:NO];
+            
+            // dice que este ya está dentro de otro
+            [self setInside_another:YES];
+            
+            [selected_dropzone_view setBlock_inside:self];
+            
+            // borra el borde que habia dejado
+            [selected_dropzone_view resetBorder];
+            
+            //hace más grande el bloque y sus padres
+            [selected_dropzone_view increaseWidth:recognizer.view.frame.size.width reachingTo:_super_parent_view];
+        }
+        
+        if (selected_block != nil)
+        {
+            // saca quien era el hijo del nuevo padre para este bloque
+            Block *previous_child = [selected_block child];
+            
+            // define a este bloque como el nuevo hijo
+            [self setParent:selected_block];
+            
+            // acomoda este bloque con sus hijos y regresa al último hijo
+            Block *last_child = [self arrangeSinceBlock:self];
+            
+            // asigna el hijo anterior como hijo del último hijo de este bloque
+            [last_child setChild:previous_child];
+            [previous_child setParent:last_child];
+            
+            // reacomoda los nuevos hijos
+            [self arrangeSinceBlock:last_child];
+            
+            // ahora le dice al padre de este bloque quien es su hijo
+            [selected_block setChild:self];
+            
+            // reinicia el borde
+            [[selected_block main_view] resetBorder];
         }
     }
 }
@@ -500,6 +529,14 @@
     }
     
     return @"";
+}
+
+- (void)resetInnerBorders
+{
+    for (DropZoneView *this_dropzone_view in _inner_drop_zones)
+    {
+        [this_dropzone_view resetBorder];
+    }
 }
 
 @end
