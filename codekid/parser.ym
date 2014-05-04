@@ -332,7 +332,7 @@ opEspera:
         ;
 
 opEsperaAux:
-        cte
+        expresion
             {
                 NSString *op = [Common popFromStack:[Common operators]];
                 id value = [Common popFromStack:[Common operands]];
