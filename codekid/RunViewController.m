@@ -227,12 +227,12 @@
                 
                 if(term1_value < term2_value)
                 {
-                    [memory setValue:@"true"
+                    [memory setValue:BOOL_TRUE
                               forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
                 }
                 else
                 {
-                    [memory setValue:@"false"
+                    [memory setValue:BOOL_FALSE
                               forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
                 }
                 [self actionForQuadruple:++pointer];
@@ -262,12 +262,12 @@
                     
                     if ([term1_value isEqualToString:term2_value])
                     {
-                        [memory setValue:@"true"
+                        [memory setValue:BOOL_TRUE
                                   forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
                     }
                     else
                     {
-                        [memory setValue:@"false"
+                        [memory setValue:BOOL_FALSE
                                   forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
                     }
                 }
@@ -278,12 +278,12 @@
                     
                     if(term1_value == term2_value)
                     {
-                        [memory setValue:@"true"
+                        [memory setValue:BOOL_TRUE
                                   forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
                     }
                     else
                     {
-                        [memory setValue:@"false"
+                        [memory setValue:BOOL_FALSE
                                   forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
                     }
                 }
@@ -312,12 +312,12 @@
                 
                 if(term1_value > term2_value)
                 {
-                    [memory setValue:@"true"
+                    [memory setValue:BOOL_TRUE
                               forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
                 }
                 else
                 {
-                    [memory setValue:@"false"
+                    [memory setValue:BOOL_FALSE
                               forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
                 }
                 [self actionForQuadruple:++pointer];
@@ -485,7 +485,7 @@
             else
             {
                 NSString *term1_value = [memory objectForKey:term1];
-                if([term1_value isEqualToString:@"true"])
+                if([term1_value isEqualToString:BOOL_TRUE])
                 {
                     [self actionForQuadruple:++pointer];
                 }
@@ -507,7 +507,7 @@
             else
             {
                 NSString *term1_value = [memory objectForKey:term1];
-                if([term1_value isEqualToString:@"false"])
+                if([term1_value isEqualToString:BOOL_FALSE])
                 {
                     [self actionForQuadruple:++pointer];
                 }

@@ -40,6 +40,9 @@
 #define SCALE           36
 #define BLOCK_END       40
 
+#define BOOL_TRUE       @"1"
+#define BOOL_FALSE      @"0"
+
 @interface RunViewController : UIViewController
 
 @property NSMutableDictionary *variables;
