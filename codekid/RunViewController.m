@@ -484,7 +484,7 @@
             [UITableView animateWithDuration:ANIMATION_SPEED
                                   animations:^
                                   {
-                                      self.O_animacion.transform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(term1_value));
+                                      [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(term1_value)) )];
                                   }
                                   completion:^(BOOL finished)
                                   {
@@ -611,7 +611,7 @@
             [UITableView animateWithDuration:ANIMATION_SPEED
                                   animations:^
                                   {
-                                      self.O_animacion.transform = CGAffineTransformMakeScale(term1_value/100.0, term1_value/100.0);
+                                      [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeScale(term1_value/100.0, term1_value/100.0))];
                                   }
                                   completion:^(BOOL finished)
                                   {
