@@ -43,11 +43,9 @@ int ext_scanner( const char* );
 @property (weak, nonatomic) IBOutlet UIView *O_sidebar_characters;
 @property (weak, nonatomic) IBOutlet UITableView *O_sidebar_table_blocks;
 @property (weak, nonatomic) IBOutlet UIButton *O_sidebar_createvar_button_create;
-@property (weak, nonatomic) IBOutlet UIButton *O_sidebar_createvar_button_delete;
 - (IBAction)A_sidebar_button_blocks:(id)sender;
 - (IBAction)A_sidebar_button_characters:(id)sender;
 - (IBAction)A_create_variableList:(id)sender;
-- (IBAction)A_delete_variableList:(id)sender;
 
 // Sidebar Creating Variables and Lists
 @property NSMutableArray *variables;

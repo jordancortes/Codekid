@@ -114,8 +114,6 @@
     [_O_picker_block_button_change setBackgroundImage:[UIImage imageNamed:@"picker_block_button_change"] forState:UIControlStateNormal];
     [_O_sidebar_createvar_button_create setTitle:@"" forState:UIControlStateNormal];
     [_O_sidebar_createvar_button_create setBackgroundImage:[UIImage imageNamed:@"sidebar_createvar_button_create"] forState:UIControlStateNormal];
-    [_O_sidebar_createvar_button_delete setTitle:@"" forState:UIControlStateNormal];
-    [_O_sidebar_createvar_button_delete setBackgroundImage:[UIImage imageNamed:@"sidebar_createvar_button_delete"] forState:UIControlStateNormal];
     [_O_createvar_button_create setTitle:@"" forState:UIControlStateNormal];
     [_O_createvar_button_create setBackgroundImage:[UIImage imageNamed:@"sidebar_createvar_button_create"] forState:UIControlStateNormal];
     
@@ -195,6 +193,32 @@
     else
     {
         return [[_block_images objectAtIndex:_block_selected] count]; // cuando la tabla es sobre bloque
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_block_selected == BLOCK_VARIABLES || _block_selected == BLOCK_LISTS)
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_block_selected == BLOCK_VARIABLES)
+    {
+        [_variables removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                         withRowAnimation:UITableViewRowAnimationLeft];
+    }
+    else if (_block_selected == BLOCK_LISTS)
+    {
+        [_lists removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                         withRowAnimation:UITableViewRowAnimationLeft];
     }
 }
 
@@ -383,11 +407,6 @@
                           animations:^{
                               _O_sidebar_table_blocks.frame = sidebar_table_frame;
                           }];
-}
-
-- (IBAction)A_delete_variableList:(id)sender
-{
-    /* TOFILL: */
 }
 
 #pragma mark Picker Buttons

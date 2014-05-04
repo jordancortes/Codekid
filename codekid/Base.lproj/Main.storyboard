@@ -138,7 +138,7 @@
                                         </connections>
                                     </button>
                                     <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="of3-S5-gyX">
-                                        <rect key="frame" x="10" y="80" width="90" height="40"/>
+                                        <rect key="frame" x="75" y="80" width="90" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Create">
@@ -146,17 +146,6 @@
                                         </state>
                                         <connections>
                                             <action selector="A_create_variableList:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="7ay-8w-2ET"/>
-                                        </connections>
-                                    </button>
-                                    <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Fup-gL-Ev4">
-                                        <rect key="frame" x="140" y="80" width="90" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Delete">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="A_delete_variableList:" destination="dFT-pX-Fh0" eventType="touchUpInside" id="5FJ-bm-Qkk"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" id="3qQ-fR-Izy">
@@ -354,7 +343,6 @@
                         <outlet property="O_sidebar_button_characters" destination="uKQ-ix-OlM" id="Esu-ex-JZl"/>
                         <outlet property="O_sidebar_characters" destination="aKd-6j-1YS" id="TEM-ib-ngK"/>
                         <outlet property="O_sidebar_createvar_button_create" destination="of3-S5-gyX" id="j7N-aq-Zfw"/>
-                        <outlet property="O_sidebar_createvar_button_delete" destination="Fup-gL-Ev4" id="F5R-hF-OUS"/>
                         <outlet property="O_sidebar_image_arrow_blocks" destination="bXs-RO-xqw" id="R9G-ng-bap"/>
                         <outlet property="O_sidebar_image_arrow_characters" destination="CzF-w6-e4x" id="9dE-e8-lwv"/>
                         <outlet property="O_sidebar_table_blocks" destination="E1P-Mo-diB" id="UaR-UR-MkO"/>
