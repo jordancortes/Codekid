@@ -267,6 +267,7 @@
     }
 
     Project *p = [[Project alloc]initWithFrame:CGRectMake(75 + (col - 1) * 320, 20 + (row - 1) * 209, 253, 153) forCont:plus];
+
     [projects addObject:p];
     
     // asigna accion de eliminar proyecto
@@ -281,22 +282,13 @@
     [[[projects lastObject] btn_title] addTarget:self action:@selector(changeName:) forControlEvents:UIControlEventTouchUpInside];
     [[projects lastObject] btn_title].tag = [projects count] - 1; // indice en el arreglo
 
-//    [self.view addSubview:[[projects lastObject] preview]]; // la agrega al main view
-    
-    /*========== muestra la foto en el scrollview ===========*/
     [self.O_scroll addSubview:[[projects lastObject] preview]];
-    
-    
     [self.O_scroll setContentSize: CGSizeMake(self.O_scroll.frame.size.width, 209.33333333333333 * row)];
     
     CGRect scroll_frame = self.O_scroll.frame;
     scroll_frame.size.height = 276;
     self.O_scroll.frame = scroll_frame;
-    
-        //[self.O_scroll setContentOffset:CGPointMake(0, 0 - 265)];
-    
-   // [self.O_scroll setContentOffset: CGPointMake(CGSizeMake(730.00, 150.0*row).width/2, CGSizeMake(730.00, 150.0*row).height/2)];
-    
+
 }
 
 
