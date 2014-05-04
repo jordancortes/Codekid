@@ -87,7 +87,7 @@
 {
     if (recognizer.state == UIGestureRecognizerStateBegan)
     {
-        [[self main_view] highlightLongPressBorder]; 
+        [[self main_view] highlightLongPressBorder];
     }
     else if (recognizer.state == UIGestureRecognizerStateEnded)
     {

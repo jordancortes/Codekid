@@ -465,7 +465,7 @@
     
     // verifica que el nombre de la variable sea válido
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"^[A-Za-z]+[A-Za-z0-9]*$"
+                                  regularExpressionWithPattern:@"^[A-Za-z]+[_A-Za-z0-9]*$"
                                                        options:NSRegularExpressionCaseInsensitive
                                                          error:nil];
     NSTextCheckingResult *match = [regex firstMatchInString:variable_name

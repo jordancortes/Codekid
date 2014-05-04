@@ -631,7 +631,7 @@
     return CTE_STRING;
 }
 
-[a-z][a-zA-Z0-9]* {
+[a-zA-Z][_a-zA-Z0-9]* {
     // beta
     if ([Common flag] == FLAG_CREATE)
     {
