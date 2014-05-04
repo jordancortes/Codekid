@@ -596,7 +596,7 @@
     return _ITEM;
 }
 
-[0-9]+ {
+[-]?[0-9]+ {
     // beta
     if ([Common flag] == FLAG_CREATE)
     {
@@ -610,7 +610,7 @@
     return CTE_INT;
 }
 
-[0-9]+"."[0-9]+ {
+[-]?[0-9]+"."[0-9]+ {
     [Common pushToStack:[Common operands] Object:[NSString stringWithUTF8String:yytext]];
     [Common pushToStack:[Common operandsType] Object:@"float"];
 
