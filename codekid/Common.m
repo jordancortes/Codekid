@@ -248,7 +248,6 @@ static int _del_paren;
 
 + (void)reset
 {
-
     mem = [[Memory alloc] init];
     quadruples = [[NSMutableArray alloc] init];
     table_procedures = [[NSMutableArray alloc] init];
@@ -283,15 +282,15 @@ static int _del_paren;
 
 + (Boolean)isString:(NSString *)str1 equalTo:(NSString *)str2
 {
-    return [str1 isEqualToString:str2];
+    return [str1 isEqualToString:str2]; // compara dos strings (para el compilador)
 }
 
 + (void)save
 {
-    [self saveQuadruples];
-    [self saveProcedures];
-    [self saveVariables];
-    [mem save];
+    [self saveQuadruples]; // guarda los cuadruplos
+    [self saveProcedures]; // guarda la tabla de procedimientos
+    [self saveVariables]; // guarda las variables
+    [mem save]; // guarda la memoria de constantes
 }
 
 //==============================================================================
@@ -352,7 +351,7 @@ static int _del_paren;
         text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%d\n", [p type], [p pointer]]];
     }
     
-    /*BOOL success = */[text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    [text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&error];
 }
 
 //==============================================================================
@@ -412,9 +411,9 @@ static int _del_paren;
 {
     Variable *varAux = [table_variables objectForKey:variable];
     
-    if ([position intValue] > 0 && [position intValue] <= [varAux dimension])
+    if ([position intValue] > 0 && [position intValue] <= [varAux dimension]) // si la posión es válida dentro de la dimensión de la lista
     {
-        return [varAux mem_address] + [position intValue] - 1;
+        return [varAux mem_address] + [position intValue] - 1; // regresa la dirección de memoria correspondientes
     }
     
     return -1;
@@ -498,16 +497,16 @@ static int _del_paren;
 + (NSString *)typeForCode:(NSInteger)code
 {
     switch (code) {
-        case 0:
+        case INT:
             return @"int";
             break;
-        case 1:
+        case FLOAT:
             return @"float";
             break;
-        case 2:
+        case BOOLEAN:
             return @"bool";
             break;
-        case 3:
+        case STRING:
             return @"string";
             break;
         default:

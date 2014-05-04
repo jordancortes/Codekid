@@ -50,6 +50,7 @@
 #define ALPHA_LOW                       @"abcdefghijklmnopqrstuvwxyz"
 #define SPECIAL_CHAR                    @" ,.:;<>{}=/*+-_()&^%$#@?![]"
 #define NUMERIC_DOT                     @"."
+#define NUMERIC_NEGATIVE                @"-"
 #define NUMERIC                         @"1234567890"
 #define ALPHA_NUMERIC                   ALPHA_UP ALPHA_LOW SPECIAL_CHAR NUMERIC
 
@@ -58,6 +59,7 @@
 #define TEXT_TYPE_STRING                2
 #define TEXT_TYPE_DISABLED              3
 #define TEXT_TYPE_FORCED_STRING         4
+#define TEXT_TYPE_UNSIGNED_INTEGER      5
 
 #define NORMAL_INNER_DROPZONE_WIDTH     40
 #define STICK_BORDER                    10
