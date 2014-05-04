@@ -396,7 +396,7 @@ static int _del_paren;
     for (NSString *key in table_variables)
     {
         Variable *this_variable = [table_variables objectForKey:key];
-        text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%d\n", [this_variable mem_address], [this_variable dimension]]];
+        text = [text stringByAppendingString:[NSString stringWithFormat:@"%d\t%@\t%d\n", [this_variable mem_address], [this_variable name], [this_variable dimension]]];
     }
     
     [text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];

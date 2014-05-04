@@ -129,7 +129,10 @@
         {
             list_variables = [[content_by_lines objectAtIndex:x]
                               componentsSeparatedByString:@"\t"];
-            [_variables setObject:[list_variables objectAtIndex:1]
+            [_variables setObject:[[Variable alloc] initWithName:[list_variables objectAtIndex:1]
+                                                            Type:-1
+                                                         Address:-1
+                                                    andDimension:[[list_variables objectAtIndex:2] intValue]]
                            forKey:[list_variables objectAtIndex:0]];
         }
     }
@@ -538,9 +541,9 @@
         {
             NSString *variable = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             NSString *temp_address = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
-            NSString *dimension = [_variables objectForKey:variable];
+            NSInteger dimension = [[_variables objectForKey:variable] dimension];
             
-            [memory setObject:dimension forKey:temp_address];
+            [memory setObject:[NSString stringWithFormat:@"%d", dimension] forKey:temp_address];
             
             [self actionForQuadruple:++pointer];
         }
