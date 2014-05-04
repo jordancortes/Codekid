@@ -217,11 +217,11 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else if ([memory objectForKey:term2] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term2] name]];
             }
             else
             {
@@ -250,11 +250,11 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else if ([memory objectForKey:term2] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term2] name]];
             }
             else
             {
@@ -302,11 +302,11 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else if ([memory objectForKey:term2] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term2] name]];
             }
             else
             {
@@ -336,11 +336,11 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else if ([memory objectForKey:term2] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term2] name]];
             }
             else
             {
@@ -372,11 +372,11 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else if ([memory objectForKey:term2] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term2] name]];
             }
             else
             {
@@ -408,11 +408,11 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else if ([memory objectForKey:term2] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term2] name]];
             }
             else
             {
@@ -444,11 +444,11 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else if ([memory objectForKey:term2] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term2] name]];
             }
             else
             {
@@ -483,7 +483,7 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else
             {
@@ -505,7 +505,7 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else
             {
@@ -559,7 +559,7 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else
             {
@@ -590,7 +590,7 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else
             {
@@ -616,11 +616,11 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else if ([memory objectForKey:term2] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term2] name]];
             }
             else
             {
@@ -654,11 +654,11 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else if ([memory objectForKey:term2] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term2] name]];
             }
             else
             {
@@ -747,7 +747,7 @@
             
             if ([memory objectForKey:term1] == nil)
             {
-                [self errorVariable:@""];
+                [self errorVariable:[[_variables objectForKey:term1] name]];
             }
             else
             {
