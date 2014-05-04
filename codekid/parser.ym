@@ -112,7 +112,7 @@ inicioAux2:
         ;
 
 evento:
-        _WHEN act93 BRACKET_OPEN expresion BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE END_EXP
+        _WHEN act93 BRACKET_OPEN expresion act9 BRACKET_CLOSE BRACE_OPEN modulo moduloAux BRACE_CLOSE END_EXP
         ;
 
 act93:
@@ -409,6 +409,11 @@ act9:
                 NSString *op = [Common popFromStack:[Common operators]];
                 id value = [Common popFromStack:[Common operands]];
                 NSString *value_type = [Common topFromStack:[Common operandsType]];
+                
+                if (op == nil)
+                {
+                    op = @"when";
+                }
                 
                 // CHECK VALUE = BOOLEAN
                 if (BOOLEAN != [Common lookupOperandCodeForKey:value_type])
