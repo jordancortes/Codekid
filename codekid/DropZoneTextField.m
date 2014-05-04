@@ -49,16 +49,37 @@
     }
     else if (_input_type == TEXT_TYPE_FLOAT)
     {
-        if ([[self text] length] == 0 && [string isEqualToString:NUMERIC_DOT]) // si el primer caracter fuera un punto
+        NSUInteger minus_sign_count = [[[self text] componentsSeparatedByString:NUMERIC_NEGATIVE] count];
+        NSUInteger dot_sign_count = [[[self text] componentsSeparatedByString:NUMERIC_DOT] count];
+    
+        if ([string isEqualToString:NUMERIC_NEGATIVE])
         {
-            return NO;
+            if (minus_sign_count > 1) // si ya hay un signo de menos
+            {
+                return NO;
+            }
+            else if (range.location != 0) // si el signo al escribirse no esta al principio
+            {
+                return NO;
+            }
         }
-        else if ([string isEqualToString:NUMERIC_DOT] && [[[self text] componentsSeparatedByString:NUMERIC_DOT] count] > 1) // si se quiere escribir mas de un punto
+        else if ([string isEqualToString:NUMERIC_DOT])
         {
-            return NO;
+            if (dot_sign_count > 1) // si ya hay un punto
+            {
+                return NO;
+            }
+            else if (range.location == 0) // si se quiere escribir al principio
+            {
+                return NO;
+            }
+            else if ([[self text] characterAtIndex:0] == '-' && range.location < 2) // si el primer signo es '-' no permite escribir el punto a un lado
+            {
+                return NO;
+            }
         }
     
-        unacceptedInput = [[NSCharacterSet characterSetWithCharactersInString:[NUMERIC stringByAppendingString:NUMERIC_DOT]] invertedSet];
+        unacceptedInput = [[NSCharacterSet characterSetWithCharactersInString:[[NUMERIC stringByAppendingString:NUMERIC_DOT] stringByAppendingString:NUMERIC_NEGATIVE]] invertedSet];
     }
     else if (_input_type == TEXT_TYPE_STRING || _input_type == TEXT_TYPE_FORCED_STRING)
     {
