@@ -20,7 +20,7 @@
         _preview = [[UIView alloc] initWithFrame:frame];
         
         // inicializa componentes del UIView
-        [_preview setBackgroundColor:[UIColor grayColor]];
+        [_preview setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_project"]]];
         
         // crea boton, lo deshabilita y oculta
         _project_delete = [[UIButton alloc] initWithFrame:CGRectMake(-10, -10, 50, 50)];
@@ -33,6 +33,7 @@
         // crea label
         _project_title = [[UITextField alloc] initWithFrame:CGRectMake(0, 160, 255, 25)];
         _project_title.textAlignment = NSTextAlignmentCenter;
+        _project_title.font = [UIFont fontWithName:@"ActionMan-Bold" size:24];
         [_preview addSubview:_project_title];
         [_project_title becomeFirstResponder];
         
