@@ -370,7 +370,7 @@ opEsperaAux:
                 
                 [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:value_address]];
             }
-        | _UNTIL BRACKET_OPEN expresion act9 BRACKET_CLOSE
+        | _UNTIL BRACKET_OPEN expresion BRACKET_CLOSE
             {
                 id value = [Common popFromStack:[Common operands]];
                 NSString *value_type = [Common popFromStack:[Common operandsType]];
