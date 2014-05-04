@@ -475,11 +475,11 @@
         }
         else if ([block_inside block_type] == BLOCK_OPERATOR_GREATER_THAN)
         {
-            return [NSString stringWithFormat:@"%@ < %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+            return [NSString stringWithFormat:@"%@ > %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
         }
         else if ([block_inside block_type] == BLOCK_OPERATOR_LESS_THAN)
         {
-            return [NSString stringWithFormat:@"%@ > %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
+            return [NSString stringWithFormat:@"%@ < %@", [block_inside getValueForDropZone:0], [block_inside getValueForDropZone:1]];
         }
         else if ([block_inside block_type] == BLOCK_OPERATOR_PARENTHESIS)
         {
