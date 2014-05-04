@@ -631,6 +631,8 @@
                                                                  bundle:nil];
             RunViewController *run = [storyboard instantiateViewControllerWithIdentifier:@"RunViewController"];
             [self presentViewController:run animated:YES completion:nil];
+            
+            [[run O_header_title] setText:[_O_header_title text]];
         }
         else if (YYREJECT == result) // si hubo un error
         {

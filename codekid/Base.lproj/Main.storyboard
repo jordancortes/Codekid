@@ -376,17 +376,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="140"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="statusBar.png" id="8eo-Th-WGa">
-                                        <rect key="frame" x="342" y="14" width="340" height="112"/>
+                                    <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header_status_background" id="8eo-Th-WGa">
+                                        <rect key="frame" x="342" y="35" width="320" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Proyecto 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dt9-TI-UuG">
-                                        <rect key="frame" x="433" y="49" width="159" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="X11-ra-JdJ">
                                         <rect key="frame" x="934" y="35" width="70" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -398,6 +391,13 @@
                                             <action selector="A_stop:" destination="Vxa-KA-DKM" eventType="touchUpInside" id="Scr-JN-EHt"/>
                                         </connections>
                                     </button>
+                                    <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bin-tq-PPA">
+                                        <rect key="frame" x="342" y="57" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -418,6 +418,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="O_animacion" destination="Gh4-PV-kjb" id="KdB-g3-VU4"/>
+                        <outlet property="O_header_title" destination="bin-tq-PPA" id="uW9-dJ-Dn6"/>
                         <outlet property="O_stop" destination="X11-ra-JdJ" id="RW8-te-4wF"/>
                         <outlet property="O_text" destination="fhH-Si-1uA" id="dKW-zg-ItK"/>
                     </connections>
@@ -439,7 +440,6 @@
         <image name="sidebar_createvar_title_dimension" width="220" height="25"/>
         <image name="sidebar_createvar_title_name" width="220" height="25"/>
         <image name="sidebar_createvar_title_type" width="220" height="25"/>
-        <image name="statusBar.png" width="801" height="210"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>

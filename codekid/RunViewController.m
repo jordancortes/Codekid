@@ -29,6 +29,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [_O_header_title setFont:[UIFont fontWithName:@"ActionMan-Bold" size:40]];
+    
     // inicializa arreglo de cuadruplos
     quadruple = [[NSMutableArray alloc] init];
     // inicializa arreglo de direcciones de memoria

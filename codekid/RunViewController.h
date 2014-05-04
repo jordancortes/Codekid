@@ -44,6 +44,9 @@
 
 @property NSMutableDictionary *variables;
 
+// Header Outlets
+@property (weak, nonatomic) IBOutlet UILabel *O_header_title;
+
 // Outlet y Action del boton de stop para salir de la pantalla donde se corre la animación
 @property (weak, nonatomic) IBOutlet UIButton *O_stop;
 - (IBAction)A_stop:(UIButton *)sender;
