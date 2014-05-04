@@ -372,6 +372,7 @@ opEsperaAux:
             }
         | _UNTIL BRACKET_OPEN expresion BRACKET_CLOSE
             {
+                NSString *op = [Common popFromStack:[Common operators]];
                 id value = [Common popFromStack:[Common operands]];
                 NSString *value_type = [Common popFromStack:[Common operandsType]];
                 NSNumber *pointer = [Common popFromStack:[Common p_jumps]];
