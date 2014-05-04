@@ -212,20 +212,31 @@
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
             
-            CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-            CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-            
-            if(term1_value < term2_value)
+            if ([memory objectForKey:term1] == nil)
             {
-                [memory setValue:@"true"
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                [self errorVariable:@""];
+            }
+            else if ([memory objectForKey:term2] == nil)
+            {
+                [self errorVariable:@""];
             }
             else
             {
-                [memory setValue:@"false"
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                
+                if(term1_value < term2_value)
+                {
+                    [memory setValue:@"true"
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                else
+                {
+                    [memory setValue:@"false"
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                [self actionForQuadruple:++pointer];
             }
-            [self actionForQuadruple:++pointer];
         }
             break;
         case EQUALS:
@@ -234,39 +245,50 @@
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
             
-            if ([self typeForMemoryDirection:term1] == STRING && [self typeForMemoryDirection:term2] == STRING)
+            if ([memory objectForKey:term1] == nil)
             {
-                NSString *term1_value = [memory objectForKey:term1];
-                NSString *term2_value = [memory objectForKey:term2];
-                
-                if ([term1_value isEqualToString:term2_value])
-                {
-                    [memory setValue:@"true"
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
-                else
-                {
-                    [memory setValue:@"false"
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
-                }
+                [self errorVariable:@""];
+            }
+            else if ([memory objectForKey:term2] == nil)
+            {
+                [self errorVariable:@""];
             }
             else
             {
-                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                
-                if(term1_value == term2_value)
+                if ([self typeForMemoryDirection:term1] == STRING && [self typeForMemoryDirection:term2] == STRING)
                 {
-                    [memory setValue:@"true"
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                    NSString *term1_value = [memory objectForKey:term1];
+                    NSString *term2_value = [memory objectForKey:term2];
+                    
+                    if ([term1_value isEqualToString:term2_value])
+                    {
+                        [memory setValue:@"true"
+                                  forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                    }
+                    else
+                    {
+                        [memory setValue:@"false"
+                                  forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                    }
                 }
                 else
                 {
-                    [memory setValue:@"false"
-                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                    CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                    CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                    
+                    if(term1_value == term2_value)
+                    {
+                        [memory setValue:@"true"
+                                  forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                    }
+                    else
+                    {
+                        [memory setValue:@"false"
+                                  forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                    }
                 }
+                [self actionForQuadruple:++pointer];
             }
-            [self actionForQuadruple:++pointer];
         }
             break;
         case GREATER_THAN:
@@ -275,20 +297,31 @@
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
             
-            CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-            CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-            
-            if(term1_value > term2_value)
+            if ([memory objectForKey:term1] == nil)
             {
-                [memory setValue:@"true"
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                [self errorVariable:@""];
+            }
+            else if ([memory objectForKey:term2] == nil)
+            {
+                [self errorVariable:@""];
             }
             else
             {
-                [memory setValue:@"false"
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                
+                if(term1_value > term2_value)
+                {
+                    [memory setValue:@"true"
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                else
+                {
+                    [memory setValue:@"false"
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                [self actionForQuadruple:++pointer];
             }
-            [self actionForQuadruple:++pointer];
         }
             break;
         case PLUS:
@@ -297,23 +330,35 @@
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
             
-            if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+            
+            if ([memory objectForKey:term1] == nil)
             {
-                NSInteger term1_value = [[memory objectForKey:term1] intValue];
-                NSInteger term2_value = [[memory objectForKey:term2] intValue];
-                
-                [memory setValue:[NSString stringWithFormat:@"%d", term1_value + term2_value]
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                [self errorVariable:@""];
+            }
+            else if ([memory objectForKey:term2] == nil)
+            {
+                [self errorVariable:@""];
             }
             else
             {
-                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                
-                [memory setValue:[NSString stringWithFormat:@"%f", term1_value + term2_value]
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+                {
+                    NSInteger term1_value = [[memory objectForKey:term1] intValue];
+                    NSInteger term2_value = [[memory objectForKey:term2] intValue];
+                    
+                    [memory setValue:[NSString stringWithFormat:@"%d", term1_value + term2_value]
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                else
+                {
+                    CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                    CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                    
+                    [memory setValue:[NSString stringWithFormat:@"%f", term1_value + term2_value]
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                [self actionForQuadruple:++pointer];
             }
-            [self actionForQuadruple:++pointer];
         }
             break;
         case MINUS:
@@ -322,23 +367,34 @@
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
             
-            if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+            if ([memory objectForKey:term1] == nil)
             {
-                NSInteger term1_value = [[memory objectForKey:term1] intValue];
-                NSInteger term2_value = [[memory objectForKey:term2] intValue];
-                
-                [memory setValue:[NSString stringWithFormat:@"%d", term1_value - term2_value]
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                [self errorVariable:@""];
+            }
+            else if ([memory objectForKey:term2] == nil)
+            {
+                [self errorVariable:@""];
             }
             else
             {
-                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                
-                [memory setValue:[NSString stringWithFormat:@"%f", term1_value - term2_value]
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+                {
+                    NSInteger term1_value = [[memory objectForKey:term1] intValue];
+                    NSInteger term2_value = [[memory objectForKey:term2] intValue];
+                    
+                    [memory setValue:[NSString stringWithFormat:@"%d", term1_value - term2_value]
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                else
+                {
+                    CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                    CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                    
+                    [memory setValue:[NSString stringWithFormat:@"%f", term1_value - term2_value]
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                [self actionForQuadruple:++pointer];
             }
-            [self actionForQuadruple:++pointer];
         }
             break;
         case MULTIPLICATION:
@@ -347,23 +403,34 @@
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
             
-            if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+            if ([memory objectForKey:term1] == nil)
             {
-                NSInteger term1_value = [[memory objectForKey:term1] intValue];
-                NSInteger term2_value = [[memory objectForKey:term2] intValue];
-                
-                [memory setValue:[NSString stringWithFormat:@"%d", term1_value * term2_value]
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                [self errorVariable:@""];
+            }
+            else if ([memory objectForKey:term2] == nil)
+            {
+                [self errorVariable:@""];
             }
             else
             {
-                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                
-                [memory setValue:[NSString stringWithFormat:@"%f", term1_value * term2_value]
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+                {
+                    NSInteger term1_value = [[memory objectForKey:term1] intValue];
+                    NSInteger term2_value = [[memory objectForKey:term2] intValue];
+                    
+                    [memory setValue:[NSString stringWithFormat:@"%d", term1_value * term2_value]
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                else
+                {
+                    CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                    CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                    
+                    [memory setValue:[NSString stringWithFormat:@"%f", term1_value * term2_value]
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                [self actionForQuadruple:++pointer];
             }
-            [self actionForQuadruple:++pointer];
         }
             break;
         case DIVISION:
@@ -372,23 +439,34 @@
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
             
-            if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+            if ([memory objectForKey:term1] == nil)
             {
-                NSInteger term1_value = [[memory objectForKey:term1] intValue];
-                NSInteger term2_value = [[memory objectForKey:term2] intValue];
-                
-                [memory setValue:[NSString stringWithFormat:@"%d", term1_value / term2_value]
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                [self errorVariable:@""];
+            }
+            else if ([memory objectForKey:term2] == nil)
+            {
+                [self errorVariable:@""];
             }
             else
             {
-                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-                
-                [memory setValue:[NSString stringWithFormat:@"%f", term1_value / term2_value]
-                          forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                if ([self typeForMemoryDirection:term1] == INT && [self typeForMemoryDirection:term2] == INT)
+                {
+                    NSInteger term1_value = [[memory objectForKey:term1] intValue];
+                    NSInteger term2_value = [[memory objectForKey:term2] intValue];
+                    
+                    [memory setValue:[NSString stringWithFormat:@"%d", term1_value / term2_value]
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                else
+                {
+                    CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                    CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                    
+                    [memory setValue:[NSString stringWithFormat:@"%f", term1_value / term2_value]
+                              forKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]];
+                }
+                [self actionForQuadruple:++pointer];
             }
-            [self actionForQuadruple:++pointer];
         }
             break;
         case GOTO:
@@ -399,28 +477,44 @@
         case GOTOF:
         {
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-            NSString *term1_value = [memory objectForKey:term1];
-            if([term1_value isEqualToString:@"true"])
+            
+            if ([memory objectForKey:term1] == nil)
             {
-                [self actionForQuadruple:++pointer];
+                [self errorVariable:@""];
             }
             else
             {
-                [self actionForQuadruple:[actual_quadruple result] - 1];
+                NSString *term1_value = [memory objectForKey:term1];
+                if([term1_value isEqualToString:@"true"])
+                {
+                    [self actionForQuadruple:++pointer];
+                }
+                else
+                {
+                    [self actionForQuadruple:[actual_quadruple result] - 1];
+                }
             }
         }
             break;
         case GOTOV:
         {
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
-            NSString *term1_value = [memory objectForKey:term1];
-            if([term1_value isEqualToString:@"false"])
+            
+            if ([memory objectForKey:term1] == nil)
             {
-                [self actionForQuadruple:++pointer];
+                [self errorVariable:@""];
             }
             else
             {
-                [self actionForQuadruple:[actual_quadruple result] - 1];
+                NSString *term1_value = [memory objectForKey:term1];
+                if([term1_value isEqualToString:@"false"])
+                {
+                    [self actionForQuadruple:++pointer];
+                }
+                else
+                {
+                    [self actionForQuadruple:[actual_quadruple result] - 1];
+                }
             }
         }
             break;
@@ -458,18 +552,28 @@
             break;
         case WAIT:
         {
-            NSTimeInterval wait_time = [[memory objectForKey:[NSString stringWithFormat:@"%d", [actual_quadruple result]]] intValue];
-            NSInteger actual_pointer = ++pointer; // por scope
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
             
-            [UITableView animateWithDuration:wait_time
-                                  animations:^
-             {
-                 [_O_animacion setBackgroundColor:[UIColor clearColor]]; // esta acción no importa, pero es necesario algo para que la animación no se invalide
-             }
-             completion:^(BOOL finished)
-             {
-                 [self actionForQuadruple:actual_pointer];
-             }];
+            if ([memory objectForKey:term1] == nil)
+            {
+                [self errorVariable:@""];
+            }
+            else
+            {
+                NSTimeInterval wait_time = [[memory objectForKey:term1] intValue];
+            
+                NSInteger actual_pointer = ++pointer; // por scope
+                
+                [UITableView animateWithDuration:wait_time
+                                      animations:^
+                 {
+                     [_O_animacion setBackgroundColor:[UIColor clearColor]]; // esta acción no importa, pero es necesario algo para que la animación no se invalide
+                 }
+                                      completion:^(BOOL finished)
+                 {
+                     [self actionForQuadruple:actual_pointer];
+                 }];
+            }
         }
             break;
         case WAIT_UNTIL:
@@ -480,18 +584,26 @@
         case TURN:
         {
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
-            CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-            NSInteger actual_pointer = ++pointer; // por scope
             
-            [UITableView animateWithDuration:ANIMATION_SPEED
-                                  animations:^
-                                  {
-                                      [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(term1_value)) )];
-                                  }
-                                  completion:^(BOOL finished)
-                                  {
-                                      [self actionForQuadruple:actual_pointer];
-                                  }];
+            if ([memory objectForKey:term1] == nil)
+            {
+                [self errorVariable:@""];
+            }
+            else
+            {
+                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                NSInteger actual_pointer = ++pointer; // por scope
+            
+                [UITableView animateWithDuration:ANIMATION_SPEED
+                                      animations:^
+                 {
+                     [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(term1_value)) )];
+                 }
+                                      completion:^(BOOL finished)
+                 {
+                     [self actionForQuadruple:actual_pointer];
+                 }];
+            }
         }
             break;
         case MOVE:
@@ -499,26 +611,37 @@
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
             
-            CGFloat term1_value = [[memory objectForKey:term1] floatValue];
-            CGFloat term2_value = [[memory objectForKey:term2] floatValue];
-            NSInteger actual_pointer = ++pointer; // por scope
-            
-            CGRect frame1 = [self.O_animacion frame];
-            frame1.origin.x += term1_value;
-            frame1.origin.y += term2_value;
-            CGRect frame2 = [self.O_text frame];
-            frame2.origin.x += term1_value;
-            frame2.origin.y += term2_value;
-            [UITableView animateWithDuration:ANIMATION_SPEED
-                                  animations:^
-                                  {
-                                      self.O_animacion.frame = frame1;
-                                      self.O_text.frame = frame2;
-                                  }
-                                  completion:^(BOOL finished)
-                                  {
-                                      [self actionForQuadruple:actual_pointer];
-                                  }];
+            if ([memory objectForKey:term1] == nil)
+            {
+                [self errorVariable:@""];
+            }
+            else if ([memory objectForKey:term2] == nil)
+            {
+                [self errorVariable:@""];
+            }
+            else
+            {
+                CGFloat term1_value = [[memory objectForKey:term1] floatValue];
+                CGFloat term2_value = [[memory objectForKey:term2] floatValue];
+                NSInteger actual_pointer = ++pointer; // por scope
+                
+                CGRect frame1 = [self.O_animacion frame];
+                frame1.origin.x += term1_value;
+                frame1.origin.y += term2_value;
+                CGRect frame2 = [self.O_text frame];
+                frame2.origin.x += term1_value;
+                frame2.origin.y += term2_value;
+                [UITableView animateWithDuration:ANIMATION_SPEED
+                                      animations:^
+                 {
+                     self.O_animacion.frame = frame1;
+                     self.O_text.frame = frame2;
+                 }
+                                      completion:^(BOOL finished)
+                 {
+                     [self actionForQuadruple:actual_pointer];
+                 }];
+            }
         }
             break;
         case SAY:
@@ -526,45 +649,56 @@
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
             NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
             
-            NSString *term1_value = [memory objectForKey:term2];
-            NSInteger term2_value = [[memory objectForKey:term1] intValue];
-            NSInteger actual_pointer = ++pointer; // por scope
-            
-            // define el texto
-            [_O_text setText:term1_value];
-            
-            // define el tamaño del font
-            CGFloat font_size = 0.14545454545454545 * [_O_animacion frame].size.width + 8;
-            [_O_text setFont:[UIFont fontWithName:@"ActionMan-Bold" size:font_size]];
-            [_O_text setTextAlignment:NSTextAlignmentLeft];
-            
-            CGRect text_frame = [_O_text frame]; // obtiene los atributos del textView
-            
-            // define la dimensión del TextView
-            CGSize text_size = [[_O_text text] sizeWithAttributes:@{NSFontAttributeName:[_O_text font]}];
-            text_frame.size.width = text_size.width + 10;
-            text_frame.size.height = text_size.height;
-            
-            // se posición encima de la imagen
-            text_frame.origin.x = [_O_animacion frame].origin.x + [_O_animacion frame].size.width;
-            text_frame.origin.y = [_O_animacion frame].origin.y - text_frame.size.height;
-            
-            [_O_text setFrame:text_frame]; // asigna los atributos cambiados
-            
-            self.O_text.hidden = NO;
-            self.O_text.alpha = 1.0f;
-            [UIView animateWithDuration:ANIMATION_SPEED/2
-                                  delay:term2_value
-                                options:0
-                             animations:^
-                             {
-                                 self.O_text.alpha = 0.0f;
-                             }
-                             completion:^(BOOL finished)
-                             {
-                                 self.O_text.hidden = YES;
-                                 [self actionForQuadruple:actual_pointer];
-                             }];
+            if ([memory objectForKey:term1] == nil)
+            {
+                [self errorVariable:@""];
+            }
+            else if ([memory objectForKey:term2] == nil)
+            {
+                [self errorVariable:@""];
+            }
+            else
+            {
+                NSString *term1_value = [memory objectForKey:term2];
+                NSInteger term2_value = [[memory objectForKey:term1] intValue];
+                NSInteger actual_pointer = ++pointer; // por scope
+                
+                // define el texto
+                [_O_text setText:term1_value];
+                
+                // define el tamaño del font
+                CGFloat font_size = 0.14545454545454545 * [_O_animacion frame].size.width + 8;
+                [_O_text setFont:[UIFont fontWithName:@"ActionMan-Bold" size:font_size]];
+                [_O_text setTextAlignment:NSTextAlignmentLeft];
+                
+                CGRect text_frame = [_O_text frame]; // obtiene los atributos del textView
+                
+                // define la dimensión del TextView
+                CGSize text_size = [[_O_text text] sizeWithAttributes:@{NSFontAttributeName:[_O_text font]}];
+                text_frame.size.width = text_size.width + 10;
+                text_frame.size.height = text_size.height;
+                
+                // se posición encima de la imagen
+                text_frame.origin.x = [_O_animacion frame].origin.x + [_O_animacion frame].size.width;
+                text_frame.origin.y = [_O_animacion frame].origin.y - text_frame.size.height;
+                
+                [_O_text setFrame:text_frame]; // asigna los atributos cambiados
+                
+                self.O_text.hidden = NO;
+                self.O_text.alpha = 1.0f;
+                [UIView animateWithDuration:ANIMATION_SPEED/2
+                                      delay:term2_value
+                                    options:0
+                                 animations:^
+                 {
+                     self.O_text.alpha = 0.0f;
+                 }
+                                 completion:^(BOOL finished)
+                 {
+                     self.O_text.hidden = YES;
+                     [self actionForQuadruple:actual_pointer];
+                 }];
+            }
         }
             break;
         case SHOW:
@@ -607,18 +741,26 @@
         case SCALE:
         {
             NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
-            NSInteger term1_value = [[memory objectForKey:term1] intValue];
-            NSInteger actual_pointer = ++pointer;
             
-            [UITableView animateWithDuration:ANIMATION_SPEED
-                                  animations:^
-                                  {
-                                      [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeScale(term1_value/100.0, term1_value/100.0))];
-                                  }
-                                  completion:^(BOOL finished)
-                                  {
-                                      [self actionForQuadruple:actual_pointer];
-                                  }];
+            if ([memory objectForKey:term1] == nil)
+            {
+                [self errorVariable:@""];
+            }
+            else
+            {
+                NSInteger term1_value = [[memory objectForKey:term1] intValue];
+                NSInteger actual_pointer = ++pointer;
+                
+                [UITableView animateWithDuration:ANIMATION_SPEED
+                                      animations:^
+                 {
+                     [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeScale(term1_value/100.0, term1_value/100.0))];
+                 }
+                                      completion:^(BOOL finished)
+                 {
+                     [self actionForQuadruple:actual_pointer];
+                 }];
+            }
         }
             break;
         case BLOCK_END:
@@ -627,6 +769,13 @@
         }
             break;
     }
+}
+
+- (void)errorVariable:(NSString *)variable_name
+{
+    EventsViewController *parent = (EventsViewController *)self.presentingViewController;
+    [[parent O_header_errors] setText:[NSString stringWithFormat:@"The variable %@ is not initialized", variable_name ]];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
