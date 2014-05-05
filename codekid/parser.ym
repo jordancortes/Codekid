@@ -1362,13 +1362,13 @@ cte:
                 // CREATE QUADRUPLE
                 [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:variable_address] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:[tn mem_address]]];
             }
-        | _ITEM CTE_INT _OF var
+        | _ITEM exp _OF var
             {
-                [Common popFromStack:[Common operators]]; // op
+                NSString *op = [Common popFromStack:[Common operators]];
                 NSString *variable = [Common popFromStack:[Common operands]];
                 NSString *variable_type = [Common popFromStack:[Common operandsType]];
-                NSString *position = [Common popFromStack:[Common operands]];
-                [Common popFromStack:[Common operandsType]]; // position_type
+                id position = [Common popFromStack:[Common operands]];
+                NSString *position_type = [Common popFromStack:[Common operandsType]];
                 
                 // CHECK IS LIST
                 if (![Common isVariableList:variable])
@@ -1378,19 +1378,52 @@ cte:
                 }
                 
                 // MEM ADDRESS
-                NSInteger list_address = [Common addressForVariable:variable atPosition:[NSNumber numberWithInt:[position intValue]]];
+                NSInteger position_address;
+                
+                // MEM ADDRESSES
+                NSInteger variable_address = [Common addressForVariable:variable];
+                
+                // POSITION
+                if ([position isKindOfClass:[Temporal class]])
+                {
+                    position_address = [position mem_address];
+                }
+                else if ([Common lookupVariable:(NSString *)position])
+                {
+                    // CHECK IS NOT LIST
+                    if ([Common isVariableList:position])
+                    {
+                        [Common setYyError:[NSString stringWithFormat:@"The variable '%@' is a list.", position]];
+                        return yyerror("");
+                    }
+                    
+                    position_address = [Common addressForVariable:(NSString *)position];
+                }
+                else
+                {
+                    position_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:position_type] andValue:(NSString *)position];
+                }
+                
+                // CREATE TEMP
+                Temporal *tn = [Common addTempWithType:[Common codeForType:variable_type]];
+                [Common pushToStack:[Common operands] Object:tn];
+                [Common pushToStack:[Common operandsType] Object:variable_type];
+                
+                [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:position_address] Term2:[NSNumber numberWithInt:variable_address] andResult:[NSNumber numberWithInt:[tn mem_address]]];
+                
+                 // = [Common addressForVariable:variable atPosition:[NSNumber numberWithInt:[position intValue]]];
                 
                 // OUT OF BOUNDS
-                if (-1 == list_address)
+                /*if (-1 == list_address)
                 {
                     [Common setYyError:[NSString stringWithFormat:@"The position '%@' is out of bounds for '%@'.", position, variable]];
                     return yyerror("");
-                }
+                }*/
                 
                 // CREATE SPECIAL TEMP
-                Temporal *tn = [[Temporal alloc] initWithName:@"_TP1_" andAddress:list_address];
-                [Common pushToStack:[Common operands] Object:tn];
-                [Common pushToStack:[Common operandsType] Object:variable_type];
+                //Temporal *tn = [[Temporal alloc] initWithName:@"_TP1_" andAddress:list_address];
+                //[Common pushToStack:[Common operands] Object:tn];
+                //[Common pushToStack:[Common operandsType] Object:variable_type];
             }
         | _TOSTRING exp
             {
