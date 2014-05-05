@@ -20,8 +20,22 @@
 
 @implementation RunViewController
 
-- (void)viewDidAppear:(BOOL)animated{
-    [self actionForQuadruple:0];
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self checkForEventsWithMainPointer:0];
+}
+
+- (void)checkForEventsWithMainPointer:(NSInteger)main_pointer
+{
+    for (Procedure *this_procedure in procedures)
+    {
+        if ([this_procedure type] != MAIN)
+        {
+            [self actionForQuadruple:[this_procedure pointer]];
+        }
+    }
+    
+    [self actionForQuadruple:main_pointer];
 }
 
 - (void)viewDidLoad
@@ -523,7 +537,7 @@
             break;
         case SUB:
         {
-            /* es usado para funciones */
+            /* regresa a la función donde se quedó */
         }
             break;
         case _SET:
@@ -534,7 +548,9 @@
             
             [memory setObject:[memory objectForKey:value] forKey:variable];
             
-            [self actionForQuadruple:++pointer];
+            [self checkForEventsWithMainPointer:++pointer];
+            
+            //[self actionForQuadruple:++pointer];
         }
             break;
         case LENGTH:
@@ -596,14 +612,15 @@
             {
                 CGFloat term1_value = [[memory objectForKey:term1] floatValue];
                 NSInteger actual_pointer = ++pointer; // por scope
-            
-                [UITableView animateWithDuration:ANIMATION_SPEED
+                
+                [UIImageView animateWithDuration:ANIMATION_SPEED
                                       animations:^
                  {
                      [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(term1_value)) )];
                  }
                                       completion:^(BOOL finished)
                  {
+                     //[self checkForEventsWithMainPointer:actual_pointer];
                      [self actionForQuadruple:actual_pointer];
                  }];
             }
