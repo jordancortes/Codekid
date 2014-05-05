@@ -22,7 +22,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self checkForEventsWithMainPointer:0];
+    [self actionForQuadruple:0];
 }
 
 - (void)checkForEventsWithMainPointer:(NSInteger)main_pointer
@@ -548,9 +548,7 @@
             
             [memory setObject:[memory objectForKey:value] forKey:variable];
             
-            [self checkForEventsWithMainPointer:++pointer];
-            
-            //[self actionForQuadruple:++pointer];
+            [self actionForQuadruple:++pointer];
         }
             break;
         case LENGTH:
@@ -620,7 +618,6 @@
                  }
                                       completion:^(BOOL finished)
                  {
-                     //[self checkForEventsWithMainPointer:actual_pointer];
                      [self actionForQuadruple:actual_pointer];
                  }];
             }
@@ -800,6 +797,11 @@
                 
                 [self actionForQuadruple:++pointer];
             }
+        }
+            break;
+        case CHECK_EVENTS:
+        {
+            [self checkForEventsWithMainPointer:++pointer];
         }
             break;
         case BLOCK_END:
