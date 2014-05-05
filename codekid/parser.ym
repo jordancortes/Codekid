@@ -55,6 +55,8 @@
 %token CTE_STRING
 %token ID
 %token _TOSTRING
+%token _CHECK
+%token _EVENTS
 
 %start inicio
 
@@ -139,10 +141,18 @@ modulo:
         | opImagen
         | opVisibilidad
         | opMovimiento
+        | opEventos
         ;
 
 opVar:
         _SET var _TO expresion opVarAux END_EXP
+        ;
+
+opEventos:
+        _CHECK _EVENTS END_EXP
+            {
+                [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:@"CHECK_EVENTS"]] Term1:[NSNumber numberWithInt:-1] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:-1]];
+            }
         ;
 
 opVarAux:

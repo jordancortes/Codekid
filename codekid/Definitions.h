@@ -14,6 +14,7 @@
 
 #define BLOCK_EVENTS_START              0
 #define BLOCK_EVENTS_WHEN               1
+#define BLOCK_EVENTS_CHECK              2
 #define BLOCK_APPEARANCE_SHOW           10
 #define BLOCK_APPEARANCE_CLEAR          11
 #define BLOCK_APPEARANCE_HIDE           12

@@ -21,7 +21,6 @@
     // quitar teclado
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.O_dropzone_view addGestureRecognizer:tap];
-    [self. addGestureRecognizer:tap];
     
     // Header
     _O_header_title.font = [UIFont fontWithName:@"ActionMan-Bold" size:40];
@@ -53,6 +52,7 @@
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_events_start"],
                       [UIImage imageNamed:@"block_events_when"],
+                      [UIImage imageNamed:@"block_events_check"],
                       nil],
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_appearance_show"],
@@ -685,6 +685,12 @@
                 code = [NSString stringWithFormat:@"%@when [ %@ ]\n{\n",
                         code,
                         [initial_block getValueForDropZone:0]];
+            }
+                break;
+            case BLOCK_EVENTS_CHECK:
+            {
+                code = [NSString stringWithFormat:@"%@check events;\n",
+                        code];
             }
                 break;
             case BLOCK_APPEARANCE_SHOW:

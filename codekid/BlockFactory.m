@@ -68,6 +68,21 @@
             [temp setSticks:YES];
         }
             break;
+        case BLOCK_EVENTS_CHECK:
+        {
+            temp.main_view = [
+                              [BlockView alloc]
+                              initWithFrame:CGRectMake(0, 0, 230, 59)
+                              andColor:[UIColor colorWithRed:0.819607843137255 green:0.443137254901961 blue:0 alpha:1.0]];
+            
+            // Texto
+            UILabel *first_text = [[VariableLabel alloc] initWithName:@"CHECK EVENTS" fontSize:32 andPosition:CGPointMake(0, 0)];
+            [first_text setTag:1];
+            [temp.main_view addSubview:first_text];
+            
+            [temp setSticks:YES];
+        }
+            break;
         case BLOCK_APPEARANCE_SHOW:
         {
             temp.main_view = [

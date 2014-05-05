@@ -417,6 +417,14 @@
     return _TOSTRING;
 }
 
+"check" {
+    return _CHECK;
+}
+
+"events" {
+    return _EVENTS;
+}
+
 "when" {
     return _WHEN;
 }
