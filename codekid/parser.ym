@@ -208,15 +208,15 @@ opVarAux:
                 
                 [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:value_address] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:variable_address]];
             }
-        | _AT CTE_INT
+        | _AT exp
         {
             // 20
             NSString *op = [Common popFromStack:[Common operators]];
-            NSString *position = [Common popFromStack:[Common operands]];
+            id position = [Common popFromStack:[Common operands]];
             NSString *position_type = [Common popFromStack:[Common operandsType]];
             id value = [Common popFromStack:[Common operands]];
             NSString *value_type = [Common popFromStack:[Common operandsType]];
-            NSString *variable = [Common popFromStack:[Common operands]];
+            id variable = [Common popFromStack:[Common operands]];
             NSString *variable_type = [Common popFromStack:[Common operandsType]];
             
             // CHECK IS VALID OPERATION
@@ -228,26 +228,60 @@ opVarAux:
                 return yyerror("");
             }
             
-            NSInteger value_address, list_address;
+            NSInteger value_address, position_address, variable_address;
             
-            // CHECK IS NOT LIST
-            if (![Common isVariableList:variable])
+            // VARIABLE
+            if ([variable isKindOfClass:[Temporal class]])
             {
-                [Common setYyError:[NSString stringWithFormat:@"The variable '%@' is not a list.", variable]];
-                return yyerror("");
+                variable_address = [variable mem_address];
+            }
+            else if ([Common lookupVariable:(NSString *)variable])
+            {
+                // CHECK IS NOT LIST
+                if (![Common isVariableList:variable])
+                {
+                    [Common setYyError:[NSString stringWithFormat:@"The variable '%@' is not a list.", variable]];
+                    return yyerror("");
+                }
+                
+                variable_address = [Common addressForVariable:(NSString *)variable];
+            }
+            else
+            {
+                variable_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:variable_type] andValue:(NSString *)variable];
             }
             
-            // MEM ADDRESS
-            list_address = [Common addressForVariable:variable atPosition:[NSNumber numberWithInt:[position intValue]]];
+            // POSITION
+            if ([position isKindOfClass:[Temporal class]])
+            {
+                position_address = [position mem_address];
+            }
+            else if ([Common lookupVariable:(NSString *)position])
+            {
+                // CHECK IS NOT LIST
+                if ([Common isVariableList:position])
+                {
+                    [Common setYyError:[NSString stringWithFormat:@"The variable '%@' is a list.", position]];
+                    return yyerror("");
+                }
+                
+                position_address = [Common addressForVariable:(NSString *)position];
+            }
+            else
+            {
+                position_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:position_type] andValue:(NSString *)position];
+            }
+            
+            //list_address = [Common addressForVariable:variable atPosition:[NSNumber numberWithInt:[position intValue]]];
             
             // OUT OF BOUNDS
-            if (-1 == list_address)
+            /*if (-1 == list_address)
             {
                 [Common setYyError:[NSString stringWithFormat:@"The position '%@' is out of bounds for '%@'.", position, variable]];
                 return yyerror("");
-            }
+            }*/
 
-            // VALOR
+            // VALUE
             if ([value isKindOfClass:[Temporal class]])
             {
                 value_address = [value mem_address];
@@ -268,7 +302,7 @@ opVarAux:
                 value_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:value_type] andValue:(NSString *)value];
             }
             
-            [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:value_address] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:list_address]];
+            [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:value_address] Term2:[NSNumber numberWithInt:variable_address] andResult:[NSNumber numberWithInt:position_address]];
         }
         ;
 

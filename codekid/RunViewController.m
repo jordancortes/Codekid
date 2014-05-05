@@ -804,6 +804,28 @@
             [self checkForEventsWithMainPointer:++pointer];
         }
             break;
+        case SET_TO_AT:
+        {
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]];
+            NSString *result = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
+            
+            // Verifica que no se salga del índice
+            if ([[memory objectForKey:result] intValue] > 0 && [[memory objectForKey:result] intValue] <= [[_variables objectForKey:term2] dimension])
+            {
+                NSInteger list_address = [term2 intValue] + [[memory objectForKey:result] intValue] - 1;
+            
+                [memory setObject:[memory objectForKey:term1] forKey:[NSString stringWithFormat:@"%d", list_address]];
+                
+                [self actionForQuadruple:++pointer];
+            }
+            else
+            {
+                // ERROR INDEX OUT OF BOUNDS
+                [self errorVariable:[[_variables objectForKey:term2] name] forIndex:[[memory objectForKey:result] intValue]];
+            }
+        }
+            break;
         case BLOCK_END:
         {
             /* terminan bloques */
@@ -816,6 +838,13 @@
 {
     EventsViewController *parent = (EventsViewController *)self.presentingViewController;
     [[parent O_header_errors] setText:[NSString stringWithFormat:@"The variable %@ is not initialized", variable_name ]];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)errorVariable:(NSString *)variable_name forIndex:(NSInteger)index
+{
+    EventsViewController *parent = (EventsViewController *)self.presentingViewController;
+    [[parent O_header_errors] setText:[NSString stringWithFormat:@"The index %d is out of bounds for variable %@", index, variable_name ]];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

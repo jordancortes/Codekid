@@ -523,6 +523,12 @@
 }
 
 "at" {
+    if ([Common isString:[Common topFromStack:[Common operators]] equalTo:@"set"])
+    {
+        [Common popFromStack:[Common operators]];
+        [Common pushToStack:[Common operators] Object:@"set_at"];
+    }
+
     return _AT;
 }
 
