@@ -564,6 +564,32 @@
             break;
         case ITEM:
         {
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]]; // indice
+            NSString *term2 = [NSString stringWithFormat:@"%d", [actual_quadruple term2]]; // lista
+            NSString *result = [NSString stringWithFormat:@"%d", [actual_quadruple result]]; // temporal a guardar
+            
+            // Verifica que no se salga del índice
+            if ([[memory objectForKey:term1] intValue] > 0 && [[memory objectForKey:term1] intValue] <= [[_variables objectForKey:term2] dimension])
+            {
+                NSInteger list_address = [term2 intValue] + [[memory objectForKey:term1] intValue] - 1;
+                
+                if ([memory objectForKey:[NSString stringWithFormat:@"%d", list_address]] == nil)
+                {
+                    [self errorVariable:[[_variables objectForKey:term2] name]];
+                }
+                else
+                {
+                    [memory setObject:[memory objectForKey:[NSString stringWithFormat:@"%d", list_address]] forKey:result];
+                    
+                    [self actionForQuadruple:++pointer];
+                }
+            }
+            else
+            {
+                // ERROR INDEX OUT OF BOUNDS
+                [self errorVariable:[[_variables objectForKey:term2] name] forIndex:[[memory objectForKey:term1] intValue]];
+            }
+            
             /* hace la validación desde compilador */
         }
             break;
