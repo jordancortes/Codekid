@@ -392,6 +392,7 @@
                             <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="running_animacion" id="Gh4-PV-kjb">
                                 <rect key="frame" x="431" y="329" width="162" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.2793774709561867" blue="0.90787590977284649" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                             <textView hidden="YES" autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" id="fhH-Si-1uA">
                                 <rect key="frame" x="597" y="285" width="93" height="45"/>

@@ -618,6 +618,7 @@
                  }
                                       completion:^(BOOL finished)
                  {
+                     
                      [self actionForQuadruple:actual_pointer];
                  }];
             }
@@ -648,14 +649,16 @@
                 CGRect frame2 = [self.O_text frame];
                 frame2.origin.x += term1_value;
                 frame2.origin.y += term2_value;
-                [UITableView animateWithDuration:ANIMATION_SPEED
+                
+                [UIImageView animateWithDuration:ANIMATION_SPEED
                                       animations:^
                  {
-                     self.O_animacion.frame = frame1;
-                     self.O_text.frame = frame2;
+                     [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeTranslation(term1_value, term2_value))];
+                     [_O_text setTransform:CGAffineTransformConcat([_O_text transform], CGAffineTransformMakeTranslation(term1_value, term2_value))];
                  }
                                       completion:^(BOOL finished)
                  {
+                     
                      [self actionForQuadruple:actual_pointer];
                  }];
             }
