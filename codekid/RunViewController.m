@@ -614,11 +614,11 @@
                 [UIImageView animateWithDuration:ANIMATION_SPEED
                                       animations:^
                  {
-                     [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(term1_value)) )];
+                     [_O_animacion setTransform:CGAffineTransformRotate([_O_animacion transform], DEGREES_TO_RADIANS(term1_value))];
                  }
                                       completion:^(BOOL finished)
                  {
-                     
+                     NSLog(@"%f, %f\n", [_O_animacion center].x, [_O_animacion center].y);
                      [self actionForQuadruple:actual_pointer];
                  }];
             }
@@ -653,12 +653,11 @@
                 [UIImageView animateWithDuration:ANIMATION_SPEED
                                       animations:^
                  {
-                     [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeTranslation(term1_value, term2_value))];
-                     [_O_text setTransform:CGAffineTransformConcat([_O_text transform], CGAffineTransformMakeTranslation(term1_value, term2_value))];
+                     [_O_animacion setTransform:CGAffineTransformTranslate([_O_animacion transform], term1_value, term2_value)];
+                     [_O_text setTransform:CGAffineTransformTranslate([_O_text transform], term1_value, term2_value)];
                  }
                                       completion:^(BOOL finished)
                  {
-                     
                      [self actionForQuadruple:actual_pointer];
                  }];
             }
@@ -774,7 +773,7 @@
                 [UITableView animateWithDuration:ANIMATION_SPEED
                                       animations:^
                  {
-                     [_O_animacion setTransform:CGAffineTransformConcat([_O_animacion transform], CGAffineTransformMakeScale(term1_value/100.0, term1_value/100.0))];
+                     [_O_animacion setTransform:CGAffineTransformScale([_O_animacion transform], term1_value / 100.0, term1_value / 100.0)];
                  }
                                       completion:^(BOOL finished)
                  {
