@@ -71,6 +71,7 @@ int ext_scanner( const char* );
 // DropZone
 @property (weak, nonatomic) IBOutlet UIScrollView *O_dropzone_view;
 @property NSMutableArray *blocks;
+- (void) hideKeyboard;
 
 @end
 

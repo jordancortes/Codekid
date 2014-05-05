@@ -18,6 +18,11 @@
 {
     [super viewDidLoad];
     
+    // quitar teclado
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.O_dropzone_view addGestureRecognizer:tap];
+    [self. addGestureRecognizer:tap];
+    
     // Header
     _O_header_title.font = [UIFont fontWithName:@"ActionMan-Bold" size:40];
     [_O_header_back_projects setTitle:@"" forState:UIControlStateNormal];
@@ -134,6 +139,11 @@
     // DropZone
     _factory = [[BlockFactory alloc] init];
     _blocks = [[NSMutableArray alloc] init];
+}
+
+// Quitar teclado
+- (void) hideKeyboard{
+    [self.O_dropzone_view endEditing:YES];
 }
 
 #pragma mark Picker Data Source Methods
