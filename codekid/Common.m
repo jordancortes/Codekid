@@ -68,16 +68,17 @@ static int _del_paren;
      34  ->  LOAD
      35  ->  APPLY
      36  ->  SCALE
+     37  ->  TOSTRING
      */
     operatorCode = [[NSDictionary alloc]
                     initWithObjects:[NSArray arrayWithObjects:@"0", @"1", @"2", @"3", @"4", @"5", @"6", @"10",
                                      @"11", @"12", @"13", @"14", @"20", @"21", @"22", @"23", @"24",
                                      @"26", @"27", @"30", @"31",
-                                     @"32", @"33", @"34", @"35", @"36", nil]
+                                     @"32", @"33", @"34", @"35", @"36", @"37", nil]
                     forKeys:[NSArray arrayWithObjects:@"<", @"=", @">", @"+", @"-", @"*", @"/", @"GOTO",
                              @"GOTOF", @"GOTOT", @"SUB", @"ENDSUB", @"SET", @"LENGTH", @"ITEM", @"WAIT", @"WAIT_UNTIL",
                              @"TURN", @"MOVE", @"SAY", @"SHOW", @"HIDE", @"CLEAR",
-                             @"LOAD", @"APPLY", @"SCALE", nil]];
+                             @"LOAD", @"APPLY", @"SCALE", @"TOSTRING", nil]];
     
     operandCode = [[NSDictionary alloc]
                    initWithObjects:[NSArray arrayWithObjects:@"-1", @"0", @"1", @"2", @"3", @"4", nil]

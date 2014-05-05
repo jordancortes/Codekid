@@ -54,6 +54,7 @@
 %token CTE_BOOL
 %token CTE_STRING
 %token ID
+%token _TOSTRING
 
 %start inicio
 
@@ -1346,6 +1347,43 @@ cte:
                 Temporal *tn = [[Temporal alloc] initWithName:@"_TP1_" andAddress:list_address];
                 [Common pushToStack:[Common operands] Object:tn];
                 [Common pushToStack:[Common operandsType] Object:variable_type];
+            }
+        | _TOSTRING exp
+            {
+                NSString *op = [Common popFromStack:[Common operators]];
+                id value = [Common popFromStack:[Common operands]];
+                NSString *value_type = [Common popFromStack:[Common operandsType]];
+                
+                // CHECK IS LIST
+                if ([Common isVariableList:value])
+                {
+                    [Common setYyError:[NSString stringWithFormat:@"The variable '%@' is a list.", value]];
+                    return yyerror("");
+                }
+                
+                NSInteger value_address;
+                
+                // TERM 1
+                if ([value isKindOfClass:[Temporal class]])
+                {
+                    value_address = [value mem_address];
+                }
+                else if ([Common lookupVariable:(NSString *)value])
+                {
+                    value_address = [Common addressForVariable:(NSString *)value];
+                }
+                else
+                {
+                    value_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:value_type] andValue:(NSString *)value];
+                }
+                
+                // CREATE TEMP
+                Temporal *tn = [Common addTempWithType:STRING];
+                [Common pushToStack:[Common operands] Object:tn];
+                [Common pushToStack:[Common operandsType] Object:[Common typeForCode:STRING]];
+                
+                // CREATE QUADRUPLE
+                [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:value_address] Term2:[NSNumber numberWithInt:-1] andResult:[NSNumber numberWithInt:[tn mem_address]]];
             }
         ;
 

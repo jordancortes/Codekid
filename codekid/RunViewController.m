@@ -783,6 +783,25 @@
             }
         }
             break;
+        case TOSTRING:
+        {
+            NSString *term1 = [NSString stringWithFormat:@"%d", [actual_quadruple term1]];
+            NSString *result = [NSString stringWithFormat:@"%d", [actual_quadruple result]];
+            
+            if ([memory objectForKey:term1] == nil)
+            {
+                [self errorVariable:[[_variables objectForKey:term1] name]];
+            }
+            else
+            {
+                NSString *term1_value = [memory objectForKey:term1];
+                
+                [memory setObject:[NSString stringWithFormat:@"'%@'", term1_value] forKey:result];
+                
+                [self actionForQuadruple:++pointer];
+            }
+        }
+            break;
         case BLOCK_END:
         {
             /* terminan bloques */

@@ -411,6 +411,12 @@
     return END_EXP;
 }
 
+"tostring" {
+    [Common pushToStack:[Common operators] Object:[NSString stringWithUTF8String:yytext]];
+
+    return _TOSTRING;
+}
+
 "when" {
     return _WHEN;
 }

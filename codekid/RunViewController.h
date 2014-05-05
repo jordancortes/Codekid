@@ -40,6 +40,7 @@
 #define LOAD            34
 #define APPLY           35
 #define SCALE           36
+#define TOSTRING        37
 #define BLOCK_END       40
 
 #define BOOL_TRUE       @"1"
