@@ -50,7 +50,16 @@
 
 @interface RunViewController : UIViewController
 
+@property NSMutableArray *quadruple;
+@property NSMutableDictionary *memory;
+@property NSMutableArray *procedures;
+@property NSStringEncoding encoding;
+@property NSString *content;
 @property NSMutableDictionary *variables;
+
+@property NSString *term1;
+@property NSString *term2;
+@property NSString *result;
 
 // Header Outlets
 @property (weak, nonatomic) IBOutlet UILabel *O_header_title;
