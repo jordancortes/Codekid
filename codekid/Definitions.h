@@ -38,6 +38,7 @@
 #define BLOCK_OPERATOR_GREATER_THAN     45
 #define BLOCK_OPERATOR_LESS_THAN        46
 #define BLOCK_OPERATOR_PARENTHESIS      47
+#define BLOCK_OPERATOR_TOSTRING         48
 #define BLOCK_DATA_LENGTH               50
 #define BLOCK_DATA_ITEM                 51
 #define BLOCK_DATA_SET                  52

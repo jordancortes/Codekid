@@ -678,6 +678,28 @@
             [temp.main_view addSubview:close_parenthesis_sign];
         }
             break;
+        case BLOCK_OPERATOR_TOSTRING:
+        {
+            temp.main_view = [
+                              [BlockView alloc]
+                              initWithFrame:CGRectMake(0, 0, 230.5, 59)
+                              andColor:[UIColor colorWithRed:0.0392156862745098 green:0.556862745098039 blue:0 alpha:1.0]];
+            
+            // Texto
+            UILabel *text = [[VariableLabel alloc] initWithName:@"TO STRING" fontSize:35 andPosition:CGPointMake(-6, 0)];
+            [text setTag:1];
+            [temp.main_view addSubview:text];
+            
+            // Primer Dropzone
+            DropZoneView *first_drop_zone = [[DropZoneView alloc] initWithFrame:CGRectMake(185, 0, 40, 59)];
+            [first_drop_zone setTag:2];
+            [first_drop_zone addBackTextField:[
+                                               [DropZoneTextField alloc]
+                                               initWithFrame:CGRectMake(0, 0, first_drop_zone.frame.size.width, first_drop_zone.frame.size.height)
+                                               andType:TEXT_TYPE_STRING]];
+            [[temp inner_drop_zones] addObject:first_drop_zone];
+        }
+            break;
         case BLOCK_DATA_LENGTH:
         {
             temp.main_view = [
@@ -686,7 +708,7 @@
                               andColor:[UIColor colorWithRed:0.76078431372549 green:0.313725490196078 blue:0.149019607843137 alpha:1.0]];
             
             // Texto
-            UILabel *first_text = [[VariableLabel alloc] initWithName:@"LENGTH" fontSize:35 andPosition:CGPointMake(0, 0)];
+            UILabel *first_text = [[VariableLabel alloc] initWithName:@"LENGTH" fontSize:33 andPosition:CGPointMake(0, 0)];
             [first_text setTag:1];
             [temp.main_view addSubview:first_text];
             

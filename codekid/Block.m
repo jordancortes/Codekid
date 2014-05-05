@@ -514,6 +514,10 @@
         {
             return [NSString stringWithFormat:@"( %@ )", [block_inside getValueForDropZone:0]];
         }
+        else if ([block_inside block_type] == BLOCK_OPERATOR_TOSTRING)
+        {
+            return [NSString stringWithFormat:@"'%@'", [block_inside getValueForDropZone:0]];
+        }
         else if ([block_inside block_type] == BLOCK_DATA_LENGTH)
         {
             return [NSString stringWithFormat:@"length %@", [block_inside getValueForDropZone:0]];

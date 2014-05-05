@@ -77,6 +77,7 @@
                       [UIImage imageNamed:@"block_operators_greaterThan"],
                       [UIImage imageNamed:@"block_operators_lessThan"],
                       [UIImage imageNamed:@"block_operators_parenthesis"],
+                      [UIImage imageNamed:@"block_operators_toString"],
                       nil],
                      [[NSArray alloc] initWithObjects:
                       [UIImage imageNamed:@"block_data_length"],
