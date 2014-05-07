@@ -64,7 +64,7 @@
 // Header Outlets
 @property (weak, nonatomic) IBOutlet UILabel *O_header_title;
 
-// Outlet y Action del boton de stop para salir de la pantalla donde se corre la animación
+// Outlet y Action del boton de stop para salir de la pantalla
 @property (weak, nonatomic) IBOutlet UIButton *O_stop;
 - (IBAction)A_stop:(UIButton *)sender;
 
@@ -75,5 +75,87 @@
 // outlet texto
 @property (weak, nonatomic) IBOutlet UITextView *O_text;
 
+/**
+ Método de acción cuando el view sale a la vista del usuario.
+
+ @param animated
+    Si la aparición del view será animada.
+*/
+- (void)viewDidAppear:(BOOL)animated;
+
+/**
+ Método que se encarga de hacer el chequeo de los eventos auxiliares.
+ 
+ @param main_pointer
+    Apuntador a la instrucción del MAIN donde se quedó.
+ */
+- (void)checkForEventsWithMainPointer:(NSInteger)main_pointer;
+
+/**
+ Método de acción cuando se carga el view, se inicializan variables.
+ */
+- (void)viewDidLoad;
+
+/**
+ Lee el archivo de cuádruplos y los guarda en un arreglo.
+ */
+- (void)ArrayQuadruple;
+
+/**
+ Lee el archivo de memoria y los guarda en un arreglo.
+ */
+- (void)ArrayMemory;
+
+/**
+ Lee el archivo de procedimientos y los guarda en un arreglo.
+ */
+- (void)ArrayProcedure;
+
+/**
+ Lee el archivo de variables y los guarda en un arreglo.
+ */
+- (void)readVariables;
+
+/**
+ Obtiene la dirección absoluta de la carpeta Documents de la aplicación.
+
+ @return La dirección a la carpeta Documents de la aplicación.
+ */
+- (NSURL *)applicationDocumentsDirectory;
+
+/**
+ Regresa el tipo correspondiente a un valor en memoria.
+
+ @param mem_direction
+    Dirección en memoria de la variable, temporal o constante.
+ @return El tipo correspondiente a la dirección de memoria.
+ */
+- (NSInteger)typeForMemoryDirection:(NSString *)mem_direction;
+
+/**
+ Lleva a cabo la acción en pantalla dependiendo del cuadruplo a leer.
+ 
+ @param pointer
+    Apuntador a la instrucción cuádruplo siguiente.
+ */
+- (void)actionForQuadruple:(NSInteger)pointer;
+
+/**
+ Lleva a cabo las acciones necesarias para la notificación de un error con
+ una variable escalar.
+ 
+ @param variable_name
+    Nombre de la variable responsable del error.
+ */
+- (void)errorVariable:(NSString *)variable_name;
+
+/**
+ Lleva a cabo las acciones necesarias para la notificación de un error con
+ un vector.
+ 
+ @param variable_name
+ Nombre de la variable responsable del error.
+ */
+- (void)errorVariable:(NSString *)variable_name forIndex:(NSInteger)index;
 
 @end

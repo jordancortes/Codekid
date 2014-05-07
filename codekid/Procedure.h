@@ -25,6 +25,4 @@
  */
 - (id)initWithType:(NSInteger)type andPointer:(NSInteger)pointer;
 
-/* TODO: falta asignar cantidad de variables (size) cuando acaba de declararse el procedimiento */
-
 @end

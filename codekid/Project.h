@@ -11,11 +11,35 @@
 
 @interface Project : NSObject <UITextFieldDelegate>
 
-- (id)initWithFrame:(CGRect)frame forCont:(NSInteger)cont;
-
 @property UIView *preview;
 @property UITextField *project_title;
 @property UIButton *btn_title;
 @property UIButton *project_delete;
+
+/**
+ Inicializa el DropZoneView que estará dentro del DropZoneView
+ 
+ @param frame
+    Las dimensión del DropZoneView
+ 
+ @return El DropZoneView inicializado.
+ */
+- (id)initWithFrame:(CGRect)frame forCont:(NSInteger)cont;
+
+/**
+ Reconoce el fin del la edición del texto.
+ 
+ @param textField
+    TextField de la acción.
+ */
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField;
+
+/**
+ Reconoce el fin del la edición del texto.
+ 
+ @param textField
+    TextField de la acción.
+ */
+- (BOOL)textFieldShouldReturn:(UITextField *)textField;
 
 @end

@@ -71,17 +71,146 @@ int ext_scanner( const char* );
 // DropZone
 @property (weak, nonatomic) IBOutlet UIScrollView *O_dropzone_view;
 @property NSMutableArray *blocks;
+
+/**
+ Evento que se encargá de las inicializaciones.
+ */
+- (void)viewDidLoad;
+
+/**
+ Evento que se encarga de ocultar el teclado.
+ */
 - (void) hideKeyboard;
 
+/**
+ Regresa el número de componentes (columnas) para un determinado pickerView.
+
+ @param pickerView
+    pickerView el cual solicita el número.
+ @return el número de componentes (columnas) del pickerView.
+ */
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView;
+
+/**
+ Regresa el número de filas para una determinada columna del pickerView.
+ 
+ @param pickerView
+    pickerView el cual solicita el número.
+ @param component
+    Número de columna que solicita el número.
+ @return el número de filas del componente del pickerView.
+ */
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
+
+/**
+ Determina el contenido de cada opción del pickerView.
+
+ @param pickerView
+    pickerView que solicita el objeto.
+ @param row
+    fila que solicita el objeto.
+ @param component
+    columna que solicita el objeto.
+ @param view
+    Vista probablemente ya definida para reutilizarla.
+ @return el objeto solicitado que será mostrado.
+ */
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view;
+
+/**
+ Regresa el número de filas para una determinada columna del tableView.
+ 
+ @param tableView
+    tableView el cual solicita el número.
+ @param section
+    Número de columna que solicita el número.
+ @return el número de filas del componente del tableView.
+ */
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
+
+/**
+ Determina si una fila de cierto tableView es editable, es decir, se puede borrar.
+ 
+ @param tableView
+    tableView que solicita el valor.
+ @param indexPath
+    fila y celda a la cual se le define si tiene el permiso o no.
+ @return YES si se puede editar, NO si ocurre lo contrario.
+*/
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ Método de acción que reacciona cuando se edita una celda de una tabla.
+ 
+ @param tableView
+    tableView en donde se realiza la acción.
+ @param editingStyle
+    Cuál fue la acción que se quiere ejecutar.
+ @param indexPath
+    fila y celda en donde se realiza la acción.
+ */
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ Detemrina el contenido de una fila de un tableView.
+ 
+ @param tableView
+    tableView en donde se realiza la acción.
+ @param indexPath
+    fila en donde se introducira el contenido.
+ @return La celda con el contenido esperado por el tableView.
+ */
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ Método de acción cuando se selecciona una celda en una tableView.
+ 
+ @param tableView
+    tableView en donde se realiza la acción.
+ @param indexPath
+    fila y celda en donde se realiza la acción.
+ */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ Método reusable para agregar las acciones de gestureRecognizer a los bloques.
+ 
+ @param this_block
+    Bloque al cuál se le agregarán los gestos.
+ */
+- (void)addActionsToBlock:(Block *)this_block;
+
+/**
+ Método que se encarga del movimento de los view del Sidebar
+ 
+ @param myView
+    vista la cual será movida.
+ @param x
+    Posición en horizontal a la cuál se movera.
+ @param y
+    Posición en vertical a la cuál se movera.
+ @param seconds
+    Tiempo que tardará la animación en ocurrir.
+ */
+- (void)slideView:(UIView *)myView toX:(NSInteger)x andY:(NSInteger)y duringSeconds:(NSTimeInterval)seconds;
+
+/**
+ Oculta el teclado para los TextField cuando ya no se necesita.
+ 
+ @param touches
+    Tipo de gesto detectado. Incluye el objeto relacionado con el gesto.
+ @param event
+    Tipo de evento detectado.
+ */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+
+/**
+ Convierte el bloque en código para el compilador.
+ 
+ @param initial_block
+    Bloque el cuál se convertirá en código escrito.
+ @return Código que será escrito en un archivo de texto.
+ */
+- (NSString *)getCodeForEvent:(Block *)initial_block;
+
 @end
-
-
-
-
-
-
-
-
-
-
-

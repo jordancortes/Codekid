@@ -63,6 +63,23 @@
  */
 - (void)bringAllBlocksToFront;
 
+/**
+ Método que reconoce las acciones de las alertas
+ @param alertView
+    El alerta que llama a la acción
+ @param buttonIndex
+    El índice del botón al que se le hizo click.
+ */
+- (void)alertView:(BlockDeleteAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+
+
+/**
+ Se encarga de llevar a cabo los pasos necesarios dependiendo de las propiedades
+ del gesto de presión larga.
+ 
+ @param recognizer
+    Elemento que contiene la información del gesto, como el View sobre el que se hizo.
+ */
 - (void)handleMainViewLongPress:(BlockHandleLongPressGestureRecognizer *)recognizer;
 
 /**
@@ -84,5 +101,18 @@
  */
 - (Block *)arrangeSinceBlock:(Block *)block;
 
+/**
+ Obtiene el valor para el InnerDropZone, ya sea un valor escrito o
+ el valor resultante del bloque.
+ 
+ @param num_dropzone
+    El "tag" que identifica de manera única dentro de un bloque a un innerDropZone.
+ @return La cadena del valor, pudiendo ser "1" o "1+1/(5-4)"
+ */
 - (NSString *)getValueForDropZone:(NSInteger)num_dropzone;
+
+/**
+ Reinicia el color del borde del innerDropZone a negro.
+ */
+- (void)resetInnerBorders;
 @end

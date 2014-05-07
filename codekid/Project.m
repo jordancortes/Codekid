@@ -54,7 +54,8 @@
 }
 
 // hide key keyboard -- no permite esconder el teclado si el nombre esta en blanco
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
     NSString *trimmedString = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (![trimmedString isEqualToString:@""]){
         return YES;
@@ -64,7 +65,8 @@
 }
 
 // return key keyboard -- esconde teclado si el nombre no esta en blanco
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     NSString *trimmedString = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (![trimmedString isEqualToString:@""]){
         [textField resignFirstResponder];

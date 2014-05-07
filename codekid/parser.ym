@@ -271,15 +271,6 @@ opVarAux:
             {
                 position_address = [Common addConstantWithType:[Common lookupOperandCodeForKey:position_type] andValue:(NSString *)position];
             }
-            
-            //list_address = [Common addressForVariable:variable atPosition:[NSNumber numberWithInt:[position intValue]]];
-            
-            // OUT OF BOUNDS
-            /*if (-1 == list_address)
-            {
-                [Common setYyError:[NSString stringWithFormat:@"The position '%@' is out of bounds for '%@'.", position, variable]];
-                return yyerror("");
-            }*/
 
             // VALUE
             if ([value isKindOfClass:[Temporal class]])
@@ -1410,20 +1401,6 @@ cte:
                 [Common pushToStack:[Common operandsType] Object:variable_type];
                 
                 [Common addQuadrupleWithOperator:[NSNumber numberWithInt:[Common lookupOperatorCodeForKey:op]] Term1:[NSNumber numberWithInt:position_address] Term2:[NSNumber numberWithInt:variable_address] andResult:[NSNumber numberWithInt:[tn mem_address]]];
-                
-                 // = [Common addressForVariable:variable atPosition:[NSNumber numberWithInt:[position intValue]]];
-                
-                // OUT OF BOUNDS
-                /*if (-1 == list_address)
-                {
-                    [Common setYyError:[NSString stringWithFormat:@"The position '%@' is out of bounds for '%@'.", position, variable]];
-                    return yyerror("");
-                }*/
-                
-                // CREATE SPECIAL TEMP
-                //Temporal *tn = [[Temporal alloc] initWithName:@"_TP1_" andAddress:list_address];
-                //[Common pushToStack:[Common operands] Object:tn];
-                //[Common pushToStack:[Common operandsType] Object:variable_type];
             }
         | _TOSTRING exp
             {

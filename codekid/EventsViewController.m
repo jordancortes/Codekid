@@ -142,7 +142,8 @@
 }
 
 // Quitar teclado
-- (void) hideKeyboard{
+- (void) hideKeyboard
+{
     [self.O_dropzone_view endEditing:YES];
 }
 

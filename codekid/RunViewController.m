@@ -58,7 +58,8 @@
     [self readVariables];
 }
 
-- (void)ArrayQuadruple{
+- (void)ArrayQuadruple
+{
     // saca el texto del archivo quadruples.txt
     NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"quadruples.txt"];
     if(path) {
@@ -76,7 +77,8 @@
     }
 }
 
-- (void)ArrayMemory{
+- (void)ArrayMemory
+{
     // saca el texto del archivo memory.txt
     NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"memory.txt"];
     if(path) {
@@ -101,7 +103,8 @@
     }
 }
 
-- (void)ArrayProcedure{
+- (void)ArrayProcedure
+{
     // saca el texto del archivo procedures.txt
     NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"procedures.txt"];
     if(path) {

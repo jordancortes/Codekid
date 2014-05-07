@@ -447,11 +447,6 @@
         {
             return [this_textfield text];
         }
-        // si tiene que ser un string obligatorio
-        //else if ([this_textfield input_type] == TEXT_TYPE_FORCED_STRING)
-        //{
-         //   return [NSString stringWithFormat:@"'%@'", [this_textfield text]];
-        //}
         // si es bool
         else if (
                  [[[this_textfield text] lowercaseString] isEqualToString:@"true"] ||
